@@ -75,7 +75,11 @@ EXAMPLES OF REPRESENTATION:
 -}
 data JSONValue 
   = JSONNull
-  -- TODO: Add constructors for Bool, Number, String, Array, Object
+  | JSONBool Bool
+  | JSONNumber Double
+  | JSONString String
+  | JSONArray [JSONValue]
+  | JSONObject [(String, JSONValue)]
   deriving (Show, Eq)
 
 {- |

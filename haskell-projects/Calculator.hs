@@ -168,9 +168,10 @@ IMPORTANT: Always skip whitespace before parsing!
 -}
 
 -- Helper function to skip leading whitespace
--- IMPLEMENTATION HINT: Use dropWhile isSpace
+-- ALREADY IMPLEMENTED FOR YOU: This is a simple utility function
+-- You'll use this in your parsing functions
 skipSpace :: String -> String
-skipSpace = undefined  -- TODO: Implement using dropWhile
+skipSpace = dropWhile isSpace
 
 {- |
 TODO 3.1: Implement parseNumber
@@ -376,8 +377,9 @@ To catch errors like "2 + 3 xyz" where "xyz" is not a valid part of the expressi
 -}
 parse :: String -> Either String Expr
 parse s = case parseExpr s of
-  Just (expr, "") -> Right expr
-  _ -> Left "Parse error"  -- TODO: Improve error handling
+  Just (expr, rest) | all isSpace rest -> Right expr
+  Just _ -> Left "Unexpected characters after expression"
+  Nothing -> Left "Parse error"
 
 {- |
 Calculate: The main entry point combining parsing and evaluation

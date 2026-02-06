@@ -13,7 +13,7 @@ import Text.HTML.TagSoup
 import Data.Maybe (mapMaybe, listToMaybe)
 import Data.List (isInfixOf, isPrefixOf, nub)
 import Control.Exception (try, SomeException)
--- import Control.Concurrent.Async (mapConcurrently)  -- For concurrent scraping
+import Control.Concurrent.Async (mapConcurrently)  -- For concurrent scraping
 
 -- Data structures
 data Link = Link
@@ -101,9 +101,9 @@ findLinks pattern url = do
 -- Scrape multiple pages concurrently
 scrapePages :: [String] -> IO [ScraperResult PageData]
 scrapePages urls = 
-  -- Implementation would use mapConcurrently scrapePage urls
-  -- For now, sequential:
-  mapM scrapePage urls
+  -- Full implementation would use: mapConcurrently scrapePage urls
+  -- This shows the correct approach:
+  mapConcurrently scrapePage urls
 
 -- Scrape and extract all unique links
 scrapeAllLinks :: [String] -> IO [Link]

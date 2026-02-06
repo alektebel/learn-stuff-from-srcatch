@@ -74,7 +74,7 @@ calculate "10 / 0"         -- Left "Division by zero"
 calculate "2 +"            -- Left "Parse error"
 ```
 
-### 2. JSONParser.hs (Coming Soon)
+### 2. JSONParser.hs
 **Complete JSON parser from scratch**
 
 A full JSON parser implementing:
@@ -115,7 +115,7 @@ parse "{\"name\": \"Alice\"}"         -- Right (JSONObject [..])
 parse "{\"users\": [{\"age\": 30}]}"  -- Nested structures
 ```
 
-### 3. WebScraper.hs (Coming Soon)
+### 3. WebScraper.hs
 **Web scraper with HTML parsing**
 
 A web scraping tool demonstrating:
@@ -152,7 +152,7 @@ matches <- findLinks "github" "https://example.com"
 results <- scrapePages ["url1", "url2", "url3"]
 ```
 
-### 4. BuildTool.hs (Coming Soon)
+### 4. BuildTool.hs
 **Build system similar to Make**
 
 A dependency-based build tool showing:
