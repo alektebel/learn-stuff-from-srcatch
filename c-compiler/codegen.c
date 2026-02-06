@@ -663,6 +663,6 @@ int main(int argc, char** argv) {
  * - Additional args on stack (push in reverse order)
  * - Return value in %rax
  * - Caller-saved: %rax, %rcx, %rdx, %rsi, %rdi, %r8-%r11
- * - Callee-saved: %rbx, %r12-% r15, %rbp
+ * - Callee-saved: %rbx, %r12-%r15, %rbp
  * - Stack must be 16-byte aligned before call
  */
