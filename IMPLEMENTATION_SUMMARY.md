@@ -45,6 +45,7 @@ Every project has a `solutions/` directory containing:
 | haskell-projects | ✅ Calculator.hs | ✅ Calculator.hs | ✅ | Complete |
 | lean-proofs | ✅ BasicLogic.lean | ✅ BasicLogic.lean | ✅ | Complete |
 | quantum-computing-lang | ✅ quantum.c | ✅ quantum.c | ✅ | Complete |
+| sas-lineage-tool | ✅ template_lineage_parser.py | ✅ lineage_parser.py | ✅ | Complete |
 
 ## Template Features
 
