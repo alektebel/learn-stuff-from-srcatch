@@ -1,0 +1,42 @@
+# Compiled binaries
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+shell
+http_server
+lexer
+sha256
+quantum
+calculator
+
+# Haskell
+*.hi
+*.o
+.stack-work/
+dist/
+dist-newstyle/
+cabal.project.local
+
+# Lean
+.lake/
+build/
+lake-packages/
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Test outputs
+output.txt
+log.txt

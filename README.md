@@ -18,17 +18,55 @@ A collection of from-scratch implementations of various systems and projects for
 ## Philosophy
 
 This repository is dedicated to learning by building things from scratch. Each directory contains:
+- **Template files** with TODO comments and implementation guidelines
+- **Step-by-step instructions** for gradual implementation
+- **Complete solutions** in the `solutions/` folder for reference
 - A clear learning path from basics to advanced topics
-- Progressive implementation goals
-- Documentation explaining concepts and design decisions
+
+## Structure
+
+Each project directory contains:
+
+```
+project-name/
+├── README.md              # Project overview and learning path
+├── template-files         # Empty templates with TODOs and guidelines
+├── Makefile              # Build configuration (for C projects)
+└── solutions/            # Complete working implementations
+    ├── README.md         # Solution documentation
+    └── solution-files    # Fully implemented code
+```
 
 ## Getting Started
 
-1. Choose a project that interests you
-2. Read the README in that directory
-3. Follow the learning path
-4. Build incrementally and understand each step
+1. **Choose a project** that interests you
+2. **Read the README** in that directory to understand the goals
+3. **Start with the template files** - they have TODOs and guidelines
+4. **Implement gradually** - follow the TODO comments step by step
+5. **Test frequently** - build and test as you implement each section
+6. **Check solutions** when stuck or to verify your approach
+7. **Learn and iterate** - understand each step before moving forward
+
+## Implementation Approach
+
+The templates are designed to be:
+- ✅ **Gradual**: Start simple, add complexity incrementally
+- ✅ **Guided**: Clear TODO comments explain what to implement
+- ✅ **Balanced**: Not too easy (no hand-holding), not too hard (reasonable steps)
+- ✅ **Educational**: Focus on understanding concepts, not just copying code
+
+## Building Projects
+
+Most C projects include a Makefile:
+
+```bash
+cd project-name/
+make          # Build the project
+make run      # Run the program
+make test     # Run tests (if available)
+make clean    # Clean build artifacts
+```
 
 ## Note
 
-These implementations are for educational purposes. They prioritize clarity and understanding over production-ready features or performance.
+These implementations are for educational purposes. They prioritize clarity and understanding over production-ready features or performance. Use the solutions as reference, but try to implement yourself first for maximum learning!
