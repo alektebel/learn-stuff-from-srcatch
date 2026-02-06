@@ -161,7 +161,7 @@ int main(int argc, char** argv) {
  *         Handle ==, !=, <=, >=, etc.
  * 
  * Step 6: Add comment handling
- *         Skip // and /* */ comments
+ *         Skip single-line and multi-line comments
  * 
  * Testing Tips:
  * - Test with simple expressions first
