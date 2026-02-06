@@ -1,10 +1,51 @@
 # Solutions
 
-This directory contains complete implementations of cryptographic algorithms.
+This directory contains complete implementations and comprehensive implementation guides for cryptographic algorithms.
 
 ## Files
 
+### Complete Implementations
+
 - **sha256.c** - Complete SHA-256 hash function implementation
+
+### Implementation Guides
+
+These guides provide verbose, detailed implementation instructions without actual code. They are designed to teach you how to implement cryptographic algorithms from scratch while understanding the security considerations and best practices.
+
+- **[ecc_implementation_guide.md](ecc_implementation_guide.md)** - Elliptic Curve Cryptography (ECC) implementation guide
+  - Point arithmetic (addition, doubling, scalar multiplication)
+  - Modular arithmetic in finite fields
+  - Curve operations and optimizations
+  - Point encoding/decoding
+  - Security considerations and side-channel protection
+
+- **[ecdsa_implementation_guide.md](ecdsa_implementation_guide.md)** - ECDSA Digital Signature Algorithm guide
+  - Key generation
+  - Signature generation and verification
+  - Deterministic nonce generation (RFC 6979)
+  - DER encoding
+  - Security vulnerabilities and mitigations
+
+- **[aes_implementation_guide.md](aes_implementation_guide.md)** - AES (Advanced Encryption Standard) guide
+  - Core operations (SubBytes, ShiftRows, MixColumns, AddRoundKey)
+  - Key expansion
+  - Encryption and decryption
+  - Modes of operation (CBC, CTR, GCM)
+  - Performance optimization techniques
+
+- **[ecdh_implementation_guide.md](ecdh_implementation_guide.md)** - ECDH Key Agreement Protocol guide
+  - Key generation and exchange
+  - Shared secret computation
+  - Key derivation functions (KDF)
+  - Forward secrecy and authentication
+  - Curve25519 and modern approaches
+
+- **[secure_rng_guide.md](secure_rng_guide.md)** - Secure Random Number Generation guide
+  - Entropy sources and collection
+  - CSPRNG algorithms (ChaCha20, AES-CTR-DRBG, HMAC-DRBG)
+  - Platform-specific implementations
+  - Security best practices
+  - Common pitfalls and historical failures
 
 ## Building and Running
 
@@ -76,8 +117,88 @@ Input: "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"
 SHA-256: 248d6a61d20638b8e5c026930c3e6039a33ce45964ff2167f6ecedd419db06c1
 ```
 
+## How to Use the Implementation Guides
+
+Each implementation guide is structured to provide:
+
+1. **Overview**: High-level understanding of the algorithm
+2. **Mathematical Foundation**: Core cryptographic concepts
+3. **Algorithm Details**: Step-by-step implementation instructions
+4. **Data Structures**: How to organize code and data
+5. **Security Considerations**: Common vulnerabilities and mitigations
+6. **Testing Strategy**: How to validate your implementation
+7. **Optimization Tips**: Performance improvements
+8. **References**: Standards, papers, and additional resources
+
+### Learning Path
+
+1. **Start with Basics**: Begin with SHA-256 implementation to understand:
+   - Bitwise operations
+   - Fixed-size transformations
+   - Hash function principles
+
+2. **Move to Field Arithmetic**: Study the ECC guide to understand:
+   - Modular arithmetic
+   - Point operations on curves
+   - Constant-time implementations
+
+3. **Implement Digital Signatures**: Use ECDSA guide to learn:
+   - Signature schemes
+   - Nonce management
+   - Security-critical details
+
+4. **Add Encryption**: Follow AES guide for:
+   - Symmetric encryption
+   - Block cipher modes
+   - Authenticated encryption
+
+5. **Key Exchange**: Study ECDH guide for:
+   - Key agreement protocols
+   - Forward secrecy
+   - Key derivation
+
+6. **Random Number Generation**: Use RNG guide for:
+   - Entropy collection
+   - PRNG design
+   - Platform integration
+
+### Important Notes
+
+⚠️ **These implementations are for educational purposes only.**
+
+**For production systems:**
+- Use established, audited libraries (OpenSSL, libsodium, mbedTLS)
+- Cryptographic code requires extensive review and testing
+- Side-channel attacks and timing vulnerabilities are subtle
+- Security bugs can have catastrophic consequences
+
+**Benefits of implementing yourself:**
+- Deep understanding of cryptographic algorithms
+- Appreciation for complexity and security challenges
+- Better ability to use cryptographic libraries correctly
+- Foundation for security research and analysis
+
 ## Further Reading
 
-- FIPS 180-4 Specification
-- "Applied Cryptography" by Bruce Schneier
+### Standards and Specifications
+- FIPS 180-4: Secure Hash Standard (SHA-256)
+- FIPS 186-4: Digital Signature Standard (ECDSA)
+- FIPS 197: Advanced Encryption Standard (AES)
+- NIST SP 800-56A: Key Establishment (ECDH)
+- NIST SP 800-90A: Random Number Generation
+- RFC 6979: Deterministic ECDSA
+- RFC 5869: HKDF
+- RFC 7748: Curve25519 and X448
+
+### Books
+- "Guide to Elliptic Curve Cryptography" - Hankerson, Menezes, Vanstone
+- "The Design of Rijndael" - Daemen, Rijmen
+- "Cryptography Engineering" - Ferguson, Schneier, Kohno
+- "Handbook of Applied Cryptography" - Menezes, van Oorschot, Vanstone
+- "Serious Cryptography" - Aumasson
+
+### Online Resources
+- NIST Cryptographic Algorithm Validation Program (CAVP)
+- SafeCurves (https://safecurves.cr.yp.to/)
+- Cryptopals Crypto Challenges (https://cryptopals.com/)
 - https://www.di-mgt.com.au/sha_testvectors.html
