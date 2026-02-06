@@ -206,12 +206,18 @@ Result: 60 FPS on Jetson (4x faster than FP32)
 
 ### 3. Model Comparison
 
+Performance comparison across different optimization techniques:
+
 | Model       | Format  | Size | Edge FPS | Server FPS | mAP  |
 |-------------|---------|------|----------|------------|------|
 | YOLOv8n     | FP32    | 94MB | 15       | 180        | 37.3 |
 | YOLOv8n     | FP16    | 47MB | 28       | 350        | 37.2 |
 | YOLOv8n     | INT8    | 24MB | 45       | 520        | 36.8 |
 | YOLOv8n     | TRT+INT8| 20MB | 60       | 680        | 36.5 |
+
+*Edge FPS: Frames per second on Jetson Nano*  
+*Server FPS: Frames per second on single GPU server (RTX 3090)*  
+*mAP: Mean Average Precision on COCO validation set*
 
 ## Pipeline Architecture
 
