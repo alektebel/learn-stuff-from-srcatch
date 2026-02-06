@@ -2,13 +2,12 @@
 
 CC = gcc
 CFLAGS = -Wall -Wextra -g
-LDFLAGS = -lm
 TARGET = sha256
 
 all: $(TARGET)
 
 $(TARGET): sha256.c
-	$(CC) $(CFLAGS) -o $(TARGET) sha256.c $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $(TARGET) sha256.c
 
 clean:
 	rm -f $(TARGET)
