@@ -21,6 +21,9 @@ A collection of from-scratch implementations of various systems and projects for
 - **[mlops/](mlops/)** - MLOps pipelines (experiment tracking, CI/CD, feature stores)
 - **[ml-inference/](ml-inference/)** - High-performance inference (optimization, quantization, edge deployment)
 
+### Data Engineering & Analytics (Python)
+- **[sas-lineage-tool/](sas-lineage-tool/)** - SAS field lineage parser for tracking data transformations and dependencies
+
 ## Philosophy
 
 This repository is dedicated to learning by building things from scratch. Each directory contains:
