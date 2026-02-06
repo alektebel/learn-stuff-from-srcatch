@@ -1,7 +1,7 @@
 -- Simple Calculator in Haskell - Template
 -- This template guides you through building a calculator with a parser and evaluator
 
-module Calculator where
+module Main where
 
 import Data.Char (isDigit, isSpace)
 

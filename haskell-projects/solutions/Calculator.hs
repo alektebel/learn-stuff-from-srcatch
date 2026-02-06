@@ -1,6 +1,6 @@
 -- Simple Calculator in Haskell - Complete Solution
 
-module Calculator where
+module Main where
 
 import Data.Char (isDigit, isSpace)
 
