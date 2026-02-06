@@ -15,6 +15,12 @@ A collection of from-scratch implementations of various systems and projects for
 - **[haskell-projects/](haskell-projects/)** - Various projects to learn Haskell
 - **[lean-proofs/](lean-proofs/)** - Mathematical proofs in Lean, progressing toward Galois theorem
 
+### Machine Learning & MLOps
+- **[distributed-training/](distributed-training/)** - Distributed training systems (data parallelism, model parallelism, multi-node training)
+- **[ml-in-production/](ml-in-production/)** - Production ML systems (model serving, monitoring, A/B testing)
+- **[mlops/](mlops/)** - MLOps pipelines (experiment tracking, CI/CD, feature stores)
+- **[ml-inference/](ml-inference/)** - High-performance inference (optimization, quantization, edge deployment)
+
 ## Philosophy
 
 This repository is dedicated to learning by building things from scratch. Each directory contains:
