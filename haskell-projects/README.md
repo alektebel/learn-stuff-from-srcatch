@@ -88,6 +88,40 @@ Create a build tool similar to Make that manages dependencies and rebuilds only 
 
 **What You'll Build**: A tool that reads build specifications and executes build commands in the correct order.
 
+### 5. **Neural Network**
+**Complexity**: Advanced  
+**File**: `NeuralNetwork.hs`  
+**Focus**: Matrix operations, forward/backward propagation, gradient descent
+
+Implement a feedforward neural network from scratch with backpropagation for training.
+
+**Key Learning Points**:
+- Matrix and vector operations in pure functional style
+- Forward propagation through layers
+- Backpropagation algorithm for computing gradients
+- Activation functions (Sigmoid, ReLU, Tanh)
+- Gradient descent optimization
+- Functional composition for network layers
+
+**What You'll Build**: A trainable neural network that can learn simple patterns like XOR, AND, OR gates.
+
+### 6. **Decision Tree Classifier**
+**Complexity**: Intermediate-Advanced  
+**File**: `DecisionTree.hs`  
+**Focus**: Recursive data structures, information theory, tree algorithms
+
+Build a decision tree classifier using recursion and information gain to split data.
+
+**Key Learning Points**:
+- Recursive tree data structures
+- Entropy and information gain calculations
+- Greedy tree building algorithm (ID3/C4.5)
+- Tree traversal for prediction
+- Handling overfitting with depth limits
+- Classification accuracy metrics
+
+**What You'll Build**: A classifier that recursively partitions data to make predictions on new examples.
+
 ## Learning Path
 
 ### Phase 1: Foundations (Start Here)
@@ -101,6 +135,10 @@ Create a build tool similar to Make that manages dependencies and rebuilds only 
 
 ### Phase 4: System Programming
 4. **Build Tool** - Combine everything to build a complex, practical tool
+
+### Phase 5: Machine Learning (Advanced)
+5. **Neural Network** - Implement backpropagation and gradient descent from scratch
+6. **Decision Tree Classifier** - Build recursive tree-based classifier with information theory
 
 ## Getting Started
 
