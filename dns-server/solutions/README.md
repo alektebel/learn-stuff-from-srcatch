@@ -168,15 +168,13 @@ Received query from 127.0.0.1:54321 (45 bytes)
 Query ID: 0x1234
 Flags: 0x0100 (RD=1)
 Questions: 1
-Question: test.local, Type: A, Class: IN
-Resolved: test.local -> 192.168.1.100
+Question: test.local, Type: 1, Class: 1
 Sent response: 61 bytes
 
 Received query from 127.0.0.1:54322 (47 bytes)
 Query ID: 0x5678
 Flags: 0x0100 (RD=1)
 Questions: 1
-Question: unknown.local, Type: A, Class: IN
-Domain not found: unknown.local
+Question: unknown.local, Type: 1, Class: 1
 Sent NXDOMAIN response: 47 bytes
 ```

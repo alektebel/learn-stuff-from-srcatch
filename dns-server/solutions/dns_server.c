@@ -7,16 +7,18 @@
  * Usage: sudo ./dns_server [port]
  * 
  * Note: Requires root privileges to bind to port 53
+ * Note: This code uses strcasecmp which requires POSIX compatibility
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
+#include <strings.h>  // For strcasecmp (POSIX)
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <errno.h>
 
 #define DEFAULT_PORT 53
 #define BUFFER_SIZE 512
@@ -95,17 +97,31 @@ DNSHeader parse_dns_header(const unsigned char* buffer) {
     DNSHeader header;
     int pos = 0;
 
-    header.id = ntohs(*(unsigned short*)(buffer + pos));
+    // Use memcpy to avoid unaligned access issues
+    unsigned short temp;
+    
+    memcpy(&temp, buffer + pos, 2);
+    header.id = ntohs(temp);
     pos += 2;
-    header.flags = ntohs(*(unsigned short*)(buffer + pos));
+    
+    memcpy(&temp, buffer + pos, 2);
+    header.flags = ntohs(temp);
     pos += 2;
-    header.qdcount = ntohs(*(unsigned short*)(buffer + pos));
+    
+    memcpy(&temp, buffer + pos, 2);
+    header.qdcount = ntohs(temp);
     pos += 2;
-    header.ancount = ntohs(*(unsigned short*)(buffer + pos));
+    
+    memcpy(&temp, buffer + pos, 2);
+    header.ancount = ntohs(temp);
     pos += 2;
-    header.nscount = ntohs(*(unsigned short*)(buffer + pos));
+    
+    memcpy(&temp, buffer + pos, 2);
+    header.nscount = ntohs(temp);
     pos += 2;
-    header.arcount = ntohs(*(unsigned short*)(buffer + pos));
+    
+    memcpy(&temp, buffer + pos, 2);
+    header.arcount = ntohs(temp);
 
     return header;
 }
@@ -169,9 +185,15 @@ int parse_dns_question(const unsigned char* buffer, int pos, DNSQuestion* questi
         return -1;
     }
 
-    question->qtype = ntohs(*(unsigned short*)(buffer + pos));
+    // Use memcpy to avoid unaligned access
+    unsigned short temp;
+    
+    memcpy(&temp, buffer + pos, 2);
+    question->qtype = ntohs(temp);
     pos += 2;
-    question->qclass = ntohs(*(unsigned short*)(buffer + pos));
+    
+    memcpy(&temp, buffer + pos, 2);
+    question->qclass = ntohs(temp);
     pos += 2;
 
     return pos;
@@ -182,20 +204,34 @@ int parse_dns_question(const unsigned char* buffer, int pos, DNSQuestion* questi
  */
 int encode_dns_header(unsigned char* buffer, DNSHeader* header) {
     int pos = 0;
+    unsigned short temp;
+    unsigned int temp_int;
 
-    *(unsigned short*)(buffer + pos) = htons(header->id);
+    temp = htons(header->id);
+    memcpy(buffer + pos, &temp, 2);
     pos += 2;
-    *(unsigned short*)(buffer + pos) = htons(header->flags);
+    
+    temp = htons(header->flags);
+    memcpy(buffer + pos, &temp, 2);
     pos += 2;
-    *(unsigned short*)(buffer + pos) = htons(header->qdcount);
+    
+    temp = htons(header->qdcount);
+    memcpy(buffer + pos, &temp, 2);
     pos += 2;
-    *(unsigned short*)(buffer + pos) = htons(header->ancount);
+    
+    temp = htons(header->ancount);
+    memcpy(buffer + pos, &temp, 2);
     pos += 2;
-    *(unsigned short*)(buffer + pos) = htons(header->nscount);
+    
+    temp = htons(header->nscount);
+    memcpy(buffer + pos, &temp, 2);
     pos += 2;
-    *(unsigned short*)(buffer + pos) = htons(header->arcount);
+    
+    temp = htons(header->arcount);
+    memcpy(buffer + pos, &temp, 2);
     pos += 2;
 
+    (void)temp_int;  // Unused, but kept for future use
     return pos;
 }
 
@@ -233,6 +269,8 @@ int encode_domain_name(unsigned char* buffer, const char* domain) {
  */
 int encode_dns_answer(unsigned char* buffer, DNSResourceRecord* answer) {
     int pos = 0;
+    unsigned short temp;
+    unsigned int temp_int;
 
     // Encode name
     int name_len = encode_domain_name(buffer + pos, answer->name);
@@ -242,19 +280,23 @@ int encode_dns_answer(unsigned char* buffer, DNSResourceRecord* answer) {
     pos += name_len;
 
     // Type
-    *(unsigned short*)(buffer + pos) = htons(answer->type);
+    temp = htons(answer->type);
+    memcpy(buffer + pos, &temp, 2);
     pos += 2;
 
     // Class
-    *(unsigned short*)(buffer + pos) = htons(answer->class);
+    temp = htons(answer->class);
+    memcpy(buffer + pos, &temp, 2);
     pos += 2;
 
     // TTL
-    *(unsigned int*)(buffer + pos) = htonl(answer->ttl);
+    temp_int = htonl(answer->ttl);
+    memcpy(buffer + pos, &temp_int, 4);
     pos += 4;
 
     // RDLENGTH
-    *(unsigned short*)(buffer + pos) = htons(answer->rdlength);
+    temp = htons(answer->rdlength);
+    memcpy(buffer + pos, &temp, 2);
     pos += 2;
 
     // RDATA
@@ -394,7 +436,15 @@ int main(int argc, char* argv[]) {
     int port = DEFAULT_PORT;
 
     if (argc > 1) {
-        port = atoi(argv[1]);
+        char* endptr;
+        errno = 0;
+        long parsed_port = strtol(argv[1], &endptr, 10);
+        
+        if (errno != 0 || *endptr != '\0' || parsed_port < 1 || parsed_port > 65535) {
+            fprintf(stderr, "Invalid port number. Please use a port between 1 and 65535.\n");
+            return 1;
+        }
+        port = (int)parsed_port;
     }
 
     printf("Starting DNS server on port %d...\n", port);
