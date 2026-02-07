@@ -19,7 +19,7 @@ gcc -o http_server http_server.c -Wall -Wextra
 
 Open http://localhost:8080 in your browser - you should see a styled webpage!
 
-**Stop the server**: Press `Ctrl+C`
+**Stop the server**: Press `Ctrl+C` (or send SIGINT signal, or close the terminal)
 
 ---
 
