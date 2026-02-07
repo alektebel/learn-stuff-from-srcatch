@@ -1,0 +1,33 @@
+# World Models - Python Dependencies
+
+# Core deep learning
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+
+# RL environments
+gymnasium>=0.28.0
+gymnasium[box2d]  # For CarRacing
+gymnasium[atari]  # For Atari games
+gymnasium[accept-rom-license]  # Accept Atari ROM license
+
+# DMC (DeepMind Control Suite)
+dm-control>=1.0.0
+dmc2gym
+
+# Training utilities
+tqdm>=4.65.0
+tensorboard>=2.13.0
+
+# Visualization
+matplotlib>=3.7.0
+imageio>=2.31.0
+imageio-ffmpeg>=0.4.8
+opencv-python>=4.8.0
+
+# Evolution strategies (for World Models controller)
+cma>=3.3.0
+
+# Utilities
+pyyaml>=6.0
+wandb  # Optional: for experiment tracking
