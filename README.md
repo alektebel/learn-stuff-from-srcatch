@@ -25,6 +25,11 @@ A collection of from-scratch implementations of various systems and projects for
 - **[mlops/](mlops/)** - MLOps pipelines (experiment tracking, CI/CD, feature stores)
 - **[ml-inference/](ml-inference/)** - High-performance inference (optimization, quantization, edge deployment)
 
+### ML Infrastructure & Serving
+- **[sgl-lang/](sgl-lang/)** - Structured Generation Language (SGL) for LLMs - constrained generation, grammar enforcement, compilation
+- **[tensorrt-inference/](tensorrt-inference/)** - TensorRT-style inference engine - graph optimization, quantization, kernel auto-tuning
+- **[vllm-engine/](vllm-engine/)** - vLLM serving engine - PagedAttention, continuous batching, high-throughput LLM serving
+
 ### Data Engineering & Analytics
 - **[sas-lineage-tool/](sas-lineage-tool/)** - SAS field lineage parser for tracking data transformations and dependencies
 - **[web-scraping/](web-scraping/)** - Industrial web scraping/crawler library (Python/C, CUDA acceleration, CAPTCHA bypass, distributed architecture)
