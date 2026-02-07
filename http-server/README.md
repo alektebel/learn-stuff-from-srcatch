@@ -18,33 +18,53 @@ Building an HTTP server is one of the best ways to understand how the web works 
 
 ```
 http-server/
-├── README.md              # This file - project overview and guide
-├── http_server.c          # Template with TODOs for implementation
-├── Makefile              # Build configuration
-├── public/               # Directory for serving static files
-│   ├── index.html        # Test HTML page
-│   ├── style.css         # Test CSS file
-│   └── script.js         # Test JavaScript file
-└── solutions/            # Complete working implementations
-    ├── README.md         # Solution documentation and explanations
-    └── http_server.c     # Fully implemented HTTP server
+├── README.md                 # This file - project overview and guide
+├── QUICKSTART.md            # ⭐ 5-minute quick start guide
+├── IMPLEMENTATION_GUIDE.md   # 📖 Step-by-step implementation instructions
+├── TESTING_GUIDE.md          # 🧪 Comprehensive testing strategies
+├── EXTENSIONS.md             # 🚀 25+ ideas for advanced features
+├── http_server.c             # Template with TODOs for implementation
+├── Makefile                  # Build configuration
+├── public/                   # Directory for serving static files
+│   ├── index.html           # Test HTML page
+│   ├── style.css            # Test CSS file
+│   ├── script.js            # Test JavaScript file
+│   └── 404.html             # Custom 404 error page
+└── solutions/                # Complete working implementations
+    ├── README.md            # Detailed solution walkthrough
+    └── http_server.c        # Fully implemented HTTP server
 ```
 
 ## Quick Start
 
-1. **Build the template** (won't work yet - it's for you to implement):
-   ```bash
-   make
-   ```
+**New here?** → Read **[QUICKSTART.md](QUICKSTART.md)** for a 5-minute introduction!
 
-2. **Or build the solution** to see a working example:
+1. **See it working first** (recommended):
    ```bash
    cd solutions/
    gcc -o http_server http_server.c
    ./http_server 8080
+   # Open http://localhost:8080 in browser
    ```
 
-3. **Test it** by opening http://localhost:8080 in your browser
+2. **Build it yourself**:
+   ```bash
+   # Read the step-by-step guide
+   cat IMPLEMENTATION_GUIDE.md
+   
+   # Edit the template
+   vim http_server.c
+   
+   # Build and test
+   make
+   ./http_server 8080
+   ```
+
+3. **Test your implementation**:
+   ```bash
+   # See TESTING_GUIDE.md for comprehensive testing
+   curl http://localhost:8080/
+   ```
 
 ## Learning Path
 
@@ -311,15 +331,33 @@ Advanced features:
 - Check the port number
 - Look for error messages in server output
 
+## Documentation Guide
+
+This project includes comprehensive documentation:
+
+- **[QUICKSTART.md](QUICKSTART.md)** - Get started in 5 minutes
+- **[IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md)** - Step-by-step coding instructions with examples
+- **[TESTING_GUIDE.md](TESTING_GUIDE.md)** - How to test each feature thoroughly
+- **[EXTENSIONS.md](EXTENSIONS.md)** - 25+ ideas for extending the server
+- **[solutions/README.md](solutions/README.md)** - Detailed code walkthrough of the solution
+
+**Recommended reading order**:
+1. This README (overview and concepts)
+2. QUICKSTART.md (decide your approach)
+3. IMPLEMENTATION_GUIDE.md (while coding)
+4. TESTING_GUIDE.md (for verification)
+5. solutions/README.md (to understand the complete solution)
+6. EXTENSIONS.md (for next challenges)
+
 ## Next Steps
 
 After completing this project:
 
-1. **Add more features** from the advanced list above
-2. **Optimize performance** with benchmarking tools
-3. **Compare with nginx source** to see production patterns
-4. **Build a web framework** on top of your server
-5. **Try other languages** - implement in Rust, Go, Python for comparison
+1. **Add features** - See [EXTENSIONS.md](EXTENSIONS.md) for 25+ ideas
+2. **Optimize performance** - Benchmark and profile your code
+3. **Study production servers** - Compare with nginx, Apache source code
+4. **Build a framework** - Add routing, middleware, templates
+5. **Try other languages** - Implement in Rust, Go, Python for comparison
 
 ## License
 
