@@ -10,6 +10,7 @@ A collection of from-scratch implementations of various systems and projects for
 - **[cryptographic-library/](cryptographic-library/)** - Cryptographic primitives (SHA-256, ECDSA, etc.) in C
 - **[bash-from-scratch/](bash-from-scratch/)** - Unix shell/terminal implementation
 - **[http-server/](http-server/)** - HTTP server implementation
+- **[dns-server/](dns-server/)** - DNS server implementation with UDP networking and protocol parsing
 
 ### GPU Programming & Parallel Computing
 - **[cuda-from-scratch/](cuda-from-scratch/)** - CUDA parallel programming from basics to neural networks on GPU
