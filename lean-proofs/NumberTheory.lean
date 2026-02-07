@@ -66,8 +66,10 @@ theorem quotient_unique (a : ℤ) (b : ℕ) (hb : 0 < b)
   sorry  -- TODO: From b·q₁ + r₁ = b·q₂ + r₂, show |b·(q₁-q₂)| = |r₂-r₁| < b
 
 -- TODO 2.3: Define modulo operation
+-- This should return the remainder r from the division algorithm
 def mod (a b : ℤ) : ℤ :=
-  -- Returns r from division algorithm
+  -- TODO: Extract r from division algorithm where a = b·q + r with 0 ≤ r < b
+  -- This requires using Classical.choose with division_algorithm axiom
   sorry
 
 -- Notation: a % b
@@ -120,9 +122,9 @@ theorem euclidean_algorithm (a b : ℤ) (hb : b ≠ 0) :
 -- PART 4: PRIME NUMBERS
 -- ============================================================================
 
--- Definition: A prime number is a natural number > 1 with no divisors except 1 and itself
+-- Definition: A prime number is a natural number > 1 with no positive divisors except 1 and itself
 def is_prime (p : ℕ) : Prop :=
-  p > 1 ∧ ∀ d : ℕ, d ∣ p → d = 1 ∨ d = p
+  p > 1 ∧ ∀ d : ℕ, d > 0 → d ∣ p → d = 1 ∨ d = p
 
 -- TODO 4.1: Prove that 2 is prime
 theorem two_is_prime : is_prime 2 :=
@@ -197,7 +199,7 @@ theorem congruent_pow (a b n : ℤ) (k : ℕ)
 
 -- Definition: Euler's totient function φ(n) counts integers from 1 to n coprime to n
 def euler_phi (n : ℕ) : ℕ :=
-  (Finset.range n).filter (fun k => gcd k n = 1) |>.card
+  (Finset.Ico 1 (n + 1)).filter (fun k => gcd k n = 1) |>.card
 
 -- Notation: φ(n)
 notation "φ(" n ")" => euler_phi n

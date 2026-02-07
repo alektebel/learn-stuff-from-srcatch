@@ -130,7 +130,7 @@ noncomputable def operator_norm {V W : Type} [NormedVectorSpace V] [NormedVector
 -- (In finite dimensions, all linear operators are bounded)
 theorem continuous_iff_bounded {V W : Type} [NormedVectorSpace V] [NormedVectorSpace W]
   (T : LinearOperator V W) :
-  (∀ x L, (fun n => T⟨T⟩ n) ⟶ T⟨T⟩ L → (fun n => n) ⟶ L) ↔ is_bounded T :=
+  (∀ (x : ℕ → V) (L : V), x ⟶ L → (fun n => T⟨T⟩ (x n)) ⟶ T⟨T⟩ L) ↔ is_bounded T :=
   sorry  -- TODO: Direction (→): Use proof by contradiction with unbounded sequence
         -- Direction (←): Use ‖T(xₙ) - T(L)‖ = ‖T(xₙ - L)‖ ≤ C‖xₙ - L‖
 
@@ -138,7 +138,13 @@ theorem continuous_iff_bounded {V W : Type} [NormedVectorSpace V] [NormedVectorS
 theorem bounded_comp {V W Z : Type} [NormedVectorSpace V] [NormedVectorSpace W] [NormedVectorSpace Z]
   (T : LinearOperator V W) (S : LinearOperator W Z)
   (hT : is_bounded T) (hS : is_bounded S) :
-  is_bounded (LinearOperator.mk (fun x => S.to_fun (T.to_fun x)) sorry sorry) :=
+  -- Define the composed operator explicitly
+  let comp_op : LinearOperator V Z := {
+    to_fun := fun x => S.to_fun (T.to_fun x)
+    map_add := by sorry  -- Provable from linearity of S and T
+    map_scalar := by sorry  -- Provable from linearity of S and T
+  }
+  is_bounded comp_op :=
   sorry  -- TODO: If ‖T(x)‖ ≤ C₁‖x‖ and ‖S(y)‖ ≤ C₂‖y‖, then ‖S(T(x))‖ ≤ C₂C₁‖x‖
 
 -- TODO 4.3: Prove that the space of bounded linear operators is a vector space
@@ -156,8 +162,8 @@ def is_contraction {V : Type} [NormedVectorSpace V]
 -- TODO 5.1: Prove that contractions are continuous
 theorem contraction_continuous {V : Type} [NormedVectorSpace V]
   (f : V → V) (h : is_contraction f) :
-  ∀ x L, (fun n => f n) ⟶ f L → (fun n => n) ⟶ L :=
-  sorry  -- TODO: Use ‖f(x) - f(y)‖ ≤ k‖x - y‖ with k < 1
+  ∀ (x : ℕ → V) (L : V), x ⟶ L → (fun n => f (x n)) ⟶ f L :=
+  sorry  -- TODO: Use ‖f(xₙ) - f(L)‖ ≤ k‖xₙ - L‖ with k < 1
 
 -- TODO 5.2: State the Banach Fixed Point Theorem
 -- In a complete metric space (Banach space), every contraction has a unique fixed point

@@ -29,8 +29,9 @@ def partial_derivative (f : (Fin n → ℝ) → ℝ) (a : Fin n → ℝ) (i : Fi
   fun L => ∀ ε > 0, ∃ δ > 0, ∀ h, 0 < |h| ∧ |h| < δ →
     |((f (fun j => if j = i then a j + h else a j)) - f a) / h - L| < ε
 
--- Notation: ∂f/∂xᵢ
-notation "∂[" i "]" f => partial_derivative f i
+-- Notation: ∂f/∂xᵢ at point a
+-- Usage: ∂[i] f a L means the partial derivative of f at a in direction i is L
+notation "∂[" i "]" f " " a => fun L => partial_derivative f a i L
 
 -- TODO 1.1: Prove that partial derivatives are unique (if they exist)
 theorem partial_derivative_unique (f : (Fin n → ℝ) → ℝ) (a : Fin n → ℝ) (i : Fin n) (L₁ L₂ : ℝ)
