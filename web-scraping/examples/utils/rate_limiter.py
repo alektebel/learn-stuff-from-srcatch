@@ -28,7 +28,7 @@ class TokenBucketRateLimiter:
         self.capacity = capacity or int(rate)
         self.tokens = float(self.capacity)
         self.last_update = time.monotonic()
-        self._lock = asyncio.Lock() if asyncio else None
+        self._lock = None  # Initialized lazily in async methods
     
     def _add_tokens(self) -> None:
         """Add tokens based on elapsed time."""
@@ -70,6 +70,9 @@ class TokenBucketRateLimiter:
         Returns:
             Time waited in seconds
         """
+        if self._lock is None:
+            self._lock = asyncio.Lock()
+        
         async with self._lock:
             self._add_tokens()
             

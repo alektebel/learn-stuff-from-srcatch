@@ -354,17 +354,18 @@ class AsyncCrawler:
                 break
             
             # Get next task
-            try:
+            if not self.priority_queue:
+                # No more tasks - wait briefly to allow other workers to add tasks
+                await asyncio.sleep(0.5)
+                # If still no tasks after multiple attempts, exit
                 if not self.priority_queue:
-                    # No more tasks
-                    await asyncio.sleep(0.1)
-                    continue
-                
+                    break
+                continue
+            
+            try:
                 task = heapq.heappop(self.priority_queue)
-                
             except IndexError:
-                # Queue empty
-                await asyncio.sleep(0.1)
+                # Race condition - queue became empty
                 continue
             
             # Process task
