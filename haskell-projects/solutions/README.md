@@ -554,3 +554,315 @@ Found a bug or improvement in the solutions?
 
 These educational implementations are provided as learning resources.
 Feel free to use, modify, and share.
+
+### 5. NeuralNetwork.hs
+**Feedforward neural network with backpropagation**
+
+A complete neural network implementation from scratch demonstrating:
+- **Matrix Operations**: Pure functional linear algebra
+- **Forward Propagation**: Data flow through layers
+- **Backpropagation**: Gradient calculation algorithm
+- **Training**: Gradient descent optimization
+- **Multiple Activations**: Sigmoid, ReLU, Tanh
+
+**Complexity**: Advanced  
+**Lines**: ~250  
+**Key Concepts**: Numerical computing, Machine learning algorithms, Functional composition
+
+#### Features:
+- ✅ Multiple activation functions (Sigmoid, Tanh, ReLU, Identity)
+- ✅ Forward propagation through arbitrary network architectures
+- ✅ Backpropagation algorithm for gradient computation
+- ✅ Gradient descent training with configurable learning rate
+- ✅ Mean squared error loss function
+- ✅ Training examples (XOR problem)
+- ✅ Pure functional matrix/vector operations
+
+#### Network Architecture:
+```haskell
+data Layer = Layer 
+  { weights :: Matrix      -- Weight matrix
+  , biases :: Vector       -- Bias vector  
+  , activation :: Activation
+  }
+
+type Network = [Layer]     -- Sequence of layers
+```
+
+#### Usage Examples:
+```haskell
+-- Create a 2-3-1 network (2 inputs, 3 hidden, 1 output)
+let network = createNetwork [(2, 3, Sigmoid), (3, 1, Sigmoid)]
+
+-- Train on XOR data
+let xorData = [([0,0], [0]), ([0,1], [1]), ([1,0], [1]), ([1,1], [0])]
+let (trainedNet, loss) = trainEpoch network xorData 0.1
+
+-- Make prediction
+let output = predict trainedNet [1, 0]  -- Should be close to [1]
+```
+
+### 6. DecisionTree.hs
+**Decision tree classifier with recursive splitting**
+
+A decision tree implementation using information theory:
+- **Recursive Trees**: Natural tree structure with Haskell ADTs
+- **Entropy**: Measure of dataset impurity
+- **Information Gain**: Split quality metric
+- **ID3 Algorithm**: Greedy top-down induction
+- **Overfitting Prevention**: Max depth and minimum samples
+
+**Complexity**: Intermediate-Advanced  
+**Lines**: ~300  
+**Key Concepts**: Recursive algorithms, Information theory, Classification
+
+#### Features:
+- ✅ Binary decision tree construction
+- ✅ Entropy and information gain calculations
+- ✅ Best split selection (greedy algorithm)
+- ✅ Recursive tree building (ID3/C4.5 style)
+- ✅ Tree traversal for prediction
+- ✅ Accuracy metrics
+- ✅ Overfitting prevention (max depth, min samples)
+- ✅ Pretty-printing of tree structure
+- ✅ Multiple test datasets (AND, OR, XOR)
+
+#### Tree Structure:
+```haskell
+data Tree a = Leaf a                          -- Terminal prediction
+            | Node Int Double (Tree a) (Tree a)  -- Decision node
+  deriving (Show, Eq)
+-- Node: feature_index threshold left_tree right_tree
+```
+
+#### Usage Examples:
+```haskell
+-- Create training data
+let data = [([1.0, 2.0], "A"), ([5.0, 6.0], "B"), ([2.0, 3.0], "A")]
+
+-- Build tree (maxDepth=5, minSamples=2)
+let tree = buildTree data 5 0 2
+
+-- Make prediction
+let prediction = predict tree [3.0, 4.0]  -- Returns "A" or "B"
+
+-- Evaluate accuracy
+let predictions = predictDataset tree testFeatures
+let acc = accuracy predictions actualLabels  -- Returns 0.0 to 1.0
+```
+
+#### Example Tree Output:
+```
+Node: feature[0] <= 3.5
+├─ True:
+  Leaf: "A"
+└─ False:
+  Node: feature[1] <= 5.5
+  ├─ True:
+    Leaf: "B"
+  └─ False:
+    Leaf: "B"
+```
+
+## Additional Extensions for New Projects
+
+### Neural Network Extensions
+- [ ] Different optimizers (Momentum, Adam, RMSprop)
+- [ ] Batch normalization
+- [ ] Dropout for regularization
+- [ ] Convolutional layers
+- [ ] Different loss functions (cross-entropy, hinge loss)
+- [ ] Mini-batch gradient descent
+- [ ] Learning rate scheduling
+- [ ] Weight initialization strategies (Xavier, He)
+- [ ] Validation set evaluation
+- [ ] Early stopping
+
+### Decision Tree Extensions
+- [ ] Handle categorical features
+- [ ] Pruning (pre-pruning and post-pruning)
+- [ ] Random Forests (ensemble learning)
+- [ ] Feature importance calculation
+- [ ] Regression trees (predict continuous values)
+- [ ] Multi-way splits (not just binary)
+- [ ] Missing value handling
+- [ ] Gini impurity (alternative to entropy)
+- [ ] Tree visualization (export to graphviz)
+- [ ] Cross-validation
+- [ ] Gradient boosting
+- [ ] Class weights for imbalanced data
+
+## Machine Learning Concepts Demonstrated
+
+### Neural Networks
+- **Forward Propagation**: Linear transformations + activations
+- **Backpropagation**: Chain rule for gradient computation
+- **Gradient Descent**: Iterative optimization
+- **Non-linearity**: Activation functions enable complex patterns
+- **Universal Approximation**: Networks can learn any function
+
+### Decision Trees
+- **Greedy Algorithm**: Locally optimal splits at each node
+- **Recursive Partitioning**: Divide-and-conquer approach
+- **Information Theory**: Entropy measures uncertainty
+- **Overfitting**: Trees can memorize training data
+- **Interpretability**: Easy to understand and visualize
+
+## Testing Machine Learning Projects
+
+### Neural Network Testing
+```haskell
+-- Test XOR (classic non-linear problem)
+let xorData = [([0,0], [0]), ([0,1], [1]), ([1,0], [1]), ([1,1], [0])]
+
+-- Train for multiple epochs
+let trainLoop net 0 = net
+    trainLoop net n = 
+      let (newNet, loss) = trainEpoch net xorData 0.5
+      in putStrLn ("Epoch " ++ show n ++ ": loss = " ++ show loss) `seq` 
+         trainLoop newNet (n-1)
+
+let trained = trainLoop network 1000
+
+-- Test predictions
+mapM_ (\(input, target) -> 
+  let output = predict trained input
+  in print (input, output, target)) xorData
+```
+
+### Decision Tree Testing
+```haskell
+-- Test with AND function
+let andData = [([0,0], False), ([0,1], False), ([1,0], False), ([1,1], True)]
+let tree = buildTree andData 5 0 1
+
+-- Verify perfect accuracy
+let preds = predictDataset tree (map fst andData)
+let acc = accuracy preds (map snd andData)
+print acc  -- Should be 1.0 (100%)
+
+-- Test with XOR (needs depth > 1)
+let xorData = [([0,0], False), ([0,1], True), ([1,0], True), ([1,1], False)]
+let xorTree = buildTree xorData 5 0 1
+```
+
+## Performance Notes
+
+### Neural Network
+- **Time Complexity**: O(L × N × M) per training example
+  - L = number of layers
+  - N = neurons per layer (average)
+  - M = training examples
+- **Space Complexity**: O(L × N²) for weights
+- **Training Speed**: Can be slow without optimizations
+- **Optimization Tips**:
+  - Use strict evaluation (`foldl'` instead of `foldl`)
+  - Consider batch processing
+  - Use optimized BLAS libraries for matrix operations
+  - Implement mini-batch gradient descent
+
+### Decision Tree
+- **Time Complexity**: O(N × M × log M) for building
+  - N = number of features
+  - M = number of examples
+- **Space Complexity**: O(tree depth × M)
+- **Prediction**: O(tree depth) - very fast!
+- **Optimization Tips**:
+  - Limit max depth (prevents overfitting and speeds up)
+  - Use feature sampling (random forests)
+  - Cache entropy calculations
+  - Use approximate splits for large datasets
+
+## Comparison with Libraries
+
+### Neural Networks
+**Our Implementation vs. Popular Libraries:**
+- ✅ **Pros**: Educational, transparent, pure functional
+- ❌ **Cons**: Slow, no GPU support, limited features
+- **Real Libraries**: TensorFlow, PyTorch, MXNet
+  - GPU acceleration
+  - Automatic differentiation
+  - Advanced architectures
+  - Production-ready
+
+### Decision Trees
+**Our Implementation vs. Popular Libraries:**
+- ✅ **Pros**: Simple, understandable, self-contained
+- ❌ **Cons**: Basic features only, no advanced pruning
+- **Real Libraries**: scikit-learn, XGBoost, LightGBM
+  - Advanced pruning techniques
+  - Parallel tree building
+  - Feature importance
+  - Ensemble methods
+  - Production optimizations
+
+## When to Use Each Algorithm
+
+### Neural Networks
+**Best for:**
+- Image recognition
+- Natural language processing
+- Speech recognition
+- Complex non-linear patterns
+- Large datasets
+- When features are not well-understood
+
+**Avoid when:**
+- Small datasets (overfitting risk)
+- Need interpretability
+- Limited computational resources
+- Quick prototyping needed
+
+### Decision Trees
+**Best for:**
+- Tabular data
+- Feature importance analysis
+- Interpretable models
+- Mixed feature types (categorical + numerical)
+- Quick prototyping
+- Non-linear relationships
+
+**Avoid when:**
+- High-dimensional sparse data
+- Need smooth decision boundaries
+- Prone to overfitting without ensembles
+- Unstable (small changes in data → different tree)
+
+## Learning Outcomes
+
+After completing these projects, you'll understand:
+
+### Neural Networks
+- ✅ How neural networks transform inputs to outputs
+- ✅ The mathematics behind backpropagation
+- ✅ Why activation functions are necessary
+- ✅ How gradient descent optimizes weights
+- ✅ Implementing numerical algorithms functionally
+- ✅ Matrix operations in pure functional style
+
+### Decision Trees
+- ✅ How trees partition feature space
+- ✅ Information theory basics (entropy, information gain)
+- ✅ Greedy algorithms and their limitations
+- ✅ Recursive tree construction
+- ✅ Overfitting and how to prevent it
+- ✅ Tree-based classification
+
+## Real-World Applications
+
+### Neural Networks
+- Computer Vision: Object detection, image classification
+- NLP: Machine translation, sentiment analysis
+- Speech: Recognition, synthesis
+- Games: AlphaGo, game playing agents
+- Recommendation Systems: Netflix, YouTube
+- Autonomous Vehicles: Perception systems
+
+### Decision Trees
+- Credit Scoring: Loan approval decisions
+- Medical Diagnosis: Disease prediction
+- Fraud Detection: Transaction classification
+- Customer Segmentation: Marketing analysis
+- Recommendation Systems: Product suggestions
+- Risk Assessment: Insurance pricing
+
