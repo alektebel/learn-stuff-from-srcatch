@@ -18,9 +18,10 @@ LEARNING OBJECTIVES:
 
 namespace PartialDerivatives
 
--- Definition: Partial derivative with respect to i-th coordinate
+-- Definition: Partial derivative with respect to i-th coordinate at point a
 -- ∂f/∂xᵢ at point a is the limit of (f(a + hєᵢ) - f(a)) / h as h → 0
 -- where єᵢ is the i-th standard basis vector
+-- This predicate determines whether L is the value of the partial derivative at point a
 
 -- For simplicity, we'll work with functions ℝⁿ → ℝ
 -- Represent ℝⁿ as (Fin n → ℝ)
