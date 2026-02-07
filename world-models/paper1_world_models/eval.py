@@ -517,7 +517,7 @@ if __name__ == "__main__":
                        help='Path to trained controller checkpoint')
     
     # Environment
-    parser.add_argument('--env_name', type=str, default='CarRacing-v0',
+    parser.add_argument('--env_name', type=str, default='CarRacing-v2',
                        help='Gym environment name')
     
     # Model dimensions

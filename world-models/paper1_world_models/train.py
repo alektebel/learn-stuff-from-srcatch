@@ -121,7 +121,7 @@ def collect_random_episodes(env_name, num_episodes, max_steps=1000):
     Collect episodes using random policy.
     
     Args:
-        env_name: Gym environment name (e.g., 'CarRacing-v0')
+        env_name: Gym environment name (e.g., 'CarRacing-v2')
         num_episodes: Number of episodes to collect
         max_steps: Maximum steps per episode
         
@@ -415,7 +415,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Train World Models')
     
     # Environment
-    parser.add_argument('--env_name', type=str, default='CarRacing-v0',
+    parser.add_argument('--env_name', type=str, default='CarRacing-v2',
                        help='Gym environment name')
     
     # Data collection
