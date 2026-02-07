@@ -24,6 +24,9 @@ A collection of from-scratch implementations of various systems and projects for
 ### Data Engineering & Analytics (Python)
 - **[sas-lineage-tool/](sas-lineage-tool/)** - SAS field lineage parser for tracking data transformations and dependencies
 
+### Quantitative Finance & Trading
+- **[quantitative-trading/](quantitative-trading/)** - Algorithmic trading systems (statistical arbitrage, ML strategies, RL agents, market microstructure)
+
 ## Philosophy
 
 This repository is dedicated to learning by building things from scratch. Each directory contains:

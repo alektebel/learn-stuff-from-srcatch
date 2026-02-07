@@ -1,5 +1,13 @@
 # Solutions
 
+<<<<<<< HEAD
+This directory contains complete implementations of cryptographic algorithms.
+
+## Files
+
+- **sha256.c** - Complete SHA-256 hash function implementation
+
+=======
 This directory contains complete implementations and comprehensive implementation guides for cryptographic algorithms.
 
 ## Files
@@ -47,6 +55,7 @@ These guides provide verbose, detailed implementation instructions without actua
   - Security best practices
   - Common pitfalls and historical failures
 
+>>>>>>> main
 ## Building and Running
 
 ```bash
@@ -117,6 +126,12 @@ Input: "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"
 SHA-256: 248d6a61d20638b8e5c026930c3e6039a33ce45964ff2167f6ecedd419db06c1
 ```
 
+<<<<<<< HEAD
+## Further Reading
+
+- FIPS 180-4 Specification
+- "Applied Cryptography" by Bruce Schneier
+=======
 ## How to Use the Implementation Guides
 
 Each implementation guide is structured to provide:
@@ -201,4 +216,5 @@ Each implementation guide is structured to provide:
 - NIST Cryptographic Algorithm Validation Program (CAVP)
 - SafeCurves (https://safecurves.cr.yp.to/)
 - Cryptopals Crypto Challenges (https://cryptopals.com/)
+>>>>>>> main
 - https://www.di-mgt.com.au/sha_testvectors.html

@@ -17,10 +17,13 @@ __pycache__/
 *$py.class
 *.so
 .Python
-venv/
 env/
+venv/
 ENV/
 *.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
 dist/
 build/
 
@@ -53,3 +56,14 @@ lake-packages/
 # Test outputs
 output.txt
 log.txt
+
+# Quantitative trading specific
+quantitative-trading/data/
+quantitative-trading/cache/
+quantitative-trading/models/
+quantitative-trading/logs/
+quantitative-trading/*.csv
+quantitative-trading/*.parquet
+quantitative-trading/*.h5
+quantitative-trading/*.pkl
+quantitative-trading/*.joblib
