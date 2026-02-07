@@ -1,0 +1,52 @@
+{
+  "customer_summary": {
+    "dataset_name": "customer_summary",
+    "source_datasets": [
+      "customer_data"
+    ],
+    "fields": {
+      "customer_id": {
+        "field_name": "customer_id",
+        "source_fields": [
+          "id"
+        ],
+        "transformation": "direct copy",
+        "dataset": "customer_summary"
+      },
+      "age_years": {
+        "field_name": "age_years",
+        "source_fields": [
+          "age"
+        ],
+        "transformation": "direct copy",
+        "dataset": "customer_summary"
+      },
+      "total_revenue": {
+        "field_name": "total_revenue",
+        "source_fields": [
+          "price",
+          "quantity"
+        ],
+        "transformation": "derived",
+        "dataset": "customer_summary"
+      },
+      "full_name": {
+        "field_name": "full_name",
+        "source_fields": [
+          "last_name",
+          "first_name"
+        ],
+        "transformation": "derived",
+        "dataset": "customer_summary"
+      },
+      "age_group": {
+        "field_name": "age_group",
+        "source_fields": [
+          "age"
+        ],
+        "transformation": "conditional",
+        "dataset": "customer_summary"
+      }
+    }
+  }
+}

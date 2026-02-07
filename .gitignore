@@ -11,6 +11,22 @@ sha256
 quantum
 calculator
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
 # Haskell
 *.hi
 *.o
@@ -40,20 +56,6 @@ lake-packages/
 # Test outputs
 output.txt
 log.txt
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-*.egg-info/
-.pytest_cache/
-.coverage
-htmlcov/
 
 # Quantitative trading specific
 quantitative-trading/data/
