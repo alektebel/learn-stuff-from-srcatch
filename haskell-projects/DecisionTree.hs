@@ -12,9 +12,8 @@
 
 module Main where
 
-import Data.List (group, sort, nub, maximumBy, sortBy)
+import Data.List (group, sort, nub, maximumBy)
 import Data.Ord (comparing)
-import qualified Data.Map as Map
 
 {- |
 TODO 1: Define the decision tree data type

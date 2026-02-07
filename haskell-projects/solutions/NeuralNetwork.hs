@@ -116,9 +116,9 @@ backpropagate network input target (output, layerOutputs) =
       activations = input : map fst (init (reverse layerOutputs))
       
       -- Compute all deltas
-      deltas = reverse $ scanl computeDelta initialDelta (zip3 (tail layers) (tail outputs) (tail layers))
+      deltas = reverse $ scanl computeDelta initialDelta (zip (tail layers) (tail outputs))
         where
-          computeDelta prevDelta (layer, (_, z), _) = 
+          computeDelta prevDelta (layer, (_, z)) = 
             backpropLayer prevDelta (weights layer) z (activation layer)
       
       -- Add initial delta
