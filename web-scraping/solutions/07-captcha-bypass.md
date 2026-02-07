@@ -436,15 +436,14 @@ const response = await fetch(
 );
 
 const result = await response.json();
-/*
-{
-    "success": true,
-    "score": 0.7,  // 0.0 = bot, 1.0 = human
-    "action": "submit",
-    "challenge_ts": "2024-01-01T00:00:00Z",
-    "hostname": "example.com"
-}
-*/
+// Example response:
+// {
+//     "success": true,
+//     "score": 0.7,  // 0.0 = bot, 1.0 = human
+//     "action": "submit",
+//     "challenge_ts": "2024-01-01T00:00:00Z",
+//     "hostname": "example.com"
+// }
 
 // Site decides
 if (result.score < 0.5) {

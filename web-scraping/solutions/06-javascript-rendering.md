@@ -265,8 +265,12 @@ async def scrape_infinite_scroll(url, max_scrolls=10):
         
         # Check if new content loaded
         new_height = await page.evaluate('document.body.scrollHeight')
-        if new_height == prev_height:
-            break  # No more content
+        
+        # Also check if new items appeared
+        new_item_count = await page.evaluate('document.querySelectorAll(".item").length')
+        
+        if new_height == prev_height and new_item_count == len(items):
+            break  # No more content (height unchanged and no new items)
         
         prev_height = new_height
         scroll_count += 1

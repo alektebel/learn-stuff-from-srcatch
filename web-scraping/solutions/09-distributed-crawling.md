@@ -459,13 +459,23 @@ class LoadBalancer:
             
             if queue_sizes[-1][1] > queue_sizes[0][1] * 2:
                 # Imbalanced, move some work
-                num_to_move = (queue_sizes[-1][1] - queue_sizes[0][1]) // 2
+                # Calculate how many to move to balance more evenly
+                avg_size = sum(size for _, size in queue_sizes) / len(queue_sizes)
                 
-                for _ in range(num_to_move):
-                    self.redis.rpoplpush(
-                        f"worker:{most_busy}:queue",
-                        f"worker:{least_busy}:queue"
-                    )
+                # Move from busiest to those below average
+                for worker_id, size in reversed(queue_sizes):
+                    if size > avg_size * 1.2:  # More than 20% above average
+                        num_to_move = int((size - avg_size) / 2)
+                        
+                        # Find least busy worker to move to
+                        for target_id, target_size in queue_sizes:
+                            if target_size < avg_size * 0.8:  # Below average
+                                for _ in range(num_to_move):
+                                    self.redis.rpoplpush(
+                                        f"worker:{worker_id}:queue",
+                                        f"worker:{target_id}:queue"
+                                    )
+                                break
 ```
 
 ## Failure Handling
