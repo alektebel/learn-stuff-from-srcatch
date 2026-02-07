@@ -4,12 +4,15 @@ A collection of from-scratch implementations of various systems and projects for
 
 ## Directory Structure
 
-### Low-Level Systems (C)
+### Low-Level Systems (C/C++)
 - **[c-compiler/](c-compiler/)** - C compiler implementation in C
 - **[quantum-computing-lang/](quantum-computing-lang/)** - Quantum computing language and simulator (like Qiskit) in C
 - **[cryptographic-library/](cryptographic-library/)** - Cryptographic primitives (SHA-256, ECDSA, etc.) in C
 - **[bash-from-scratch/](bash-from-scratch/)** - Unix shell/terminal implementation
 - **[http-server/](http-server/)** - HTTP server implementation
+
+### GPU Programming & Parallel Computing
+- **[cuda-from-scratch/](cuda-from-scratch/)** - CUDA parallel programming from basics to neural networks on GPU
 
 ### Functional Programming & Formal Verification
 - **[haskell-projects/](haskell-projects/)** - Various projects to learn Haskell
