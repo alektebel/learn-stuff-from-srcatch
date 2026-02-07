@@ -24,8 +24,9 @@ A collection of from-scratch implementations of various systems and projects for
 - **[mlops/](mlops/)** - MLOps pipelines (experiment tracking, CI/CD, feature stores)
 - **[ml-inference/](ml-inference/)** - High-performance inference (optimization, quantization, edge deployment)
 
-### Data Engineering & Analytics (Python)
+### Data Engineering & Analytics
 - **[sas-lineage-tool/](sas-lineage-tool/)** - SAS field lineage parser for tracking data transformations and dependencies
+- **[web-scraping/](web-scraping/)** - Industrial web scraping/crawler library (Python/C, CUDA acceleration, CAPTCHA bypass, distributed architecture)
 
 ### Quantitative Finance & Trading
 - **[quantitative-trading/](quantitative-trading/)** - Algorithmic trading systems (statistical arbitrage, ML strategies, RL agents, market microstructure)
