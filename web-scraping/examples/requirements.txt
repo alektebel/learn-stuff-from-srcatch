@@ -1,0 +1,32 @@
+# Web Scraping Examples - Requirements
+# 
+# This file lists all dependencies needed to run the example crawlers.
+# Install with: pip install -r requirements.txt
+
+# Core HTTP and Async Libraries
+requests>=2.31.0          # Synchronous HTTP library for basic_crawler.py
+aiohttp>=3.9.0           # Asynchronous HTTP library for async_crawler.py
+
+# HTML Parsing
+beautifulsoup4>=4.12.0   # HTML parsing and navigation
+lxml>=5.0.0              # Fast XML/HTML parser (optional BeautifulSoup backend)
+
+# URL Parsing (standard library, listed for completeness)
+# urllib - included in Python standard library
+
+# Development and Testing (optional)
+pytest>=7.4.0            # Testing framework
+pytest-asyncio>=0.21.0   # Async testing support
+black>=23.0.0            # Code formatting
+flake8>=6.1.0            # Linting
+mypy>=1.7.0              # Type checking
+
+# Additional useful libraries for web scraping
+# Uncomment as needed:
+
+# playwright>=1.40.0       # Browser automation for JavaScript-heavy sites
+# selenium>=4.15.0         # Alternative browser automation
+# scrapy>=2.11.0           # Full-featured scraping framework
+# httpx>=0.25.0            # Modern async HTTP client (alternative to aiohttp)
+# fake-useragent>=1.4.0    # Rotating user agents
+# python-dotenv>=1.0.0     # Environment variable management
