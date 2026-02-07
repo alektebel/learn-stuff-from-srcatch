@@ -495,7 +495,7 @@ example : ∃ E : Type, ∃ [Field E] [Algebra ℚ E],
 
 -- TODO 8.4: Cyclotomic extension ℚ(ζₙ) is Galois
 -- ζₙ is primitive n-th root of unity, i.e., ζₙⁿ = 1
-def cyclotomic_poly (n : ℕ) : Polynomial ℚ :=
+def cyclotomicPoly (n : ℕ) : Polynomial ℚ :=
   sorry  -- Φₙ(X) = ∏(X - ζ) over primitive n-th roots ζ
 
 example (n : ℕ) (hn : n > 0) : 
