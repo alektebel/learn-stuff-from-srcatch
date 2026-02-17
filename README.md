@@ -25,6 +25,11 @@ A collection of from-scratch implementations of various systems and projects for
 - **[mlops/](mlops/)** - MLOps pipelines (experiment tracking, CI/CD, feature stores)
 - **[ml-inference/](ml-inference/)** - High-performance inference (optimization, quantization, edge deployment)
 
+### Generative AI & Deep Learning
+- **[diffusion-models/](diffusion-models/)** - Diffusion models from scratch (DDPM, DDIM, U-Net, image generation like Stable Diffusion)
+- **[deepfake-creation/](deepfake-creation/)** - Deepfake generation techniques (face swapping, reenactment, First Order Motion Model, Wav2Lip)
+- **[deepfake-detection/](deepfake-detection/)** - Deepfake detection methods (CNN-based, temporal analysis, frequency domain, biological signals)
+
 ### ML Infrastructure & Serving
 - **[sgl-lang/](sgl-lang/)** - Structured Generation Language (SGL) for LLMs - constrained generation, grammar enforcement, compilation
 - **[tensorrt-inference/](tensorrt-inference/)** - TensorRT-style inference engine - graph optimization, quantization, kernel auto-tuning
