@@ -68,3 +68,27 @@ quantitative-trading/*.parquet
 quantitative-trading/*.h5
 quantitative-trading/*.pkl
 quantitative-trading/*.joblib
+
+# Diffusion models
+diffusion-models/data/
+diffusion-models/checkpoints/
+diffusion-models/samples/
+diffusion-models/logs/
+diffusion-models/*.pt
+diffusion-models/*.pth
+
+# Deepfake projects
+deepfake-creation/data/
+deepfake-creation/videos/
+deepfake-creation/checkpoints/
+deepfake-creation/outputs/
+deepfake-creation/*.pt
+deepfake-creation/*.pth
+deepfake-creation/*.dat
+
+deepfake-detection/data/
+deepfake-detection/datasets/
+deepfake-detection/checkpoints/
+deepfake-detection/logs/
+deepfake-detection/*.pt
+deepfake-detection/*.pth
