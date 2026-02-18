@@ -11,6 +11,7 @@ A collection of from-scratch implementations of various systems and projects for
 - **[bash-from-scratch/](bash-from-scratch/)** - Unix shell/terminal implementation
 - **[http-server/](http-server/)** - HTTP server implementation
 - **[dns-server/](dns-server/)** - DNS server implementation with UDP networking and protocol parsing
+- **[firewall-from-scratch/](firewall-from-scratch/)** - Packet filtering firewall with raw sockets, protocol parsing, and rule-based filtering
 
 ### GPU Programming & Parallel Computing
 - **[cuda-from-scratch/](cuda-from-scratch/)** - CUDA parallel programming from basics to neural networks on GPU
