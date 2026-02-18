@@ -636,6 +636,12 @@ query_idx = learner.query(unlabeled_pool)
 - [Sensity AI Resources](https://sensity.ai/resources/)
 - [Detection Papers Collection](https://github.com/aerophile/awesome-deepfakes)
 
+### Video Courses
+
+- [Computer Vision Courses](https://github.com/Developer-Y/cs-video-courses#computer-vision)
+- [Deep Learning Courses](https://github.com/Developer-Y/cs-video-courses#deep-learning)
+- [Machine Learning Courses](https://github.com/Developer-Y/cs-video-courses#machine-learning)
+
 ## Related Projects
 
 - **deepfake-creation/**: Understanding generation techniques

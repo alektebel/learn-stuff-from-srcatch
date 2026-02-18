@@ -94,6 +94,75 @@ make test     # Run tests (if available)
 make clean    # Clean build artifacts
 ```
 
+## Video Courses & Learning Resources
+
+To complement the hands-on projects in this repository, we've curated relevant video courses from universities and online platforms. These courses provide theoretical foundations and different perspectives on the topics covered here.
+
+**Note**: This curated list is based on the excellent [cs-video-courses](https://github.com/Developer-Y/cs-video-courses) repository by Developer-Y, which maintains a comprehensive collection of Computer Science courses with video lectures.
+
+### General Computer Science
+- [CS 50 - Introduction to Computer Science, Harvard University](https://online-learning.harvard.edu/course/cs50-introduction-computer-science)
+- [6.0001 - Introduction to Computer Science and Programming in Python - MIT OCW](https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/video_galleries/lecture-videos/)
+
+### Systems Programming & Operating Systems
+*Relevant for: bash-from-scratch, http-server, dns-server, c-compiler*
+- [15-213 Introduction to Computer Systems - CMU](https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22b96d90ae-9871-4fae-91e2-b1627b43e25e%22&maxResults=150)
+- [CS 162 Operating Systems - UC Berkeley](https://archive.org/details/ucberkeley-webcast-PL-XXv-cvA_iBDyz-ba4yDskqMDY6A1w_c?sort=titleSorter)
+- [6.824 - Distributed Systems - MIT](https://pdos.csail.mit.edu/6.824/schedule.html)
+
+### Compiler Design & Programming Languages
+*Relevant for: c-compiler, quantum-computing-lang*
+- [CS143 - Compilers - Stanford](https://web.stanford.edu/class/cs143/)
+- [Theoretical CS and Programming Languages courses](https://github.com/Developer-Y/cs-video-courses#theoretical-cs-and-programming-languages)
+
+### Cryptography & Security
+*Relevant for: cryptographic-library*
+- [Security Courses - Various Universities](https://github.com/Developer-Y/cs-video-courses#security)
+
+### Parallel Computing & GPU Programming
+*Relevant for: cuda-from-scratch*
+- [Parallel Computing and GPU Programming courses](https://github.com/Developer-Y/cs-video-courses#computer-organization-and-architecture)
+
+### Machine Learning & Deep Learning
+*Relevant for: distributed-training, ml-in-production, mlops, ml-inference, diffusion-models, deepfake-creation, deepfake-detection, world-models*
+- [CS229 - Machine Learning - Stanford](http://cs229.stanford.edu/)
+- [6.S191 - Introduction to Deep Learning - MIT](http://introtodeeplearning.com/)
+- [Deep Learning Specialization - Various Universities](https://github.com/Developer-Y/cs-video-courses#deep-learning)
+- [Computer Vision Courses](https://github.com/Developer-Y/cs-video-courses#computer-vision)
+- [Generative AI and LLMs](https://github.com/Developer-Y/cs-video-courses#generative-ai-and-llms)
+
+### MLOps & Production ML
+*Relevant for: sgl-lang, tensorrt-inference, vllm-engine*
+- [Full Stack Deep Learning](https://fullstackdeeplearning.com/)
+- [Machine Learning Systems Design](https://github.com/Developer-Y/cs-video-courses#machine-learning)
+
+### Functional Programming
+*Relevant for: haskell-projects*
+- [FP 101x - Introduction to Functional Programming - TU Delft](https://ocw.tudelft.nl/courses/introduction-to-functional-programming/)
+- [Functional Programming courses](https://github.com/Developer-Y/cs-video-courses#theoretical-cs-and-programming-languages)
+
+### Formal Verification
+*Relevant for: lean-proofs*
+- [Formal Methods and Verification courses](https://github.com/Developer-Y/cs-video-courses#theoretical-cs-and-programming-languages)
+
+### Quantum Computing
+*Relevant for: quantum-computing-lang*
+- [Quantum Computing Courses](https://github.com/Developer-Y/cs-video-courses#quantum-computing)
+
+### Computational Finance
+*Relevant for: quantitative-trading*
+- [Computational Finance Courses](https://github.com/Developer-Y/cs-video-courses#computational-finance)
+
+### Data Engineering
+*Relevant for: sas-lineage-tool, web-scraping*
+- [Database Systems Courses](https://github.com/Developer-Y/cs-video-courses#database-systems)
+
+### Computer Networks
+*Relevant for: http-server, dns-server*
+- [Computer Networks Courses](https://github.com/Developer-Y/cs-video-courses#computer-networks)
+
+**For a complete list of courses across all CS topics**, visit the [Developer-Y/cs-video-courses](https://github.com/Developer-Y/cs-video-courses) repository.
+
 ## Note
 
 These implementations are for educational purposes. They prioritize clarity and understanding over production-ready features or performance. Use the solutions as reference, but try to implement yourself first for maximum learning!

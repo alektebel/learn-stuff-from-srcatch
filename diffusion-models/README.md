@@ -438,6 +438,21 @@ After completing the basic diffusion model, explore:
 - [Hugging Face Diffusers Library](https://github.com/huggingface/diffusers)
 - [PyTorch Implementation Examples](https://github.com/CompVis/stable-diffusion)
 
+### Video Courses
+
+**Deep Learning Foundations**:
+- [CS231n - Convolutional Neural Networks for Visual Recognition - Stanford](http://cs231n.stanford.edu/)
+- [6.S191 - Introduction to Deep Learning - MIT](http://introtodeeplearning.com/)
+- [Deep Learning Specialization - deeplearning.ai](https://www.deeplearning.ai/courses/deep-learning-specialization/)
+
+**Generative Models & Computer Vision**:
+- [Generative AI and LLMs Courses](https://github.com/Developer-Y/cs-video-courses#generative-ai-and-llms)
+- [Computer Vision Courses](https://github.com/Developer-Y/cs-video-courses#computer-vision)
+- [Deep Learning Courses](https://github.com/Developer-Y/cs-video-courses#deep-learning)
+
+**Advanced Topics**:
+- [Full list of ML/AI video courses](https://github.com/Developer-Y/cs-video-courses#machine-learning)
+
 ## Performance Tips
 
 ### Training

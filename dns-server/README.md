@@ -129,3 +129,13 @@ After building a basic DNS server, consider:
 - Adding DNSSEC validation
 - Creating a DNS proxy/forwarder
 - Implementing DoH (DNS over HTTPS) or DoT (DNS over TLS)
+
+## Video Courses & Resources
+
+**Computer Networks**:
+- [Computer Networks Courses](https://github.com/Developer-Y/cs-video-courses#computer-networks)
+- [Systems Programming Courses](https://github.com/Developer-Y/cs-video-courses#systems-programming)
+
+**Additional Resources**:
+- [DNS RFC 1035](https://tools.ietf.org/html/rfc1035)
+- [DNSSEC Overview](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/)

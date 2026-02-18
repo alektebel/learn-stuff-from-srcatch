@@ -389,6 +389,11 @@ Input (784) → FC(128) → ReLU → FC(64) → ReLU → FC(10) → Softmax
 - [Udacity: Intro to Parallel Programming](https://www.udacity.com/course/intro-to-parallel-programming--cs344)
 - [Coursera: GPU Programming](https://www.coursera.org/specializations/gpu-programming)
 
+**Video Courses**:
+- [Computer Organization and Architecture](https://github.com/Developer-Y/cs-video-courses#computer-organization-and-architecture)
+- [Systems Programming](https://github.com/Developer-Y/cs-video-courses#systems-programming)
+- [Deep Learning](https://github.com/Developer-Y/cs-video-courses#deep-learning)
+
 ## Testing
 
 ### Test Suite

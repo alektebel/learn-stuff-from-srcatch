@@ -539,6 +539,11 @@ Your implementation should achieve:
 - NVIDIA Deep Learning Institute courses
 - Coursera: GPU Programming
 
+### Video Courses
+- [Deep Learning Courses](https://github.com/Developer-Y/cs-video-courses#deep-learning)
+- [Computer Organization and Architecture](https://github.com/Developer-Y/cs-video-courses#computer-organization-and-architecture)
+- [Systems Programming](https://github.com/Developer-Y/cs-video-courses#systems-programming)
+
 ## Common Pitfalls
 
 1. **Incorrect tensor layout**: Use NCHW for GPU, not NHWC

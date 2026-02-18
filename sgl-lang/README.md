@@ -447,6 +447,12 @@ Your implementation should achieve:
 - [Context-Free Grammars](https://en.wikipedia.org/wiki/Context-free_grammar)
 - [LLM Inference Optimization](https://lilianweng.github.io/posts/2023-01-10-inference-optimization/)
 
+### Video Courses
+- [Generative AI and LLMs](https://github.com/Developer-Y/cs-video-courses#generative-ai-and-llms)
+- [Natural Language Processing](https://github.com/Developer-Y/cs-video-courses#natural-language-processing)
+- [Theoretical CS and Programming Languages](https://github.com/Developer-Y/cs-video-courses#theoretical-cs-and-programming-languages)
+- [Deep Learning](https://github.com/Developer-Y/cs-video-courses#deep-learning)
+
 ## Common Pitfalls
 
 1. **Inefficient constraint checking**: Check constraints token-by-token, not after generation

@@ -280,4 +280,14 @@ Once you've completed these projects, consider:
 - Solutions are available in `solutions/` folder for reference
 - Don't hesitate to consult external resources when stuck
 - The best way to learn is by **implementing yourself first**
+
+## Video Courses & Resources
+
+**Functional Programming**:
+- [FP 101x - Introduction to Functional Programming - TU Delft](https://ocw.tudelft.nl/courses/introduction-to-functional-programming/)
+- [Functional Programming & Theoretical CS Courses](https://github.com/Developer-Y/cs-video-courses#theoretical-cs-and-programming-languages)
+
+**Additional Resources**:
+- [Learn You a Haskell for Great Good](http://learnyouahaskell.com/)
+- [Real World Haskell](http://book.realworldhaskell.org/)
 >>>>>>> main

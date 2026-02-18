@@ -447,6 +447,12 @@ consistency_score = evaluate_flow_consistency(flow)
 - [Wav2Lip Official Implementation](https://github.com/Rudrabha/Wav2Lip)
 - [Deep Learning for Deepfakes Survey](https://arxiv.org/abs/2004.11138)
 
+### Video Courses
+
+- [Computer Vision Courses](https://github.com/Developer-Y/cs-video-courses#computer-vision)
+- [Deep Learning Courses](https://github.com/Developer-Y/cs-video-courses#deep-learning)
+- [Generative AI and LLMs](https://github.com/Developer-Y/cs-video-courses#generative-ai-and-llms)
+
 ## Related Projects
 
 - **deepfake-detection/**: Detection and forensic analysis

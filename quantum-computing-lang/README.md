@@ -17,3 +17,16 @@ Build a quantum computing simulator to understand:
 4. Implement measurement operations
 5. Build quantum algorithms
 6. Add visualization and debugging tools
+
+## Video Courses & Resources
+
+**Quantum Computing Courses**:
+- [Quantum Computing Courses - Various Universities](https://github.com/Developer-Y/cs-video-courses#quantum-computing)
+
+**Linear Algebra & Math Foundations**:
+- [Math for Computer Scientists](https://github.com/Developer-Y/cs-video-courses#math-for-computer-scientist)
+
+**Additional Resources**:
+- [Qiskit Documentation](https://qiskit.org/)
+- [IBM Quantum Learning](https://learning.quantum.ibm.com/)
+
