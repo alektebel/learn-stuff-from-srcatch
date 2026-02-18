@@ -684,6 +684,12 @@ Your implementation should achieve:
 ### Books & Courses
 - "Designing Data-Intensive Applications" by Martin Kleppmann
 - "High Performance Python" by Micha Gorelick
+
+### Video Courses
+- [Deep Learning Courses](https://github.com/Developer-Y/cs-video-courses#deep-learning)
+- [Generative AI and LLMs](https://github.com/Developer-Y/cs-video-courses#generative-ai-and-llms)
+- [Natural Language Processing](https://github.com/Developer-Y/cs-video-courses#natural-language-processing)
+- [Systems Programming](https://github.com/Developer-Y/cs-video-courses#systems-programming)
 - GPU programming courses
 - Distributed systems courses
 

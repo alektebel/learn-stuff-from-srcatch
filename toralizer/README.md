@@ -354,6 +354,11 @@ After completing the basic toralizer, explore:
 - [Beej's Guide to Network Programming](https://beej.us/guide/bgnet/)
 - [Linux Socket Programming](https://man7.org/linux/man-pages/man7/socket.7.html)
 
+### Video Courses
+- [Computer Networks Courses](https://github.com/Developer-Y/cs-video-courses#computer-networks)
+- [Security Courses](https://github.com/Developer-Y/cs-video-courses#security)
+- [Systems Programming](https://github.com/Developer-Y/cs-video-courses#systems-programming)
+
 ## Security Notes
 
 ⚠️ **Important**: This is an educational project. For real anonymity needs, use:

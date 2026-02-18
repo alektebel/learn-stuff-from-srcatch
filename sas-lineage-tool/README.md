@@ -309,3 +309,12 @@ After completing this project:
 ## Note
 
 This implementation is educational and demonstrates core lineage concepts. Production lineage tools require handling the full SAS language specification, which is extensive. This project focuses on the most common and important patterns.
+
+## Video Courses & Resources
+
+**Database Systems & Data Engineering**:
+- [Database Systems Courses](https://github.com/Developer-Y/cs-video-courses#database-systems)
+- [Software Engineering Courses](https://github.com/Developer-Y/cs-video-courses#software-engineering)
+
+**Compilers & Parsing**:
+- [Theoretical CS and Programming Languages](https://github.com/Developer-Y/cs-video-courses#theoretical-cs-and-programming-languages)

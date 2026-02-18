@@ -420,3 +420,14 @@ lean-proofs/
 Good luck on your journey through mathematics! 🎓✨
 
 Whether your goal is the Fundamental Theorem of Galois Theory, mastering real analysis, understanding functional analysis, or exploring the beauty of number theory, this collection provides a comprehensive foundation in formal mathematics.
+
+## 📹 Video Courses & Resources
+
+**Theoretical CS & Mathematics**:
+- [Theoretical CS and Programming Languages](https://github.com/Developer-Y/cs-video-courses#theoretical-cs-and-programming-languages)
+- [Math for Computer Scientists](https://github.com/Developer-Y/cs-video-courses#math-for-computer-scientist)
+
+**Additional Resources**:
+- [Lean 4 Documentation](https://lean-lang.org/lean4/doc/)
+- [Mathematics in Lean](https://leanprover-community.github.io/mathematics_in_lean/)
+- [Theorem Proving in Lean 4](https://leanprover.github.io/theorem_proving_in_lean4/)

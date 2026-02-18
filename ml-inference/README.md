@@ -192,11 +192,17 @@ Key metrics you'll optimize:
 
 ## Resources
 
+**Optimization & Performance**:
 - [ONNX Runtime Performance Tuning](https://onnxruntime.ai/docs/performance/)
 - [TensorRT Developer Guide](https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/)
 - [Quantization Papers and Techniques](https://arxiv.org/abs/2004.09602)
 - [NVIDIA Triton Inference Server](https://github.com/triton-inference-server)
 - [Model Optimization Toolkit](https://github.com/tensorflow/model-optimization)
+
+**Video Courses**:
+- [Machine Learning Courses](https://github.com/Developer-Y/cs-video-courses#machine-learning)
+- [Deep Learning Courses](https://github.com/Developer-Y/cs-video-courses#deep-learning)
+- [Computer Organization and Architecture](https://github.com/Developer-Y/cs-video-courses#computer-organization-and-architecture)
 
 ## Common Pitfalls
 

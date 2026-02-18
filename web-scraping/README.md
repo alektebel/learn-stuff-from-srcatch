@@ -308,6 +308,11 @@ Target performance for production crawler:
 - CUDA Programming Guide (docs.nvidia.com/cuda)
 - HTTP/2 RFC 7540
 
+### Video Courses
+- [Computer Networks Courses](https://github.com/Developer-Y/cs-video-courses#computer-networks)
+- [Web Programming and Internet Technologies](https://github.com/Developer-Y/cs-video-courses#web-programming-and-internet-technologies)
+- [Database Systems](https://github.com/Developer-Y/cs-video-courses#database-systems)
+
 ## Security Warning ⚠️
 
 This is for **educational purposes only**. Unauthorized scraping can:
