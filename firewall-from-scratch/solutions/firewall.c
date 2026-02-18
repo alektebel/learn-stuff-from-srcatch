@@ -124,6 +124,7 @@ int create_raw_socket(const char* interface) {
         
         // Copy interface name (safely with size limit)
         strncpy(ifr.ifr_name, interface, IFNAMSIZ - 1);
+        ifr.ifr_name[IFNAMSIZ - 1] = '\0';  // Ensure null termination
         
         // Bind socket to the specified interface
         if (setsockopt(sock, SOL_SOCKET, SO_BINDTODEVICE, &ifr, sizeof(ifr)) < 0) {
@@ -568,10 +569,13 @@ int apply_rules(unsigned char* buffer, int size) {
     source.sin_addr.s_addr = iph->saddr;
     dest.sin_addr.s_addr = iph->daddr;
     
-    strncpy(src_ip, inet_ntoa(source.sin_addr), MAX_IP_STR - 1);
+    // Use inet_ntop or store first result before second call to avoid buffer reuse
+    char* temp_src = inet_ntoa(source.sin_addr);
+    strncpy(src_ip, temp_src, MAX_IP_STR - 1);
     src_ip[MAX_IP_STR - 1] = '\0';
     
-    strncpy(dst_ip, inet_ntoa(dest.sin_addr), MAX_IP_STR - 1);
+    char* temp_dst = inet_ntoa(dest.sin_addr);
+    strncpy(dst_ip, temp_dst, MAX_IP_STR - 1);
     dst_ip[MAX_IP_STR - 1] = '\0';
     
     // Extract protocol
