@@ -128,10 +128,17 @@ python test_phase2.py  # Test your Phase 2 implementation
 
 ## Resources
 
+**Documentation & Guides**:
 - [PyTorch Distributed Overview](https://pytorch.org/tutorials/beginner/dist_overview.html)
 - [Ring-AllReduce Paper](https://arxiv.org/abs/1509.01916)
 - [ZeRO: Memory Optimizations](https://arxiv.org/abs/1910.02054)
 - [Megatron-LM](https://github.com/NVIDIA/Megatron-LM)
+
+**Video Courses**:
+- [CS 677 - Distributed Operating Systems - UMass](https://www.youtube.com/playlist?list=PLacuG5pysFbBpWHfKUU9Dfdk8RmQ7B9EH)
+- [6.824 - Distributed Systems - MIT](https://pdos.csail.mit.edu/6.824/schedule.html)
+- [Distributed Systems Courses](https://github.com/Developer-Y/cs-video-courses#distributed-systems)
+- [Machine Learning Courses](https://github.com/Developer-Y/cs-video-courses#machine-learning)
 
 ## Note
 

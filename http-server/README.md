@@ -362,3 +362,14 @@ After completing this project:
 ## License
 
 Educational project for learning purposes.
+
+## Video Courses & Resources
+
+**Systems Programming & Networks**:
+- [15-213 Introduction to Computer Systems - CMU](https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22b96d90ae-9871-4fae-91e2-b1627b43e25e%22&maxResults=150)
+- [Computer Networks Courses](https://github.com/Developer-Y/cs-video-courses#computer-networks)
+- [Systems Programming Courses](https://github.com/Developer-Y/cs-video-courses#systems-programming)
+
+**Additional Resources**:
+- [HTTP/1.1 RFC 2616](https://tools.ietf.org/html/rfc2616)
+- [Beej's Guide to Network Programming](https://beej.us/guide/bgnet/)

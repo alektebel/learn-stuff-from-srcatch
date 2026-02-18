@@ -738,6 +738,12 @@ Expected performance after proper training:
 - [World Models](https://github.com/ctallec/world-models)
 - [CleanRL Implementations](https://github.com/vwxyzjn/cleanrl)
 
+### Video Courses
+
+- [Reinforcement Learning Courses](https://github.com/Developer-Y/cs-video-courses#reinforcement-learning)
+- [Deep Learning Courses](https://github.com/Developer-Y/cs-video-courses#deep-learning)
+- [Machine Learning Courses](https://github.com/Developer-Y/cs-video-courses#machine-learning)
+
 ## Tips for Success
 
 ### Learning Strategy

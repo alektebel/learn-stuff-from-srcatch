@@ -248,4 +248,13 @@ Legend:
 - ✅ Available
 - ⚠️ Partial
 - ❌ Not yet implemented
+
+## Video Courses & Resources
+
+**Cryptography & Security**:
+- [Security Courses - Various Universities](https://github.com/Developer-Y/cs-video-courses#security)
+- [Applied Cryptography](https://www.coursera.org/learn/crypto)
+
+**Mathematics Foundations**:
+- [Math for Computer Scientists](https://github.com/Developer-Y/cs-video-courses#math-for-computer-scientist)
 >>>>>>> main

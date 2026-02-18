@@ -238,6 +238,12 @@ python template_rl_agent.py --episodes 1000 --env TradingEnv-v0
 
 ### Frameworks
 - [Backtrader](https://www.backtrader.com/)
+
+### Video Courses
+- [Computational Finance Courses](https://github.com/Developer-Y/cs-video-courses#computational-finance)
+- [Machine Learning Courses](https://github.com/Developer-Y/cs-video-courses#machine-learning)
+- [Reinforcement Learning Courses](https://github.com/Developer-Y/cs-video-courses#reinforcement-learning)
+- [Time Series Analysis Courses](https://github.com/Developer-Y/cs-video-courses#time-series-analysis)
 - [Zipline](https://zipline.ml4trading.io/)
 - [QuantConnect](https://www.quantconnect.com/)
 - [VectorBT](https://vectorbt.dev/)

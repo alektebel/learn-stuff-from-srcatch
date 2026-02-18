@@ -140,10 +140,17 @@ docker-compose up
 
 ## Resources
 
+**Documentation & Guides**:
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
 - [Model Serving Patterns](https://www.oreilly.com/library/view/building-machine-learning/9781492053187/)
 - [Prometheus Monitoring](https://prometheus.io/docs/introduction/overview/)
 - [ONNX Runtime](https://onnxruntime.ai/)
+
+**Video Courses**:
+- [Full Stack Deep Learning](https://fullstackdeeplearning.com/)
+- [Machine Learning Engineering for Production (MLOps) - deeplearning.ai](https://www.deeplearning.ai/courses/machine-learning-engineering-for-production-mlops/)
+- [Machine Learning Systems Design](https://github.com/Developer-Y/cs-video-courses#machine-learning)
+- [Deep Learning Courses](https://github.com/Developer-Y/cs-video-courses#deep-learning)
 
 ## Note
 

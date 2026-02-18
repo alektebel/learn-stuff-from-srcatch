@@ -302,6 +302,11 @@ echo $?  # Should print 15
 - [x86-64 ABI Documentation](https://github.com/hjl-tools/x86-psABI/wiki/x86-64-psABI-1.0.pdf)
 - [GNU Assembler Manual](https://sourceware.org/binutils/docs/as/)
 
+**Video Courses**:
+- [CS143 - Compilers - Stanford](https://web.stanford.edu/class/cs143/)
+- [CS 6120 - Advanced Compilers - Cornell](https://www.cs.cornell.edu/courses/cs6120/2020fa/)
+- [More compiler and programming language courses](https://github.com/Developer-Y/cs-video-courses#theoretical-cs-and-programming-languages)
+
 ## Testing
 
 ### Test Suite

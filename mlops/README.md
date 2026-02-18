@@ -158,11 +158,18 @@ kubectl apply -f deployment/
 
 ## Resources
 
+**Documentation & Tools**:
 - [MLOps Principles](https://ml-ops.org/)
 - [Google MLOps Whitepaper](https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)
 - [MLflow Documentation](https://mlflow.org/docs/latest/index.html)
 - [Kubeflow](https://www.kubeflow.org/)
 - [Feast Feature Store](https://feast.dev/)
+
+**Video Courses**:
+- [Machine Learning Engineering for Production (MLOps) - deeplearning.ai](https://www.deeplearning.ai/courses/machine-learning-engineering-for-production-mlops/)
+- [Full Stack Deep Learning](https://fullstackdeeplearning.com/)
+- [Machine Learning Courses](https://github.com/Developer-Y/cs-video-courses#machine-learning)
+- [Software Engineering Courses](https://github.com/Developer-Y/cs-video-courses#software-engineering)
 
 ## Key Concepts
 
