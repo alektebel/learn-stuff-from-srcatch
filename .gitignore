@@ -7,6 +7,7 @@
 shell
 http_server
 dns_server
+firewall
 lexer
 sha256
 quantum
