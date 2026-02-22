@@ -36,6 +36,9 @@ A collection of from-scratch implementations of various systems and projects for
 - **[tensorrt-inference/](tensorrt-inference/)** - TensorRT-style inference engine - graph optimization, quantization, kernel auto-tuning
 - **[vllm-engine/](vllm-engine/)** - vLLM serving engine - PagedAttention, continuous batching, high-throughput LLM serving
 
+### System Design & Distributed Systems
+- **[system-design/](system-design/)** - Core distributed systems patterns: caching (LRU, cache-aside, stampede), async queues (retries, backoff, DLQ, idempotency), reliability (circuit breaker, bulkhead, backpressure), consistent hashing, leaderboards, URL shortener, rate limiter, and capacity math
+
 ### Data Engineering & Analytics
 - **[sas-lineage-tool/](sas-lineage-tool/)** - SAS field lineage parser for tracking data transformations and dependencies
 - **[web-scraping/](web-scraping/)** - Industrial web scraping/crawler library (Python/C, CUDA acceleration, CAPTCHA bypass, distributed architecture)
@@ -153,6 +156,14 @@ To complement the hands-on projects in this repository, we've curated relevant v
 ### Computational Finance
 *Relevant for: quantitative-trading*
 - [Computational Finance Courses](https://github.com/Developer-Y/cs-video-courses#computational-finance)
+
+### System Design & Distributed Systems
+*Relevant for: system-design*
+- [CS 75 - Building Dynamic Websites - Harvard](https://cs75.tv/2012/summer/)
+- [6.824 - Distributed Systems - MIT](https://pdos.csail.mit.edu/6.824/schedule.html)
+- [CMU 15-445 Database Systems](https://15445.courses.cs.cmu.edu/fall2022/)
+- [Database Systems Courses](https://github.com/Developer-Y/cs-video-courses#database-systems)
+- [Distributed Systems Courses](https://github.com/Developer-Y/cs-video-courses#distributed-systems)
 
 ### Data Engineering
 *Relevant for: sas-lineage-tool, web-scraping*
