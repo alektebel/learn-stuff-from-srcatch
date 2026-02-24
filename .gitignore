@@ -12,6 +12,7 @@ lexer
 sha256
 quantum
 calculator
+cuda-from-scratch/cuda-compiler/cuda_compiler
 
 # Python
 __pycache__/
