@@ -24,12 +24,20 @@ Advanced topics: reinforcement learning for trading and market microstructure.
 - Market making strategy
 - Transaction cost analysis
 - Adverse selection modeling
+- Avellaneda-Stoikov for binary-settlement assets
+- GLFT inventory bounds and one-sided quoting
+- Glosten-Milgrom adverse-selection spread model
+- VPIN kill switch for toxic-flow detection
 
 **Key Concepts**:
 - Order book imbalance predicts short-term moves
 - Spread = liquidity cost
 - Market making earns spread but takes inventory risk
 - Transaction costs include spread, impact, opportunity cost
+- Binary contracts require a bounded-variance formulation
+- GLFT bounds prevent unbounded inventory accumulation
+- Adverse selection (informed flow) widens the fair spread
+- VPIN measures real-time order-flow imbalance; high VPIN → halt quoting
 
 ### 3. Production System (5-6 hours)
 - Real-time data pipeline (WebSocket)
@@ -60,6 +68,8 @@ Advanced topics: reinforcement learning for trading and market microstructure.
 - Analyze order book data
 - Implement market making
 - Model transaction costs
+- Implement AS binary, GLFT, Glosten-Milgrom, and VPIN models
+  (see `template_advanced_market_making.py`)
 
 **Week 4: Production**
 - Build real-time pipeline

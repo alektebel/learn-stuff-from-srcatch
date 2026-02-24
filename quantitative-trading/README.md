@@ -121,6 +121,7 @@ quantitative-trading/
 ├── phase4_rl_microstructure/
 │   ├── template_rl_agent.py
 │   ├── template_microstructure.py
+│   ├── template_advanced_market_making.py
 │   ├── template_production_system.py
 │   └── guidelines.md
 └── solutions/
@@ -142,6 +143,7 @@ quantitative-trading/
     ├── phase4_rl_microstructure/
     │   ├── rl_agent.py
     │   ├── microstructure.py
+    │   ├── advanced_market_making.py
     │   ├── production_system/
     │   │   ├── real_time_pipeline.py
     │   │   ├── monitoring.py
