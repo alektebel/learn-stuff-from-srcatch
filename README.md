@@ -12,6 +12,7 @@ A collection of from-scratch implementations of various systems and projects for
 - **[http-server/](http-server/)** - HTTP server implementation
 - **[dns-server/](dns-server/)** - DNS server implementation with UDP networking and protocol parsing
 - **[firewall-from-scratch/](firewall-from-scratch/)** - Packet filtering firewall with raw sockets, protocol parsing, and rule-based filtering
+- **[communication-protocols/](communication-protocols/)** - Serial & parallel communication protocol implementations: UART/USART, SPI, I2C, CAN bus, RS-232/RS-485 (with Linux spidev/i2c-dev/SocketCAN hardware support)
 
 ### GPU Programming & Parallel Computing
 - **[cuda-from-scratch/](cuda-from-scratch/)** - CUDA parallel programming from basics to neural networks on GPU
@@ -170,7 +171,7 @@ To complement the hands-on projects in this repository, we've curated relevant v
 - [Database Systems Courses](https://github.com/Developer-Y/cs-video-courses#database-systems)
 
 ### Computer Networks
-*Relevant for: http-server, dns-server*
+*Relevant for: http-server, dns-server, communication-protocols*
 - [Computer Networks Courses](https://github.com/Developer-Y/cs-video-courses#computer-networks)
 
 **For a complete list of courses across all CS topics**, visit the [Developer-Y/cs-video-courses](https://github.com/Developer-Y/cs-video-courses) repository.
