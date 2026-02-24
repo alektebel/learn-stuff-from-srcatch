@@ -9,6 +9,7 @@ Build a deep understanding of GPU parallel programming and CUDA by implementing:
 - **Memory management**: Host-device transfers, shared memory optimization
 - **Parallel patterns**: Reduction, scan, convolution
 - **Neural networks**: Complete implementation from scratch on GPU
+- **CUDA compiler**: Tiny compiler that translates CUDA kernels to PTX assembly
 
 ## Project Structure
 
@@ -25,6 +26,15 @@ cuda-from-scratch/
 ├── 06_neural_network_forward.cu      # NN forward propagation
 ├── 07_neural_network_backward.cu     # NN backpropagation
 ├── 08_complete_neural_network.cu     # Full NN training from scratch
+├── cuda-compiler/                     # Tiny CUDA → PTX compiler (from scratch)
+│   ├── README.md
+│   ├── Makefile
+│   ├── lexer.h / lexer.c              # CUDA tokenizer
+│   ├── ast.h                          # Abstract Syntax Tree definitions
+│   ├── parser.c                       # Recursive-descent parser
+│   ├── codegen.c                      # PTX code generator
+│   ├── main.c                         # Compiler entry point
+│   └── tests/                         # Test CUDA kernel inputs
 ├── tests/                             # Test programs and datasets
 │   ├── test_vector_addition.cu
 │   ├── test_matrix_multiplication.cu
@@ -546,6 +556,13 @@ ncu --metrics dram__throughput.avg.pct_of_peak ./program
 ## Advanced Topics
 
 After completing the basic examples, explore:
+
+### CUDA Compiler Internals
+- **[cuda-compiler/](cuda-compiler/)** – Tiny CUDA→PTX compiler built from scratch
+  - Lexer: tokenises CUDA-specific syntax (`__global__`, `threadIdx`, etc.)
+  - Parser: recursive-descent parser producing an AST
+  - PTX code generator: walks the AST and emits valid PTX assembly
+  - Build: `cd cuda-compiler && make && ./cuda_compiler tests/vector_add.cu`
 
 ### Advanced Optimizations
 - Streams and concurrent execution
