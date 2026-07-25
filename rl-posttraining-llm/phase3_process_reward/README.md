@@ -33,8 +33,15 @@ is still visibly wrong).
    hand-features of `(prefix, step)` is enough to feel the mechanism. Features:
    does the step introduce a gold table? a spurious table? a needed filter?
 4. **Shape the GRPO reward.** `reward = w_exec·exec + w_prm·mean(prm_step_scores)`.
-   Show it distinguishes the `q5` candidates that execution reward could not,
-   because the *reasoning* toward the wrong metric is visibly wrong.
+   Verify it is genuinely denser: on `q1`, the three candidates that execution
+   reward flattens to `0.0` now get distinct, nonzero scores.
+5. **Find the limit.** Check whether the shaped reward fixes `q5`. It does
+   **not** — and understanding why is the point of the phase. MC labels come
+   from the executor, so wherever execution accuracy is blind, the labels are
+   blind too: `q5` candidates 0 and 1 both execute correctly and receive
+   *identical* labels of `1.0`. No label difference, no gradient. Outcome-grounded
+   supervision cannot escape an outcome-level blind spot — which is exactly the
+   argument for Phase 4's structural, execution-free reward.
 
 ## `template_prm.py`
 
@@ -49,7 +56,24 @@ the base model's hidden states (or a separate small model) as the PRM, then add
 its score to the TRL reward. Compare PRM-shaped GRPO vs outcome-only GRPO on
 multi-join queries.
 
+---
+
+## Files in this phase
+
+| File | Use it for |
+|------|-----------|
+| `guidelines.md` | the full spec: concepts, implementation steps, and the 15 numbered requirements the tests enforce |
+| `template_prm.py` | the file you implement |
+| `test_phase3.py` | `python test_phase3.py` — checks your work (15 requirements; unimplemented shows as TODO, not failure) |
+| `HINTS.md` | progressive hints (Level 1 nudge → Level 3 code) and a debugging table |
+
+Read `guidelines.md` before you start writing code.
+
 ## Done when
 
-You have an auto-labeled PRM (no manual step labels) and PRM-shaped GRPO beats
-outcome-only GRPO on the `q5`-style ambiguous cases.
+You have an auto-labeled PRM (no manual step labels), PRM-shaped GRPO gives
+denser signal than outcome-only GRPO on execution-failing candidates, and you
+can explain in one sentence why it still cannot fix `q5`.
+
+Full requirements and acceptance criteria: `guidelines.md`. Run
+`python test_phase3.py` to check yourself.

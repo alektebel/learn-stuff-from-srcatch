@@ -68,6 +68,19 @@ call, you execute and append the observation, repeat to a turn budget, grade the
 final query. Train with `trl` GRPO over trajectories (reward on the last step).
 This is essentially a compact MARSQL.
 
+---
+
+## Files in this phase
+
+| File | Use it for |
+|------|-----------|
+| `guidelines.md` | the full spec: concepts, implementation steps, and the 14 numbered requirements the tests enforce |
+| `template_agent_loop.py` | the file you implement |
+| `test_phase5.py` | `python test_phase5.py` — checks your work (14 requirements; unimplemented shows as TODO, not failure) |
+| `HINTS.md` | progressive hints (Level 1 nudge → Level 3 code) and a debugging table |
+
+Read `guidelines.md` before you start writing code.
+
 ## Done when
 
 The agent discovers the schema it needs (not the whole schema) and grounds

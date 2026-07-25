@@ -55,6 +55,19 @@ score with weighted graph similarity. Optionally train a small GNN/matcher on
 the *only* reward — no executor in the loop — and compare final execution
 accuracy (measured only at eval time) against Phase 2.
 
+---
+
+## Files in this phase
+
+| File | Use it for |
+|------|-----------|
+| `guidelines.md` | the full spec: concepts, implementation steps, and the 14 numbered requirements the tests enforce |
+| `template_graph_reward.py` | the file you implement |
+| `test_phase4.py` | `python test_phase4.py` — checks your work (14 requirements; unimplemented shows as TODO, not failure) |
+| `HINTS.md` | progressive hints (Level 1 nudge → Level 3 code) and a debugging table |
+
+Read `guidelines.md` before you start writing code.
+
 ## Done when
 
 Your reward ranks the correct `q5` query first without executing anything, and

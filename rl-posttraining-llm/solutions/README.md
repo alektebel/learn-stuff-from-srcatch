@@ -14,8 +14,15 @@ python phase1_execution_reward/grpo_sql.py
 python phase2_phased_rewards/partial_rewards.py
 ```
 
-Phases 3–7 are intentionally left as specs + templates (that's where the real
-learning is). Each phase README gives a precise, gradeable "done when".
+Phases 3–7 intentionally ship **no solution** — that's where the real learning
+is. They're not left vague, though: each has a `guidelines.md` with a numbered
+requirements table, a `test_phaseN.py` that enforces every requirement, and a
+`HINTS.md` with three escalating hint levels per function. The tests *are* the
+solution, expressed as behaviour instead of code.
+
+If you want a reference for those phases, the honest answer is: make the tests
+pass, then re-read `guidelines.md` and check you can explain *why* each
+requirement exists.
 
 **Use these as reference, not a shortcut** — implement the templates yourself
 first, then diff.

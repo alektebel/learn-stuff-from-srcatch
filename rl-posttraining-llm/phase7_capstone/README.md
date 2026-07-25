@@ -58,6 +58,19 @@ Once the CPU version works, move the real-model track to a standard benchmark:
 
 (Confirm each arXiv ID before citing — see the note in the top-level README.)
 
+---
+
+## Files in this phase
+
+| File | Use it for |
+|------|-----------|
+| `guidelines.md` | the full spec: concepts, implementation steps, and the 10 numbered requirements the tests enforce |
+| `template_ablation.py` | the file you implement |
+| `test_phase7.py` | `python test_phase7.py` — checks your work (10 requirements; unimplemented shows as TODO, not failure) |
+| `HINTS.md` | progressive hints (Level 1 nudge → Level 3 code) and a debugging table |
+
+Read `guidelines.md` before you start writing code.
+
 ## Done when
 
 You can hand someone the ablation table and defend, from your own runs, which of

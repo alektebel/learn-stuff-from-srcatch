@@ -80,12 +80,14 @@ honest caveats so you spend your time well:
 ```
 rl-posttraining-llm/
 ├── README.md                     # this file
+├── run_all_tests.sh              # every phase's tests = your progress dashboard
 ├── requirements.txt              # only needed for the "real model" (TRL) templates
 ├── common/                       # zero-dependency, RUNNABLE core
 │   ├── tiny_sql_env.py           #   SQLite text-to-SQL "gym"
 │   ├── rewards.py                #   composable reward library (the papers, as code)
 │   ├── grpo.py                   #   GRPO math + tabular policy, from scratch
 │   ├── candidates.py             #   candidate-completion pools for CPU exercises
+│   ├── test_harness.py           #   tiny stdlib test runner (PASS/FAIL/TODO)
 │   └── test_common.py            #   smoke tests (pure stdlib)
 ├── phase0_foundations/           # policy gradient, baselines, GRPO
 ├── phase1_execution_reward/      # sparse reward baseline
@@ -94,35 +96,68 @@ rl-posttraining-llm/
 ├── phase4_execution_free/        # Graph-Reward-SQL
 ├── phase5_multiturn_schema/      # TRUST-SQL / MARSQL agent loop
 ├── phase6_agentic_analysis/      # generalist data-analytic agents
-├── phase7_capstone/              # put it together
+├── phase7_capstone/              # integrate everything + ablation table
 └── solutions/                    # RUNNABLE reference implementations (phases 0-2)
-    ├── phase0_foundations/reinforce_vs_grpo.py
-    ├── phase1_execution_reward/grpo_sql.py
-    └── phase2_phased_rewards/partial_rewards.py
 ```
 
-Each phase directory has a `README.md` (concepts + goals + exercises) and a
-`template_*.py` with TODOs. Phases 0–2 additionally have fully-runnable
-solutions; phases 3–7 give you a scaffold and a precise spec to implement
-(these are where the real learning happens).
+**Every phase directory contains the same four files**, so the workflow never
+changes:
+
+| File | What it's for |
+|------|---------------|
+| `README.md` | concepts, goals, exercises — read first |
+| `guidelines.md` | the detailed spec: key concepts, implementation steps, and the numbered **requirements table** the tests enforce |
+| `template_*.py` | the file you implement, with TODOs |
+| `test_phaseN.py` | run it to check yourself — **this is the spec in executable form** |
+| `HINTS.md` | progressive hints: Level 1 nudge → Level 2 structure → Level 3 code, plus a debugging table |
+
+Phases 0–2 also ship runnable solutions. Phases 3–7 deliberately don't — the
+guidelines and tests pin down the requirements precisely enough that you don't
+need one, and building them yourself is the point.
+
+### The tests are designed to be run from minute one
+
+Unimplemented functions report as **TODO**, not as failures, so the suite works
+as a progress dashboard rather than a wall of red:
+
+```
+[TODO] advantages are zero-mean
+       -> not implemented yet
+[PASS] probs() returns a valid distribution
+[FAIL] GRPO has lower signal variance
+       -> expected GRPO signal^2 (0.79) < REINFORCE (0.79)
+```
+
+`run_all_tests.sh` exits non-zero only when something is genuinely broken
+(FAIL/ERROR) — never for TODOs.
+
+**A few tests assert that your agent *fails*.** Phase 1 checks that `q5` stays
+near chance; Phase 3 checks that the process reward inherits the executor's
+blind spot. Those failures are the lessons the later phases exist to fix, so
+"passing" means reproducing them faithfully.
 
 ---
 
 ## Quick start (no installs)
 
 ```bash
-cd rl-posttraining-llm/common
+cd rl-posttraining-llm
+./run_all_tests.sh             # see all 104 checks and what's left to do
+
+cd common
 python test_common.py          # prove the core works
 python grpo.py                 # watch GRPO learn on a toy task
 python rewards.py              # see the reward breakdown on good vs bad SQL
-
-cd ../solutions/phase0_foundations && python reinforce_vs_grpo.py
-cd ../phase1_execution_reward   && python grpo_sql.py      # sparse reward
-cd ../phase2_phased_rewards     && python partial_rewards.py  # phased + curriculum
 ```
 
-Then open `phase0_foundations/README.md` and start working the templates in
-order.
+Then, for each phase in order: read `README.md`, read `guidelines.md`, implement
+`template_*.py`, run `test_phaseN.py` until it's green, and reach for `HINTS.md`
+only when stuck.
+
+```bash
+cd phase0_foundations
+python test_phase0.py          # 12 TODOs — your checklist
+```
 
 ## Two tracks
 

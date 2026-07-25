@@ -54,6 +54,19 @@ This is where you want a real model and `trl`. Build the analysis tool loop
 plus final-answer verification, and run the EvoDS self-improvement loop for a
 few rounds. Track: held-out task accuracy vs number of self-generated rounds.
 
+---
+
+## Files in this phase
+
+| File | Use it for |
+|------|-----------|
+| `guidelines.md` | the full spec: concepts, implementation steps, and the 16 numbered requirements the tests enforce |
+| `template_data_agent.py` | the file you implement |
+| `test_phase6.py` | `python test_phase6.py` — checks your work (16 requirements; unimplemented shows as TODO, not failure) |
+| `HINTS.md` | progressive hints (Level 1 nudge → Level 3 code) and a debugging table |
+
+Read `guidelines.md` before you start writing code.
+
 ## Done when
 
 You have an agent that answers a multi-step analytic question correctly, a

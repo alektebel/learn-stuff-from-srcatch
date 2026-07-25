@@ -70,6 +70,19 @@ trainer = GRPOTrainer(model=..., reward_funcs=[make_reward_func(env, lookup, W)]
 For the curriculum, pass a fresh `weights` dict each epoch via a callback, or
 register one reward function per component and schedule their coefficients.
 
+---
+
+## Files in this phase
+
+| File | Use it for |
+|------|-----------|
+| `guidelines.md` | the full spec: concepts, implementation steps, and the 13 numbered requirements the tests enforce |
+| `template_partial_rewards.py` | the file you implement |
+| `test_phase2.py` | `python test_phase2.py` — checks your work (13 requirements; unimplemented shows as TODO, not failure) |
+| `HINTS.md` | progressive hints (Level 1 nudge → Level 3 code) and a debugging table |
+
+Read `guidelines.md` before you start writing code.
+
 ## Done when
 
 Phased rewards learn from step 0, the curriculum still maximizes execution

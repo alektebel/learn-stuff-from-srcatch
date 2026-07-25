@@ -41,6 +41,19 @@ Expected: both reach high `P(correct)`, but GRPO's `mean signal^2` (a proxy for
 gradient variance) is markedly lower. That variance reduction is the entire
 reason GRPO trains stably on real LLMs.
 
+---
+
+## Files in this phase
+
+| File | Use it for |
+|------|-----------|
+| `guidelines.md` | the full spec: concepts, implementation steps, and the 12 numbered requirements the tests enforce |
+| `template_reinforce.py` | the file you implement |
+| `test_phase0.py` | `python test_phase0.py` — checks your work (12 requirements; unimplemented shows as TODO, not failure) |
+| `HINTS.md` | progressive hints (Level 1 nudge → Level 3 code) and a debugging table |
+
+Read `guidelines.md` before you start writing code.
+
 ## Done when
 
 You can explain, without notes: why subtracting the group mean is unbiased, why

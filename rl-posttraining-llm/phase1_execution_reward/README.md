@@ -45,6 +45,19 @@ Spider's train split; evaluate execution accuracy on dev. Expect it to learn
 easy single-table queries and stall on multi-join ones — the same starvation,
 at scale.
 
+---
+
+## Files in this phase
+
+| File | Use it for |
+|------|-----------|
+| `guidelines.md` | the full spec: concepts, implementation steps, and the 10 numbered requirements the tests enforce |
+| `template_grpo_sql.py` | the file you implement |
+| `test_phase1.py` | `python test_phase1.py` — checks your work (10 requirements; unimplemented shows as TODO, not failure) |
+| `HINTS.md` | progressive hints (Level 1 nudge → Level 3 code) and a debugging table |
+
+Read `guidelines.md` before you start writing code.
+
 ## Done when
 
 You can state precisely why sparse execution reward starves early training, and
