@@ -9,7 +9,7 @@ Build it to understand:
 - Token-exact matching, with no block quantisation
 - Why "only leaves are evictable" makes protecting shared prefixes automatic
 - Node splitting, and where reference counts have to go when you split
-- Why an over-capacity cache is sometimes the correct state
+- Why a cache that refuses to evict is sometimes behaving correctly
 
 Learning Path:
 1. Implement match_prefix — walk edges, allow a partial match inside one
@@ -129,8 +129,8 @@ class RadixCache:
     # -- Step 3 -------------------------------------------------------------
 
     def _evict_if_needed(self) -> None:
-        """TODO: while size > capacity, evict the LRU leaf. Stop if none is
-        evictable — being over capacity is better than corrupting a live
+        """TODO: while size > capacity, evict the LRU leaf. Stop when no leaf
+        is evictable — leaving data uncached is better than corrupting a live
         request."""
         raise NotImplementedError
 
@@ -193,9 +193,11 @@ def _demo() -> None:
        eviction cannot reach at all.
 
     5. Pinning: pin a 50-token request in a 60-token cache, then insert five
-       more sequences. The pinned tokens must survive, and the cache should end
-       up OVER capacity. That is correct behaviour — the fix for that pressure
-       is admission control, not eviction.
+       more sequences. All 50 pinned tokens must survive, and every eviction
+       must have fallen on a NEWCOMER instead. The cache has effectively
+       stopped caching new work — which is the signal to admit fewer requests,
+       not to evict harder. Then unpin and confirm the data becomes evictable
+       again.
     """
     raise NotImplementedError
 

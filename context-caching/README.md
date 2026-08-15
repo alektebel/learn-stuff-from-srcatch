@@ -45,6 +45,51 @@ arithmetic.
 
 ---
 
+## How to use this directory
+
+The files at the top level are **templates**: every function has a docstring
+explaining what to build and why, then `raise NotImplementedError`. You fill
+them in. `solutions/` holds complete working versions for when you are stuck or
+want to compare afterwards.
+
+```bash
+cd context-caching
+python3 check.py            # what to build next
+# ... implement the functions the checker points at ...
+python3 check.py            # re-run; it stops at the first thing not yet done
+```
+
+`check.py` runs 16 graded checks against **your** code (it never imports
+`solutions/`). Each one names the file, the concept, and — when something is
+wrong — what usually causes it:
+
+```
+  ✓  1. kv_cache.py          linear algebra helpers
+  ✓  2. kv_cache.py          KVCache append/truncate/clone
+  ·  3. kv_cache.py          cached == uncached attention
+      not implemented yet — kv_cache.py:169 in forward_full()
+
+  2/16 passing, 1 to write
+
+  Next: step 3 — cached == uncached attention (kv_cache.py)
+```
+
+Useful invocations:
+
+| Command | Does |
+|---|---|
+| `python3 check.py` | Run in order, stop at the first unimplemented step |
+| `python3 check.py 5` | Run only step 5, while you iterate on it |
+| `python3 check.py 5 8` | Run steps 5 through 8 |
+| `python3 check.py --all` | Run everything, skipping nothing |
+| `python3 <file>.py` | Run that file's own demo once it is implemented |
+
+A check that has not been written yet shows as a grey `·` (a TODO, not a
+failure). A red `✗` means your implementation is wrong, and the message says
+how. Work top to bottom — later files import earlier ones.
+
+---
+
 ## Learning Path
 
 Each file runs standalone with `python3 <file>.py` and prints a measured experiment.
@@ -188,6 +233,7 @@ almost nothing — optimise decode instead.
 ```
 context-caching/
 ├── README.md
+├── check.py              # progress checker — run this first
 ├── kv_cache.py           # templates with TODOs
 ├── tiny_transformer.py
 ├── prefix_cache.py

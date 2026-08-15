@@ -312,10 +312,13 @@ def _demo() -> None:
     matched, _, _ = cache.match_prefix(running)
     print(f"after 5 competing inserts, the pinned request still has "
           f"{matched}/50 tokens")
-    print(f"cache is over capacity at {cache.size}/{cache.capacity} tokens —")
-    print("correctly so: evicting KV that a live request is decoding against")
-    print("would corrupt its output. Admission control, not eviction, is the")
-    print("right answer to this pressure.")
+    print(f"cache holds {cache.size}/{cache.capacity} tokens, "
+          f"{cache.stats['tokens_evicted']} evicted")
+    print("Every one of those evictions was a NEWCOMER, not the pinned request.")
+    print("Evicting KV a live request is decoding against would corrupt its")
+    print("output, so the cache refuses — and effectively stops caching new")
+    print("work instead. That pressure is a signal to admit fewer requests, not")
+    print("to evict harder.")
 
     cache.unpin(node)
     cache.insert(list(range(7000, 7020)), _kv(range(7000, 7020)))

@@ -36,6 +36,51 @@ partitioning and hinted handoff, and `dynamo_cluster.py` assembles the lot.
 
 ---
 
+## How to use this directory
+
+The files at the top level are **templates**: every function has a docstring
+explaining what to build and why, then `raise NotImplementedError`. You fill
+them in. `solutions/` holds complete working versions for when you are stuck or
+want to compare afterwards.
+
+```bash
+cd dynamo-paper
+python3 check.py            # what to build next
+# ... implement the functions the checker points at ...
+python3 check.py            # re-run; it stops at the first thing not yet done
+```
+
+`check.py` runs 17 graded checks against **your** code (it never imports
+`solutions/`). Each one names the file, the concept, and — when something is
+wrong — what usually causes it:
+
+```
+  ✓  1. partitioning.py      ring: add/remove/coordinator
+  ✓  2. partitioning.py      preference lists (N distinct nodes)
+  ·  3. partitioning.py      load balance and key migration
+      not implemented yet — partitioning.py:140 in load_distribution()
+
+  2/17 passing, 1 to write
+
+  Next: step 3 — load balance and key migration (partitioning.py)
+```
+
+Useful invocations:
+
+| Command | Does |
+|---|---|
+| `python3 check.py` | Run in order, stop at the first unimplemented step |
+| `python3 check.py 5` | Run only step 5, while you iterate on it |
+| `python3 check.py 5 8` | Run steps 5 through 8 |
+| `python3 check.py --all` | Run everything, skipping nothing |
+| `python3 <file>.py` | Run that file's own demo once it is implemented |
+
+A check that has not been written yet shows as a grey `·` (a TODO, not a
+failure). A red `✗` means your implementation is wrong, and the message says
+how. Work top to bottom — later files import earlier ones.
+
+---
+
 ## Learning Path
 
 Work through the files in order. Each one runs on its own with `python3 <file>.py` and
@@ -190,6 +235,7 @@ Deliberate omissions, so you know what you have *not* built:
 ```
 dynamo-paper/
 ├── README.md
+├── check.py              # progress checker — run this first
 ├── partitioning.py       # templates with TODOs
 ├── vector_clock.py
 ├── quorum.py
