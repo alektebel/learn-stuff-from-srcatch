@@ -266,3 +266,5 @@ No dependencies beyond the Python 3 standard library.
 - [`ml-inference/`](../ml-inference/) — quantisation and inference optimisation generally
 - [`dynamo-paper/`](../dynamo-paper/) — the same "make the expensive thing cheap"
   instinct, applied to distributed storage
+- [`contextcite/`](../contextcite/) — a different "context" problem despite the name:
+  explaining which parts of a context caused a response, rather than caching it
