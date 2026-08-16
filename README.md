@@ -2,6 +2,10 @@
 
 A collection of from-scratch implementations of various systems and projects for learning purposes.
 
+**New here? Read [PHILOSOPHY.md](PHILOSOPHY.md)** — what this repo is for, and the three
+principles every directory follows: design choices named as problem-solving decisions,
+MVP-then-complicate driven by limit cases, and verification you can run.
+
 ## Directory Structure
 
 ### Low-Level Systems (C/C++)
@@ -16,6 +20,7 @@ A collection of from-scratch implementations of various systems and projects for
 
 ### GPU Programming & Parallel Computing
 - **[cuda-from-scratch/](cuda-from-scratch/)** - CUDA parallel programming from basics to neural networks on GPU
+- **[compiler-and-vgpu/](compiler-and-vgpu/)** - A compiler and a virtual GPU sharing one instruction set: 32-bit ISA, two-pass assembler, scalar CPU, recursive-descent front end, code generation with linear-scan register allocation and spilling, and a SIMT warp with divergence, mask stacks and barrier deadlock detection (12 graded checks via `python3 check.py`)
 
 ### Functional Programming & Formal Verification
 - **[haskell-projects/](haskell-projects/)** - Various projects to learn Haskell
