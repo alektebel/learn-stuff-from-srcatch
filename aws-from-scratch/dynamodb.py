@@ -122,7 +122,15 @@ class Table:
     def get_item(self, partition_value: Any, sort_value: Any = None,
                  consistent: bool = False,
                  now: Optional[float] = None) -> Optional[Item]:
-        """A strongly consistent read costs twice as much."""
+        """A strongly consistent read costs twice as much.
+
+        Count this call in BOTH stats["reads"] and stats["scanned_items"].
+        scanned_items means "items touched", which is the billable quantity —
+        a GetItem touches exactly one, so it belongs in the same counter as the
+        items a Query or a Scan walks past. Keep them in separate counters and
+        every cost model built on these stats has to guess which calls were
+        which.
+        """
         raise NotImplementedError
 
     def query(self, partition_value: Any,

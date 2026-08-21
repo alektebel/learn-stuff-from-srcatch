@@ -6,6 +6,7 @@ standard library; everything runs in about a second.
 ```bash
 python3 iam.py  s3.py  sqs.py  dynamodb.py  lambda_svc.py  sns.py  kms.py  vpc.py
 python3 capstone.py
+python3 pricing.py  billing.py  optimize.py
 ```
 
 ## What each file demonstrates
@@ -129,6 +130,75 @@ Lambda errored; DynamoDB caused it. The failed messages were never deleted, so t
 leases expired and they came back — nothing was lost, because the queue sits between the
 topic and the function.
 
+### `pricing.py`
+The two rounding rules, side by side, and what they do to a schema decision:
+
+```
+pro-rata:   1 S3 PUT costs 0.00000500  (not rounded up to a whole 1,000)
+quantised:  a 1.1 KB DynamoDB write costs 2 WCU, not 1.1
+            a 0.2 KB write also costs 1 WCU  <- 80% of it is waste
+```
+
+Then `Bill.scaled()`, which is the one that has to be right:
+
+```
+   traffic        total        fixed   fixed %
+    0.001x       $36.06       $35.85     99.4%
+        1x      $242.52       $35.85     14.8%
+      100x   $20,702.53       $35.85      0.2%
+```
+
+Fixed lines — a NAT gateway hour, a KMS key month, provisioned capacity, an idle poller —
+do not scale with traffic. A `scaled()` that multiplies everything hides exactly the
+effect it was built to show.
+
+### `billing.py`
+The versioning trap, measured rather than asserted:
+
+```
+after 200 puts:     live=20.0 MB  noncurrent=0.0 MB
+after 200 deletes:  live=0.0 MB   noncurrent=20.0 MB
+LIST now returns 0 keys. The console is empty.
+Billable bytes went from 20.0 MB to 20.0 MB — it did not move.
+```
+
+And the S3 minimum billable object size, which inverts the advice it is usually given
+with — the *same* 8 MB, in two object sizes, per GB-month:
+
+```
+class              2000 x 4 KB   $/GB-mo      8 x 1 MB   $/GB-mo
+standard             $0.000175    0.0209     $0.000180    0.0214
+standard_ia          $0.003052    0.3638     $0.000098    0.0116
+```
+
+Standard-IA is half Standard's sticker price and 17x Standard's actual price here.
+
+`bill_sqs` puts empty receives on their own `idle-poll-requests` line, marked fixed. That
+is not tidiness: idle polling scales with wall-clock time and the number of pollers, so a
+queue that goes **quiet** gets more expensive per message — backwards from every other
+line on a bill, and invisible if you fold it into the request count.
+
+### `optimize.py`
+Every section is a crossover derived from the price sheet, not a rule recalled:
+
+```
+crossover (writes): 14.44% utilisation
+crossover (reads):  14.44% utilisation
+```
+
+Identical, because AWS priced both modes with the same ratio — one number to remember.
+
+The Lambda memory sweep is the same formula three times with opposite answers:
+
+```
+CPU-bound     128 MB -> 10 GB:  1.00x cost, 80x faster   <- more memory is free speed
+I/O-bound     128 MB -> 10 GB: 41.94x cost, 1.7x faster  <- every MB is waste
+```
+
+And the ranked bill for the capstone pipeline at a million uploads a month, where the
+route-table entry beats every code change and `BatchWriteItem` saves exactly nothing —
+one API call, still one write unit per item.
+
 ## Implementation notes
 
 - **`iam.evaluate` returns on the first matching Deny** and collects Allows otherwise.
@@ -146,3 +216,15 @@ topic and the function.
   requires supplying it exactly.
 - **`test_connection` evaluates the reply on the ephemeral port**, which is what makes the
   stateless NACL fail where a stateful SG succeeds.
+- **`get_item` increments `scanned_items` as well as `reads`.** `scanned_items` means
+  "items touched", which is the billable quantity; a GetItem touches exactly one. Keep
+  them in separate counters and every cost model built on these stats has to guess which
+  calls were which.
+- **`billable_units` subtracts an epsilon before the ceiling.** Without it an exact 4.0 KB
+  read bills as 2 RCU whenever the float lands at 4.0000000000000009.
+- **`rank_savings` keys by `service/dimension`, never by dimension alone.** Lambda, SQS
+  and KMS all have a line called `requests`; summing them because they share a word makes
+  a cost model agree with itself and disagree with the invoice.
+- **`money()` prints six decimals below a cent.** A serverless line item is routinely
+  $0.0000004, and rounding a hundred of those to $0.00 is how a cost dashboard reports
+  that a workload is free.

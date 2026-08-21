@@ -179,7 +179,14 @@ class Table:
             self.stats["throttles"] += 1
             raise
         self.stats["reads"] += 1
+        # scanned_items means "items touched", which is the BILLABLE quantity.
+        # A GetItem touches exactly one, so it belongs in the same counter as
+        # the items a Query or a Scan walks past — otherwise a cost model has
+        # to guess which calls were which.
+        self.stats["scanned_items"] += 1
         item = partition.items.get((partition_value, sort_value))
+        if item is not None:
+            self.stats["returned_items"] += 1
         return dict(item) if item else None
 
     def query(self, partition_value: Any,

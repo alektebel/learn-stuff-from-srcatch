@@ -69,6 +69,7 @@ The same ladder runs through every directory:
 | `contextcite` | leave-one-out attribution | two sources state the same fact |
 | `deploy-and-debug` | alert on the error rate | a 30-second blip pages you at 3am |
 | `compiler-and-vgpu` | all lanes execute in lockstep | a branch makes them disagree |
+| `aws-from-scratch` | one policy, one bucket, one queue | the failures compose, and then arrive on the bill |
 
 ### 3. Verification you can run, that explains itself
 

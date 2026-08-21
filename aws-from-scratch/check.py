@@ -725,6 +725,433 @@ def check_capstone() -> None:
     assert denied, "the audit trail must record denied calls, not only allowed ones"
 
 
+# ---------------------------------------------------------------------------
+# Pricing
+# ---------------------------------------------------------------------------
+
+def check_pricing_arithmetic() -> None:
+    from pricing import billable_units, per_unit, price, prorate, tiered_cost
+
+    assert abs(per_unit(0.20, 1e6) - 2e-7) < 1e-15, \
+        "$0.20 per million is $0.0000002 each"
+    assert abs(per_unit(0.005, 1000) - 5e-6) < 1e-15
+    try:
+        per_unit(0.20, 0)
+        raise AssertionError("a zero denominator must raise, not divide")
+    except (ValueError, ZeroDivisionError):
+        pass
+
+    assert billable_units(1.1, 1.0) == 2, "a 1.1 KB write costs 2 WCU"
+    assert billable_units(0.2, 1.0) == 1, "a 200-byte write still costs 1 WCU"
+    assert billable_units(5.0, 4.0) == 2, "a 5 KB consistent read costs 2 RCU"
+    assert billable_units(4.0, 4.0) == 1, (
+        "an EXACT 4 KB read is 1 RCU, not 2. If you got 2, ceil() is seeing "
+        "4.0000000000000009 — subtract a small epsilon before the ceiling.")
+    assert billable_units(0.0, 1.0) == 1, "the minimum is one unit, not zero"
+
+    tiers = [(100.0, 0.09), (float("inf"), 0.05)]
+    assert abs(tiered_cost(50.0, tiers) - 4.5) < 1e-9
+    assert abs(tiered_cost(150.0, tiers) - (100 * 0.09 + 50 * 0.05)) < 1e-9, (
+        "graduated tiers price the PORTION in each tier. 150 units is "
+        "100 at the first rate plus 50 at the second — not 150 at either.")
+    assert tiered_cost(0.0, tiers) == 0.0
+
+    egress = price("network", "internet_out_tiers")
+    assert tiered_cost(300_000.0, egress) > 300_000.0 * egress[-1][1], (
+        "at 300 TB the graduated answer must exceed the top-rate answer — "
+        "the first 10 TB are charged at 0.09, not 0.05")
+
+    assert abs(prorate(730.0, 365.0) - 365.0) < 1e-9, \
+        "half a month of a monthly charge is half the charge"
+
+
+def check_bill() -> None:
+    from pricing import Bill, FreeTier, money
+
+    assert money(0) == "$0"
+    small = money(4e-7)
+    assert small not in ("$0.00", "$0"), (
+        f"money(0.0000004) printed {small!r}. Rounding sub-cent line items to "
+        "$0.00 and then summing a hundred of them is how a cost model reports "
+        "zero for a workload that costs real money.")
+    assert money(1234.5) == "$1,234.50"
+
+    bill = Bill("t", 730.0)
+    bill.add("lambda", "requests", 20e6, "request", 2e-7)
+    bill.add("network", "nat-gateway-hours", 730.0, "hour", 0.045)
+    bill.add("s3", "puts", 1e6, "request", 5e-6)
+    assert abs(bill.total - (4.0 + 32.85 + 5.0)) < 1e-9
+    assert bill.dominant().dimension == "nat-gateway-hours"
+    assert list(bill.by_service()) == ["network", "s3", "lambda"], (
+        "by_service must be sorted most expensive first — the ordering IS the "
+        "product")
+    assert abs(bill.share(bill.dominant()) - 32.85 / 41.85) < 1e-9
+    assert [i.dimension for i in bill.by_dimension()][0] == "nat-gateway-hours"
+
+    ten = bill.scaled(10.0)
+    fixed = [i for i in ten.items if i.dimension == "nat-gateway-hours"][0]
+    variable = [i for i in ten.items if i.dimension == "requests"][0]
+    assert abs(fixed.cost - 32.85) < 1e-9, (
+        "a NAT gateway hour does not scale with traffic. If scaled() multiplied "
+        "it, the fixed-versus-variable crossover — the reason cost advice flips "
+        "with volume — becomes invisible.")
+    assert abs(variable.cost - 40.0) < 1e-9, "variable lines DO scale"
+    assert abs(bill.total - 41.85) < 1e-9, "scaled() must not mutate the original"
+
+    tiered = Bill("g")
+    tiered.add_tiered("network", "internet-out-gb", 150.0, "GB",
+                      [(100.0, 0.09), (float("inf"), 0.05)])
+    assert abs(tiered.total - 11.5) < 1e-9
+    assert abs(tiered.items[0].unit_price - 11.5 / 150.0) < 1e-9, \
+        "a tiered line should record its EFFECTIVE unit price"
+
+    free = Bill("f")
+    free.add("lambda", "requests", 1_500_000.0, "request", 2e-7)
+    discounted, waived = FreeTier.apply(free)
+    assert abs(waived - 0.2) < 1e-9, (
+        f"1M of 1.5M Lambda requests are free, so $0.20 is waived, not "
+        f"${waived:.4f}")
+    assert abs(discounted.total - 0.1) < 1e-9
+    assert abs(free.total - 0.3) < 1e-9, "apply() must not mutate the original"
+
+
+# ---------------------------------------------------------------------------
+# Billing
+# ---------------------------------------------------------------------------
+
+def check_billing_s3() -> None:
+    from billing import bill_s3, stored_bytes
+    from s3 import S3
+
+    s3 = S3()
+    s3.create_bucket("b", versioning=True)
+    for n in range(10):
+        s3.put_object("b", f"k{n}", b"x" * 100_000)
+    before = stored_bytes(s3)
+    assert before["live"] == 1_000_000 and before["noncurrent"] == 0
+
+    for n in range(10):
+        s3.delete_object("b", f"k{n}")
+    after = stored_bytes(s3)
+    assert after["live"] == 0, "a delete marker hides the current version"
+    assert after["noncurrent"] == 1_000_000, (
+        "a plain DELETE in a versioned bucket deletes NOTHING. The bytes move "
+        "from 'live' to 'noncurrent' and stay fully billable. If noncurrent is "
+        "0 here you are reading only the visible listing, which is exactly the "
+        "mistake that makes a bucket cost more than the data in it.")
+    assert after["total"] == before["total"], "the billable total did not move"
+    assert after["delete_markers"] == 10
+
+    # The 128 KB minimum billable object size, on objects far below it.
+    small = S3()
+    small.create_bucket("s")
+    for n in range(100):
+        small.put_object("s", f"k{n}", b"x" * 4096)
+    standard = bill_s3(small, storage_class="standard", days=30.4167)
+    ia = bill_s3(small, storage_class="standard_ia", days=30.4167)
+
+    def storage(bill):
+        return sum(i.cost for i in bill.items
+                   if i.dimension == "storage-gb-months")
+
+    assert storage(ia) > storage(standard) * 10, (
+        f"Standard-IA storage on 4 KB objects came out at {storage(ia):.8f} "
+        f"versus Standard's {storage(standard):.8f}. IA's sticker price is HALF "
+        "Standard's, but every object under 128 KB is billed as 128 KB — so on "
+        "4 KB objects IA is ~32x its sticker price and far more expensive than "
+        "Standard. Miss this and 'move cold data to IA' makes the bill go up.")
+
+    # The minimum storage DURATION.
+    week = bill_s3(small, storage_class="deep_archive", days=7)
+    month = bill_s3(small, storage_class="deep_archive", days=30)
+    half_year = bill_s3(small, storage_class="deep_archive", days=180)
+    assert abs(storage(week) - storage(half_year)) < 1e-12, (
+        "Deep Archive has a 180-day minimum. Storing an object for a week must "
+        "cost the same as storing it for 180 days.")
+    assert abs(storage(month) - storage(half_year)) < 1e-12
+    year = bill_s3(small, storage_class="deep_archive", days=365)
+    assert storage(year) > storage(half_year), "past the minimum it grows again"
+
+    assert any(i.dimension == "deletes" and i.cost == 0 for i in month.items), \
+        "DELETE is free, and the line belongs on the bill at $0 anyway"
+
+
+def check_billing_services() -> None:
+    from billing import (bill_dynamodb, bill_kms, bill_lambda, bill_network,
+                         bill_sns, bill_sqs)
+    from dynamodb import Table
+    from kms import KMS, EnvelopeCipher
+    from lambda_svc import Function, LambdaService
+    from sns import Topic
+    from sqs import Queue
+
+    # -- DynamoDB: the same table, both modes ------------------------------
+    table = Table("t", partition_key="pk", sort_key="sk",
+                  read_capacity=100, write_capacity=100, num_partitions=4)
+    for n in range(50):
+        table.put_item({"pk": f"p{n}", "sk": "0"}, now=0.0)
+    # A filtered scan: 50 items touched, exactly 1 returned. The gap between
+    # those two numbers is what the read line has to be built from.
+    returned = table.scan(lambda item: item["pk"] == "p7", now=1.0)
+    assert len(returned) == 1
+
+    provisioned = bill_dynamodb(table, mode="provisioned", hours=730.0)
+    on_demand = bill_dynamodb(table, mode="on_demand", hours=730.0)
+    assert abs(provisioned.total - (100 * 730 * 0.00065 + 100 * 730 * 0.00013)) < 1e-6, (
+        "provisioned bills RESERVED capacity x hours. Nothing about the traffic "
+        "may appear in the number.")
+
+    busier = Table("t2", partition_key="pk", read_capacity=100,
+                   write_capacity=100, num_partitions=4)
+    for n in range(200):
+        busier.put_item({"pk": f"p{n}"}, now=n * 0.05)
+    assert abs(bill_dynamodb(busier, mode="provisioned", hours=730.0).total
+               - provisioned.total) < 1e-6, (
+        "4x the traffic on the same reserved capacity must cost the SAME in "
+        "provisioned mode. That is the entire risk of provisioning, and the "
+        "entire reason the crossover exists.")
+
+    reads = [i for i in on_demand.items if i.dimension == "on-demand-reads"][0]
+    assert abs(reads.quantity - 25.0) < 1e-9, (
+        f"the read line billed {reads.quantity} units for a scan that touched "
+        "50 items and returned 1. It must be 25 (50 items x 0.5 RRU each). If "
+        "you got 0.5 you billed returned_items — but DynamoDB charges for what "
+        "it READ, not what it gave back, and that difference IS the whole "
+        "scan-versus-query cost argument.")
+
+    try:
+        bill_dynamodb(table, mode="spot")
+        raise AssertionError("an unknown billing mode must raise, not guess")
+    except ValueError:
+        pass
+
+    # -- Lambda ------------------------------------------------------------
+    service = LambdaService(account_concurrency=4)
+    function = Function("f", lambda event, ctx: None, memory_mb=512,
+                        init_ms=500.0)
+    service.register(function)
+    for n in range(20):
+        service.invoke("f", {}, now=n * 0.5)
+    priced = bill_lambda(function)
+    gb_seconds = [i for i in priced.items if i.dimension == "gb-seconds"][0]
+    expected = function.stats["billed_ms"] / 1000.0 * 512 / 1024.0
+    assert abs(gb_seconds.quantity - expected) < 1e-9, (
+        f"GB-seconds is billed_ms/1000 x memory_mb/1024, so {expected:.4f}, not "
+        f"{gb_seconds.quantity:.4f}. Getting the 1024 wrong is a 2x error that "
+        "looks completely plausible on a dashboard.")
+    arm = bill_lambda(function, arch="arm")
+    assert arm.total < priced.total, "Graviton GB-seconds are ~20% cheaper"
+
+    # -- SQS: idle polling is its own, FIXED, line -------------------------
+    queue = Queue("q")
+    for n in range(100):
+        queue.send(f"m{n}", now=0.0)
+    for message in queue.receive(max_messages=10, now=1.0):
+        queue.delete(message.receipt_handle)
+    sqs_bill = bill_sqs(queue, empty_receives=50_000)
+    idle = [i for i in sqs_bill.items if i.dimension == "idle-poll-requests"]
+    assert idle and idle[0].quantity == 50_000, (
+        "empty receives belong on their own line named 'idle-poll-requests'. "
+        "Fold them into 'requests' and they scale with traffic, which is "
+        "backwards: idle polling scales with wall-clock time and the number of "
+        "pollers, so a queue that goes QUIET gets more expensive per message.")
+    scaled = sqs_bill.scaled(100.0)
+    scaled_idle = [i for i in scaled.items
+                   if i.dimension == "idle-poll-requests"][0]
+    assert scaled_idle.quantity == 50_000, \
+        "and because it is fixed, 100x the traffic must not change it"
+
+    # -- SNS: the protocol is the price ------------------------------------
+    topic = Topic("t")
+    sink = Queue("sink")
+    topic.subscribe("sqs", sink, "free")
+    topic.subscribe("http", lambda *a: None, "paid",
+                    filter_policy={"level": ["high"]})
+    for n in range(100):
+        topic.publish("m", {"level": "high" if n % 10 == 0 else "low"}, now=0.0)
+    sns_bill = bill_sns(topic)
+    dimensions = {i.dimension: i for i in sns_bill.items}
+    assert "deliveries-sqs" in dimensions and "deliveries-http" in dimensions, (
+        "deliveries must be split BY PROTOCOL. SQS is free, HTTP is $0.60/M "
+        "and SMS is $6,450/M — one line for 'deliveries' averages across a "
+        "five-order-of-magnitude spread and tells you nothing.")
+    assert dimensions["deliveries-sqs"].cost == 0.0
+    assert dimensions["deliveries-http"].quantity == 10, \
+        "the filter policy must have stopped 90 of them at the topic"
+    assert dimensions["filtered-deliveries"].cost == 0.0
+
+    # -- KMS ---------------------------------------------------------------
+    kms = KMS()
+    kms.create_key("k")
+    cipher = EnvelopeCipher(kms, "k")
+    for _ in range(1000):
+        cipher.encrypt(b"x", {"t": "a"})
+    kms_bill = bill_kms(kms)
+    keys = [i for i in kms_bill.items if i.dimension == "key-months"][0]
+    requests = [i for i in kms_bill.items if i.dimension == "requests"][0]
+    assert keys.cost == 1.0 and requests.quantity == 1000
+    assert keys.cost > requests.cost, (
+        "at 1,000 records the KEY costs more than every API call put together. "
+        "Which of these two lines is bigger is the diagnosis: key-months means "
+        "key sprawl, requests means a per-record call pattern.")
+
+    # -- Network: cross-AZ is billed on BOTH sides -------------------------
+    net = bill_network(cross_az_gb=1000.0, internet_in_gb=5000.0)
+    cross = [i for i in net.items if i.dimension == "cross-az-gb"][0]
+    assert cross.quantity == 2000.0, (
+        f"1,000 GB of cross-AZ traffic bills {cross.quantity} GB, not 2,000. "
+        "It is charged on the sending side AND the receiving side — $0.02/GB "
+        "round trip, which is the number people forget when they spread a "
+        "chatty service across AZs.")
+    assert [i for i in net.items if i.dimension == "internet-in-gb"][0].cost == 0.0, \
+        "ingress is free"
+
+
+# ---------------------------------------------------------------------------
+# Optimize
+# ---------------------------------------------------------------------------
+
+def check_crossovers() -> None:
+    from optimize import (best_memory, best_storage_class, dynamodb_crossover,
+                          lambda_duration_ms, lambda_memory_sweep,
+                          nat_vs_gateway_endpoint, nat_vs_interface_endpoint,
+                          storage_class_cost)
+
+    write = dynamodb_crossover("write")
+    read = dynamodb_crossover("read")
+    assert abs(write - 0.14444) < 0.001, (
+        f"got {write:.4f}. One WCU costs $0.00065/hour and delivers 3,600 write "
+        "units in that hour; those units on demand cost 3,600 x $1.25/1M. "
+        "Setting them equal gives 14.44%.")
+    assert abs(write - read) < 1e-9, (
+        "reads and writes must give the SAME crossover — AWS priced both modes "
+        "with the same ratio, which is why there is only one number to know")
+
+    assert abs(lambda_duration_ms(1769, 900.0, 0.0) - 900.0) < 1e-6, \
+        "1,769 MB is one vCPU, so CPU work takes exactly its nominal time"
+    assert abs(lambda_duration_ms(884.5, 900.0, 0.0) - 1800.0) < 1e-6, \
+        "half the memory is half the CPU, so twice the duration"
+    assert abs(lambda_duration_ms(10240, 100.0, 400.0) - 417.28) < 0.1, \
+        "the io_wait term must NOT shrink with memory — that is the whole point"
+
+    cpu_bound = lambda_memory_sweep(900.0, 0.0)
+    costs = [row["cost"] for row in cpu_bound]
+    assert max(costs) / min(costs) < 1.02, (
+        f"CPU-bound cost varied by {max(costs) / min(costs):.2f}x across the "
+        "memory range. It should be nearly FLAT: twice the memory runs in half "
+        "the time, so the GB-seconds cancel. This is why leaving a CPU-bound "
+        "function at 128 MB buys a 12x slower function for no saving at all.")
+    cheapest, fastest = best_memory(cpu_bound)
+    assert fastest == 10240, "more memory is always faster for CPU-bound work"
+
+    io_bound = lambda_memory_sweep(20.0, 400.0)
+    cheapest, fastest = best_memory(io_bound)
+    assert cheapest == 128 and fastest == 10240, (
+        "for I/O-bound work the cheapest and fastest settings must be at "
+        "OPPOSITE ends. The wait does not shrink, so every extra MB is billed "
+        "against a duration you cannot reduce.")
+
+    gateway = nat_vs_gateway_endpoint(10_000.0)
+    assert gateway["through_endpoint"] == 0.0 and gateway["saving"] > 0, (
+        "an S3/DynamoDB gateway endpoint is free at every volume, forever. "
+        "There is no crossover, which is what makes it the best line in the "
+        "file: a route-table entry that cannot change behaviour.")
+    assert nat_vs_gateway_endpoint(100_000.0)["saving"] > \
+        nat_vs_gateway_endpoint(1_000.0)["saving"]
+
+    assert nat_vs_interface_endpoint(1_000.0, services=1)["saving"] > 0
+    assert nat_vs_interface_endpoint(1_000.0, services=30)["saving"] < 0, (
+        "interface endpoints are NOT free — $0.01/hour per AZ per service. "
+        "Route thirty services privately across three AZs and you have bought "
+        "ninety endpoints to replace three NAT gateways.")
+
+    # 180 days is 5.92 months, so anything shorter bills identically.
+    month = storage_class_cost(1.0, 1.0, 0.0, "deep_archive")
+    five = storage_class_cost(1.0, 5.0, 0.0, "deep_archive")
+    assert abs(month - five) < 1e-12, (
+        "Deep Archive has a 180-day minimum, so 1 month and 5 months must cost "
+        "exactly the same. A lifecycle rule that archives objects and deletes "
+        "them a month later costs six times what the storage rate suggests, "
+        "and the console shows the data as gone.")
+    assert storage_class_cost(1.0, 12.0, 0.0, "deep_archive") > five, \
+        "past the minimum it grows with time again"
+
+    tiny = storage_class_cost(1.0, 1.0, 0.0, "standard_ia", object_kb=4.0)
+    big = storage_class_cost(1.0, 1.0, 0.0, "standard_ia", object_kb=1024.0)
+    assert abs(tiny / big - 32.0) < 0.01, (
+        f"1 GB of 4 KB objects in Standard-IA costs {tiny / big:.1f}x what the "
+        "same GB in 1 MB objects costs. 128/4 = 32.")
+
+    hot, _ = best_storage_class(1.0, 12.0, 10.0)
+    assert hot == "standard", (
+        "read ten times a month, Standard wins — the retrieval charge on every "
+        "colder class overwhelms the storage saving. Nothing in this decision "
+        "is about how 'cold' the data feels.")
+
+
+def check_measured_optimisations() -> None:
+    from pricing import Bill
+    from optimize import (allocate, measure_data_key_reuse,
+                          measure_query_vs_scan, measure_queue_strategies,
+                          rank_savings)
+
+    keys = measure_data_key_reuse(1000, 100)
+    assert keys["calls_per_record"] == 1000, \
+        "EnvelopeCipher.encrypt calls GenerateDataKey once per record"
+    assert keys["calls_batched"] == 10, \
+        "one data key per 100 records is 10 calls for 1,000 records"
+    assert keys["cost_batched"] <= keys["cost_per_record"]
+    assert keys["cost_batched"] >= 1.0, (
+        "the floor is the key itself at $1.00/month. Below a few hundred "
+        "thousand records there is no money in the request line to save, and "
+        "reusing data keys widens the blast radius for nothing.")
+
+    scan = measure_query_vs_scan(tenants=40, per_tenant=10)
+    assert scan["query_items"] == 10, "a query touches only its own partition"
+    assert scan["scan_items"] == 400, (
+        f"the scan touched {scan['scan_items']} items. A scan reads EVERY item "
+        "and filters afterwards, so it must touch all 400 to return 10.")
+    assert abs(scan["ratio"] - 40.0) < 1e-9, \
+        "the ratio IS table size / result size, and it grows with the table"
+
+    rows = measure_queue_strategies(200)
+    short, long_poll, batched = rows
+    assert short["idle_requests"] > long_poll["idle_requests"] * 100, \
+        "long polling must collapse the idle column, not shave it"
+    assert batched["work_requests"] < long_poll["work_requests"], \
+        "batching divides the receive and delete calls"
+    assert all(row["drained"] == 200 for row in rows), \
+        "all three strategies must do the SAME work — otherwise it is not a "\
+        "comparison"
+
+    bill = Bill("b")
+    bill.add("lambda", "requests", 10e6, "request", 2e-7)      # $2
+    bill.add("sqs", "requests", 100e6, "request", 4e-7)        # $40
+    bill.add("network", "nat-gateway-hours", 730.0, "hour", 0.045)
+    ranked = rank_savings(bill, {"halve sqs": ("sqs/requests", 0.5),
+                                 "halve lambda": ("lambda/requests", 0.5)})
+    assert [row["change"] for row in ranked] == ["halve sqs", "halve lambda"], \
+        "rank by dollars saved, descending"
+    assert abs(ranked[0]["saving"] - 20.0) < 1e-9, (
+        f"halving the SQS line saves $20, not ${ranked[0]['saving']:.2f}. If "
+        "you got $21 you summed every line whose dimension is 'requests' — but "
+        "Lambda, SQS and KMS all have a line by that name, and adding them "
+        "because they share a word makes the model disagree with the invoice.")
+    try:
+        rank_savings(bill, {"typo": ("sqs/reqests", 0.5)})
+        raise AssertionError(
+            "a misspelled line silently 'saved' $0. Raise instead — a change "
+            "that appears to save nothing because of a typo is the worst "
+            "possible output from a ranking tool.")
+    except KeyError:
+        pass
+
+    split = allocate(bill, {"a": 1.0, "b": 3.0})
+    assert abs(sum(split.values()) - bill.total) < 1e-9, \
+        "an allocation must add back up to the bill"
+    assert abs(split["b"] / split["a"] - 3.0) < 1e-9
+
+
 CHECKS: List[Tuple[str, str, Callable[[], None]]] = [
     ("iam.py", "explicit deny > allow > implicit deny", check_iam_basics),
     ("iam.py", "conditions and permissions boundaries", check_iam_conditions),
@@ -744,6 +1171,12 @@ CHECKS: List[Tuple[str, str, Callable[[], None]]] = [
     ("vpc.py", "CIDR, subnets and longest-prefix routing", check_vpc_cidr),
     ("vpc.py", "stateful SG vs stateless NACL", check_stateful_vs_stateless),
     ("capstone.py", "the pipeline, and its failures", check_capstone),
+    ("pricing.py", "rounding rules and graduated tiers", check_pricing_arithmetic),
+    ("pricing.py", "line items, fixed vs variable, free tier", check_bill),
+    ("billing.py", "S3: versioning, and the two minimums", check_billing_s3),
+    ("billing.py", "metering every other service", check_billing_services),
+    ("optimize.py", "the crossovers, derived not recalled", check_crossovers),
+    ("optimize.py", "measured savings, and reading a bill", check_measured_optimisations),
 ]
 
 
