@@ -6,6 +6,16 @@ A collection of from-scratch implementations of various systems and projects for
 principles every directory follows: design choices named as problem-solving decisions,
 MVP-then-complicate driven by limit cases, and verification you can run.
 
+**Working through it? Read [ROADMAP.md](ROADMAP.md)** — an 18-week schedule (24 Aug –
+27 Dec 2026) at three intensities, with the honest arithmetic up front: 34 directories,
+2,227 implementable units, ~1,600 hours. Track where you actually are with:
+
+```bash
+python3 progress.py                 # per-directory bars, and how far behind the plan you are
+python3 progress.py --checks        # also runs every check.py — the number that cannot be gamed
+python3 progress.py --track spine   # the 10-directory minimum, 21 h/week
+```
+
 ## Directory Structure
 
 ### Low-Level Systems (C/C++)

@@ -141,3 +141,12 @@ have found a gap in your model that passing tests did not reveal.
 
 Use `solutions/` freely when stuck. The goal is understanding, not endurance. But read it
 *after* attempting — a solution read cold is just more prose.
+
+---
+
+## Working through it
+
+[`ROADMAP.md`](ROADMAP.md) turns these principles into a calendar: an 18-week schedule at
+three intensities, a daily structure built around *predict-then-run*, and a weekly
+regression day. `python3 progress.py` scores you against it, and — as everything else
+here does — reports the number rather than an impression of the number.
