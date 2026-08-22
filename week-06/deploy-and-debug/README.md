@@ -187,6 +187,6 @@ Pure Python 3 standard library. Everything runs in about a second.
 
 ## Related directories
 
-- [`dynamo-paper/`](../dynamo-paper/) — the store this one operates
-- [`context-caching/`](../context-caching/) — the serving mechanisms this one sizes
-- [`system-design/`](../system-design/) — circuit breakers, backpressure, rate limiting
+- [`dynamo-paper/`](../../week-04/dynamo-paper/) — the store this one operates
+- [`context-caching/`](../../week-06/context-caching/) — the serving mechanisms this one sizes
+- [`system-design/`](../../week-05/system-design/) — circuit breakers, backpressure, rate limiting

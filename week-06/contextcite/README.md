@@ -264,8 +264,8 @@ No dependencies beyond the Python 3 standard library. Everything runs in about a
 
 ## Related directories
 
-- [`context-caching/`](../context-caching/) — a different "context" problem: making
+- [`context-caching/`](../../week-06/context-caching/) — a different "context" problem: making
   inference cheap rather than explaining it
-- [`dynamo-paper/`](../dynamo-paper/) — another paper replicated section by section
-- [`ml-in-production/`](../ml-in-production/) — where attribution belongs in a real
+- [`dynamo-paper/`](../../week-04/dynamo-paper/) — another paper replicated section by section
+- [`ml-in-production/`](../../week-18/ml-in-production/) — where attribution belongs in a real
   serving stack

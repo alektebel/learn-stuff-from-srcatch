@@ -200,6 +200,6 @@ Pure Python 3 standard library. Everything runs in about a second.
 ## Related directories
 
 - [`c-compiler/`](../c-compiler/) — a C compiler in C; this one is smaller and pairs with a GPU
-- [`cuda-from-scratch/`](../cuda-from-scratch/) — real CUDA, once you know what a warp is
-- [`context-caching/`](../context-caching/) — where GPU memory actually goes in practice
-- [`PHILOSOPHY.md`](../PHILOSOPHY.md) — why this repo is built the way it is
+- [`cuda-from-scratch/`](../../week-07/cuda-from-scratch/) — real CUDA, once you know what a warp is
+- [`context-caching/`](../../week-06/context-caching/) — where GPU memory actually goes in practice
+- [`PHILOSOPHY.md`](../../PHILOSOPHY.md) — why this repo is built the way it is

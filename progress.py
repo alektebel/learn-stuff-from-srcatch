@@ -108,6 +108,23 @@ BASELINE = {
 }
 
 
+def locate(name: str) -> pathlib.Path:
+    """Find a project directory, wherever the weekly layout put it.
+
+    The repo is ordered into week-01/ .. week-18/, but a directory's home week
+    is a scheduling fact, not an identity — so nothing here hard-codes a path.
+    Look it up, and keep working if the layout changes again.
+    """
+    direct = ROOT / name
+    if direct.is_dir():
+        return direct
+    for week in sorted(ROOT.glob("week-*")):
+        candidate = week / name
+        if candidate.is_dir():
+            return candidate
+    return direct
+
+
 def remaining_units(directory: pathlib.Path) -> int:
     """Markers still standing. Python prefers the marker that cannot lie."""
     nie = todo = lean = haskell = 0
@@ -167,8 +184,8 @@ def bar(fraction: float, width: int = 16) -> str:
 
 def rebaseline() -> int:
     """Rewrite BASELINE in this file from the templates as they stand now."""
-    counts = {name: remaining_units(ROOT / name) for name, *_ in PLAN
-              if (ROOT / name).is_dir()}
+    counts = {name: remaining_units(locate(name)) for name, *_ in PLAN
+              if locate(name).is_dir()}
     lines, row = [], "    "
     for key in sorted(counts):
         piece = f'"{key}": {counts[key]}, '
@@ -226,7 +243,7 @@ def main(argv) -> int:
     checks_line = []
 
     for name, hours, scheduled, _ in plan:
-        directory = ROOT / name
+        directory = locate(name)
         if not directory.is_dir():
             continue
         base = BASELINE.get(name, 0)

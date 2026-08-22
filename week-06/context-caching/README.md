@@ -222,7 +222,7 @@ almost nothing — optimise decode instead.
    and watch what it does to the tail latency.
 5. **Cross-request KV transfer.** Let a worker fetch a prefix's KV from a peer instead
    of recomputing it, and work out when the transfer is cheaper than the prefill.
-6. **A distributed prefix cache.** Combine this with [`../dynamo-paper/`](../dynamo-paper/):
+6. **A distributed prefix cache.** Combine this with [`week-04/dynamo-paper/`](../../week-04/dynamo-paper/):
    consistent hashing to place prefixes, quorum reads to fetch them. The routing problem
    in `cache_router.py` is a partitioning problem in disguise.
 
@@ -261,10 +261,10 @@ No dependencies beyond the Python 3 standard library.
 
 ## Related directories
 
-- [`vllm-engine/`](../vllm-engine/) — PagedAttention and continuous batching at scale
-- [`sgl-lang/`](../sgl-lang/) — structured generation, where RadixAttention comes from
-- [`ml-inference/`](../ml-inference/) — quantisation and inference optimisation generally
-- [`dynamo-paper/`](../dynamo-paper/) — the same "make the expensive thing cheap"
+- [`vllm-engine/`](../../week-12/vllm-engine/) — PagedAttention and continuous batching at scale
+- [`sgl-lang/`](../../week-13/sgl-lang/) — structured generation, where RadixAttention comes from
+- [`ml-inference/`](../../week-09/ml-inference/) — quantisation and inference optimisation generally
+- [`dynamo-paper/`](../../week-04/dynamo-paper/) — the same "make the expensive thing cheap"
   instinct, applied to distributed storage
-- [`contextcite/`](../contextcite/) — a different "context" problem despite the name:
+- [`contextcite/`](../../week-06/contextcite/) — a different "context" problem despite the name:
   explaining which parts of a context caused a response, rather than caching it

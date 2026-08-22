@@ -359,19 +359,19 @@ have already built, with different packaging:
 | ECS, Fargate, App Runner | Lambda with longer-lived containers | `lambda_svc.py` |
 | Step Functions | A state machine over Lambda invocations | `lambda_svc.py` |
 | RDS, Aurora | A database; the AWS part is failover and backups | — |
-| ElastiCache | A cache; see [`system-design/`](../system-design/) | — |
+| ElastiCache | A cache; see [`system-design/`](../../week-05/system-design/) | — |
 | EFS, FSx | A filesystem, so *not* S3's flat model | `s3.py` (by contrast) |
-| CloudFront | A CDN; edge caching and invalidation | [`context-caching/`](../context-caching/) |
+| CloudFront | A CDN; edge caching and invalidation | [`context-caching/`](../../week-06/context-caching/) |
 | ELB, API Gateway | Routing + throttling + health checks | `vpc.py`, `lambda_svc.py` |
-| Route 53 | DNS with health-checked routing policies | [`dns-server/`](../dns-server/) |
+| Route 53 | DNS with health-checked routing policies | [`dns-server/`](../../week-02/dns-server/) |
 | Secrets Manager, Parameter Store | KMS plus versioning and rotation | `kms.py` |
 | Cognito | STS with a user directory in front | `iam.py` |
 | CloudTrail | The audit log the capstone writes | `capstone.py` |
-| CloudWatch, X-Ray | Metrics, alarms, budgets, tracing | [`deploy-and-debug/`](../deploy-and-debug/) |
+| CloudWatch, X-Ray | Metrics, alarms, budgets, tracing | [`deploy-and-debug/`](../../week-06/deploy-and-debug/) |
 | Organizations, SCPs | IAM evaluation with another deny layer | `iam.py` |
 | CloudFormation, CDK | A dependency graph with rollback | — |
 | Glue, Athena, EMR | Query planning over object storage | `s3.py` |
-| SageMaker, Bedrock | Model serving | [`context-caching/`](../context-caching/) |
+| SageMaker, Bedrock | Model serving | [`context-caching/`](../../week-06/context-caching/) |
 
 Two of those rows — **CloudFormation's dependency graph with rollback**, and **Kinesis's
 ordered shards with replay** — have genuinely distinct mechanisms and are the best
@@ -455,7 +455,7 @@ Pure Python 3 standard library. Everything runs in about a second.
 
 ## Related directories
 
-- [`dynamo-paper/`](../dynamo-paper/) — the 2007 paper DynamoDB is built on
-- [`deploy-and-debug/`](../deploy-and-debug/) — operating and debugging this kind of system
-- [`system-design/`](../system-design/) — the patterns underneath most of these services
-- [`PHILOSOPHY.md`](../PHILOSOPHY.md) — why this repo is built the way it is
+- [`dynamo-paper/`](../../week-04/dynamo-paper/) — the 2007 paper DynamoDB is built on
+- [`deploy-and-debug/`](../../week-06/deploy-and-debug/) — operating and debugging this kind of system
+- [`system-design/`](../../week-05/system-design/) — the patterns underneath most of these services
+- [`PHILOSOPHY.md`](../../PHILOSOPHY.md) — why this repo is built the way it is

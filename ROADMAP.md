@@ -2,6 +2,11 @@
 
 Start **Monday 24 August 2026**. Finish **Sunday 27 December 2026**. Eighteen weeks.
 
+The repo is laid out to match: **`week-01/` … `week-18/`**, each with a README
+carrying that week's objective, the order to work in, and a concrete *done
+means*. This file is the whole plan and the arithmetic behind it; the week
+folders are what you actually open on a Monday. **[Start at `week-01/`](week-01/).**
+
 ## The arithmetic, before the calendar
 
 Read this first, because it changes what you decide.
@@ -66,6 +71,8 @@ Do not start week 1 without this. Every hour here buys back three in November.
 - [ ] **Pick your track and write it down** in this file, on the line below.
 
 > My track: `________`  · started: `________`
+
+Then open [`week-01/`](week-01/) and read its README before Monday.
 
 ---
 
@@ -149,9 +156,9 @@ copy without sockets, buffers and the kernel boundary. This is why it is first.
 
 | Week | Dates | Work | block h |
 |---|---|---|---|
-| **1** | Aug 24–30 | `bash-from-scratch` 8 **CS** · `http-server` 73 **CS** | 81 |
-| **2** | Aug 31–Sep 6 | `http-server` 13 · `dns-server` 9 · `cryptographic-library` 5 · `communication-protocols` 34 **C** · `toralizer` 19 | 80 |
-| **3** | Sep 7–13 | `toralizer` 2 · `firewall-from-scratch` 25 · `c-compiler` 27 **CS** · `compiler-and-vgpu` 16 **CS** · `quantum-computing-lang` 8 · `haskell-projects` 3 | 81 |
+| [**1**](week-01/) | Aug 24–30 | `bash-from-scratch` 8 **CS** · `http-server` 73 **CS** | 81 |
+| [**2**](week-02/) | Aug 31–Sep 6 | `http-server` 13 · `dns-server` 9 · `cryptographic-library` 5 · `communication-protocols` 34 **C** · `toralizer` 19 | 80 |
+| [**3**](week-03/) | Sep 7–13 | `toralizer` 2 · `firewall-from-scratch` 25 · `c-compiler` 27 **CS** · `compiler-and-vgpu` 16 **CS** · `quantum-computing-lang` 8 · `haskell-projects` 3 | 81 |
 
 **Done means:** your HTTP server serves a real browser and survives `ab -c 100`;
 your compiler compiles a program with a loop and a function call; `check.py` in
@@ -164,9 +171,9 @@ most objectively scorable. Use that.
 
 | Week | Dates | Work | block h |
 |---|---|---|---|
-| **4** | Sep 14–20 | `haskell-projects` 58 · `dynamo-paper` 21 **CS** · `system-design` 2 **C** | 81 |
-| **5** | Sep 21–27 | `system-design` 46 **C** · `aws-from-scratch` 34 **CS** | 80 |
-| **6** | Sep 28–Oct 4 | `aws-from-scratch` 8 · `deploy-and-debug` 10 **CS** · `context-caching` 28 **CS** · `contextcite` 13 **CS** · `cuda-from-scratch` 22 **CS** | 81 |
+| [**4**](week-04/) | Sep 14–20 | `haskell-projects` 58 · `dynamo-paper` 21 **CS** · `system-design` 2 **C** | 81 |
+| [**5**](week-05/) | Sep 21–27 | `system-design` 46 **C** · `aws-from-scratch` 34 **CS** | 80 |
+| [**6**](week-06/) | Sep 28–Oct 4 | `aws-from-scratch` 8 · `deploy-and-debug` 10 **CS** · `context-caching` 28 **CS** · `contextcite` 13 **CS** · `cuda-from-scratch` 22 **CS** | 81 |
 
 **Done means:** 17/17, 24/24, 12/12, 16/16 and 14/14 on five checkers, and you
 can predict the Dynamo availability table and the DynamoDB cost crossover
@@ -179,13 +186,13 @@ one every ML-serving job description is actually asking about.
 
 | Week | Dates | Work | block h |
 |---|---|---|---|
-| **7** | Oct 5–11 | `cuda-from-scratch` 81 **CS** | 81 |
-| **8** | Oct 12–18 | `cuda-from-scratch` 19 · `ml-inference` 61 **C** | 80 |
-| **9** | Oct 19–25 | `ml-inference` 76 **C** · `tensorrt-inference` 5 | 81 |
-| **10** | Oct 26–Nov 1 | `tensorrt-inference` 81 | 81 |
-| **11** | Nov 2–8 | `tensorrt-inference` 23 · `vllm-engine` 57 **C** | 80 |
-| **12** | Nov 9–15 | `vllm-engine` 81 **C** | 81 |
-| **13** | Nov 16–22 | `vllm-engine` 18 **C** · `sgl-lang` 63 | 81 |
+| [**7**](week-07/) | Oct 5–11 | `cuda-from-scratch` 81 **CS** | 81 |
+| [**8**](week-08/) | Oct 12–18 | `cuda-from-scratch` 19 · `ml-inference` 61 **C** | 80 |
+| [**9**](week-09/) | Oct 19–25 | `ml-inference` 76 **C** · `tensorrt-inference` 5 | 81 |
+| [**10**](week-10/) | Oct 26–Nov 1 | `tensorrt-inference` 81 | 81 |
+| [**11**](week-11/) | Nov 2–8 | `tensorrt-inference` 23 · `vllm-engine` 57 **C** | 80 |
+| [**12**](week-12/) | Nov 9–15 | `vllm-engine` 81 **C** | 81 |
+| [**13**](week-13/) | Nov 16–22 | `vllm-engine` 18 **C** · `sgl-lang` 63 | 81 |
 
 **Done means:** a hand-written kernel within a stated factor of cuBLAS and you
 can say *why* the factor is what it is; a paged-attention engine serving
@@ -196,11 +203,11 @@ one invariant `context-caching` exists to teach.
 
 | Week | Dates | Work | block h |
 |---|---|---|---|
-| **14** | Nov 23–29 | `sgl-lang` 24 · `distributed-training` 10 · `world-models` 46 | 80 |
-| **15** | Nov 30–Dec 6 | `world-models` 60 · `diffusion-models` 21 | 81 |
-| **16** | Dec 7–13 | `diffusion-models` 70 · `deepfake-creation` 11 | 81 |
-| **17** | Dec 14–20 | `deepfake-creation` 37 · `deepfake-detection` 33 · `quantitative-trading` 10 | 80 |
-| **18** | Dec 21–27 | `quantitative-trading` 42 · `spectral-graphs` 5 · `sas-lineage-tool` 8 · `web-scraping` 6 · `ml-in-production` 8 · `mlops` 12 | 81 |
+| [**14**](week-14/) | Nov 23–29 | `sgl-lang` 24 · `distributed-training` 10 · `world-models` 46 | 80 |
+| [**15**](week-15/) | Nov 30–Dec 6 | `world-models` 60 · `diffusion-models` 21 | 81 |
+| [**16**](week-16/) | Dec 7–13 | `diffusion-models` 70 · `deepfake-creation` 11 | 81 |
+| [**17**](week-17/) | Dec 14–20 | `deepfake-creation` 37 · `deepfake-detection` 33 · `quantitative-trading` 10 | 80 |
+| [**18**](week-18/) | Dec 21–27 | `quantitative-trading` 42 · `spectral-graphs` 5 · `sas-lineage-tool` 8 · `web-scraping` 6 · `ml-in-production` 8 · `mlops` 12 | 81 |
 
 Week 18 is deliberately a long tail of small directories. Finishing on six small
 wins in the last week is worth more than finishing on one heroic one.
@@ -211,10 +218,10 @@ wins in the last week is worth more than finishing on one heroic one.
 
 ```bash
 python3 progress.py                      # core track, today's week
+python3 progress.py --week 3             # what week 3 expects of you
 python3 progress.py --track full         # all 34
 python3 progress.py --track spine        # the 10-directory minimum
 python3 progress.py --checks             # also run every check.py — the exact number
-python3 progress.py --week 7             # what week 7 will look like
 ```
 
 It prints per-directory bars, flags anything past its due week with a red `!`,
