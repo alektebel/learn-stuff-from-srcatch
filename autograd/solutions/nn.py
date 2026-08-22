@@ -74,8 +74,11 @@ class Module:
     def forward(self, x: Tensor) -> Tensor:
         raise NotImplementedError
 
-    def __call__(self, x: Tensor) -> Tensor:
-        return self.forward(x)
+    def __call__(self, *args: Any, **kwargs: Any) -> Tensor:
+        # *args rather than one x: attention takes a mask as well, and a
+        # framework whose call signature only fits an MLP stops being a
+        # framework the first time you write a second kind of layer.
+        return self.forward(*args, **kwargs)
 
 
 class Linear(Module):
