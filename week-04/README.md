@@ -42,4 +42,4 @@ python3 ../progress.py --week 4
 python3 ../progress.py --checks
 ```
 
-[← Week 3](../week-03/) · [Roadmap](../ROADMAP.md) · [Week 5 →](../week-05/)
+[← Week 3](../week-03/) · [Roadmap](../ROADMAP.md) · [Sources](../REFERENCES.md#week-4) · [Week 5 →](../week-05/)

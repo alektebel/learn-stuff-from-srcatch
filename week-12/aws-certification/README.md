@@ -81,6 +81,20 @@ and this file has a knowledge cutoff.
 - [`deploy-and-debug/`](../../week-04/deploy-and-debug/) — operating what you chose
 - [`dynamo-paper/`](../../week-10/dynamo-paper/) — why DynamoDB is shaped that way
 
+## Sources
+
+- **The current official exam guides.** TODO §10.10 says to diff them against
+  the check list before writing anything, and to treat any conflict as the guide
+  being right. This directory has a knowledge cutoff; they do not.
+- **AWS Well-Architected Framework** and its lenses — `wellarchitected.py`.
+- **AWS Service Quotas**, the **price list API**, and each service's **FAQ** —
+  the three sources §12b ranks above the user guide, for three different kinds
+  of question.
+- Roediger & Karpicke, **"Test-Enhanced Learning"**, 2006 — why `drill.py` is
+  retrieval practice rather than review, and why it is separate from `check.py`.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-12--aws-certification-and-deployment)
+
 ---
 
 [← Week 6](../) · [Roadmap](../../ROADMAP.md) · [What remains](../../REMAINING.md)

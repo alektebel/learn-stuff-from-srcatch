@@ -66,6 +66,21 @@ marked DO NOT SKIP for a reason: the two ways this goes badly are a leaked key
 and a forgotten resource that bills per hour. Both are cheap to prevent and
 expensive to discover.
 
+## Sources
+
+[`../../REFERENCES.md`](../../REFERENCES.md#week-12--aws-certification-and-deployment)
+carries the list. The ones that matter here are not papers:
+
+- The **current AWS documentation** for every command in `RUNBOOK.md`. CLI
+  syntax and console flows change; verify before you run.
+- **AWS Service Quotas** — answers *"is this a limit or a bug"*.
+- The **price list API** — beats the pricing page, and is what `guard.py` should
+  be checked against.
+- **AWS Security Best Practices** and the IAM docs — least privilege, permission
+  boundaries, and the credential resolution chain `credentials.py` models.
+- Beyer et al., **Site Reliability Engineering** (Google), ch. 3 — error budgets,
+  for the health gate and rollback in `deploy.py`.
+
 ---
 
 [← Week 12](../) · [Certification](../aws-certification/) · [Runbook](RUNBOOK.md)

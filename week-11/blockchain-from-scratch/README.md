@@ -88,6 +88,25 @@ is not implemented here), no P2P networking, no wallet, no fee market beyond a
 mempool selection rule, no light-client sync protocol, no zero-knowledge
 anything, no bridges. It is the consensus and state-machine content, not a node.
 
+## Sources
+
+Full list, with what to read each for, in
+[`../../REFERENCES.md`](../../REFERENCES.md#week-11--blockchain-from-scratch).
+The four that carry this directory:
+
+- Nakamoto, **"Bitcoin: A Peer-to-Peer Electronic Cash System"**, 2008 — §11 is
+  the `(q/p)^k` that `fork.py` simulates against a closed form.
+- Eyal & Sirer, **"Majority Is Not Enough"**, FC 2014 — selfish mining, and why
+  the threshold depends on γ rather than being a single number.
+- Lamport, Shostak & Pease, **"The Byzantine Generals Problem"**, TOPLAS 1982 —
+  the fault model that separates this from `raft/`.
+- Buterin & Griffith, **"Casper the Friendly Finality Gadget"**, 2017 —
+  accountable safety and the ⅓ slashing bound `pos.py` checks.
+
+Also: Wood's **Ethereum Yellow Paper** for the EVM, gas and the trie; Castro &
+Liskov's **PBFT** (OSDI 1999) for BFT with *known* membership — the case Bitcoin
+deliberately does not solve.
+
 ---
 
 [← Week 5](../) · [Roadmap](../../ROADMAP.md) · [What remains](../../REMAINING.md)

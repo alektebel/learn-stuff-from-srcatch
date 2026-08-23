@@ -14,6 +14,12 @@ Steps 1–2 block everything else. Do them before the plan starts.
 >
 > **Doing now:** `________________`
 
+> **Every step below names its source.** Where it does not, the mechanism is
+> either the repo's own or documented in [`REFERENCES.md`](REFERENCES.md) under
+> the relevant week. If you are about to implement something and cannot say
+> which paper or spec it comes from, that is the gap to close first — it is
+> usually the sign that the check is going to be weak.
+
 ---
 
 ## 1. Verify the 59 existing checks · ~1 day · BLOCKING
@@ -63,18 +69,18 @@ implementation exists anywhere under the repo.
 strings — it tests whether you remember what a paper said. Every other check in
 this repo tests a mechanism.
 
-- [ ] **2.1 MiniLM** — attention distributions and value-relation matrices are
+- [ ] **2.1 MiniLM** *(Wang et al., NeurIPS 2020)* — attention distributions and value-relation matrices are
       `L × L`. Check with a **width-8 teacher and a width-4 student**: the
       targets stay comparable with no layer mapping and no learned projection.
       That property *is* the paper.
-- [ ] **2.2 GKD** — generalised JSD with `m = β·teacher + (1−β)·student`. Check
+- [ ] **2.2 GKD** *(Agarwal et al., 2023)* — generalised JSD with `m = β·teacher + (1−β)·student`. Check
       both limits numerically: `D/β → KL(t‖s)` as `β→0`, `D/(1−β) → KL(s‖t)` as
       `β→1`. A version matching only one limit has the mixture coefficient wrong.
 - [ ] **2.3 OPSD** — teacher identical to student ⇒ gradient **exactly zero**,
       both directions. Also: EMA the *logits*, not the probabilities — check
       that the probability-space average drifts toward uniform and the
       logit-space one does not.
-- [ ] **2.4 SDPO** — several distinct methods use that name. Do not assert one.
+- [ ] **2.4 SDPO** *(the identity: Rafailov et al., DPO, NeurIPS 2023 §4)* — several distinct methods use that name. Do not assert one.
       Check the identity they share: `π* ∝ π_ref·exp(r/β)`, inverted to
       `r = β·log(π*/π_ref) + β·log Z`, with the constant cancelling in a
       pairwise margin. Then read the specific paper you meant and add a check
@@ -96,7 +102,7 @@ Named in docstrings, not reachable by any check.
       differs by a wide margin. They only diverge when the student cannot match
       the teacher — which is always, so the student family must be underpowered
       or the check is vacuous.
-- [ ] **3.3** The privilege floor in closed form: best blind student is the
+- [ ] **3.3** The privilege floor in closed form *(the quantity is I(y;z|x); Cover & Thomas ch. 2 for the identity)*: best blind student is the
       marginal `E_z[p(y|x,z)]`, its loss is exactly `I(y;z|x)`. Assert the two
       agree to floating point, then sweep student capacity and assert the loss
       stops at that wall rather than approaching zero.
@@ -124,13 +130,13 @@ at `.../scratchpad/superseded/llm/`. Merge or discard.
       central differences. Nothing later is meaningful until this passes.
 - [ ] **4.3** `baselines.py` — include the **action-dependent** baseline and
       show it biased. That is the one people ship by accident.
-- [ ] **4.4** `kl_estimators.py` — k1/k2/k3, with the negative-sample fraction.
-- [ ] **4.5** `ppo.py` — clip fraction rising monotonically with drift.
-- [ ] **4.6** `grpo.py` — group baseline, then Dr. GRPO's length bias measured
+- [ ] **4.4** `kl_estimators.py` — k1/k2/k3, with the negative-sample fraction. *(Schulman, "Approximating KL Divergence", joschu.net)*
+- [ ] **4.5** `ppo.py` — clip fraction rising monotonically with drift. *(Schulman et al., PPO 2017; TRPO 2015 for what it replaced)*
+- [ ] **4.6** `grpo.py` *(DeepSeekMath for GRPO; Lan, "From REINFORCE to Dr. GRPO" for the correction)* — group baseline, then the length bias measured
       and removed. The bias must be clearly non-zero before removal, or the
       check is testing nothing.
-- [ ] **4.7** `async_rl.py` — ESS against lag, and the threshold crossing.
-- [ ] **4.8** `reward_hacking.py` — the true reward must **turn over**.
+- [ ] **4.7** `async_rl.py` — ESS against lag, and the threshold crossing. *(Xu, "Async GRPO in the Wild"; Kong & Liu on ESS)*
+- [ ] **4.8** `reward_hacking.py` — the true reward must **turn over**. *(Gao et al., scaling laws for reward-model over-optimisation; the RLHF Book)*
       Asserting only that the proxy rises tests nothing; that is what
       optimisers do.
 - [ ] **4.9** `dpo.py` — round-trip the identity; the recovered reward differs
@@ -148,13 +154,13 @@ templates **and** five working solutions with running demos. Overlaps
 `week-06/provenance-semirings/` and `week-08/linc/`. Two results in it are not
 in the shipped version:
 
-- [ ] **5.1** The **universality check** — evaluate a query once in `N[X]`, then
+- [ ] **5.1** The **universality check** *(Green, Karvounarakis & Tannen, PODS 2007, Prop. 3.4)* — evaluate a query once in `N[X]`, then
       derive nine semantics by mapping the answer through a homomorphism, and
       assert it agrees with having evaluated natively in each. That property is
       what makes provenance one feature instead of nine, and an operator that
       does not use `+` and `×` where the definition says passes every row-count
       test and fails exactly this one.
-- [ ] **5.2** The **absorption/termination result** — `a + a×b == a` predicts
+- [ ] **5.2** The **absorption/termination result** *(Green & Tannen, PODS 2017, on ω-continuous and absorptive semirings)* — `a + a×b == a` predicts
       whether a recursive program reaches a fixpoint. Measured: `Boolean`,
       `Tropical` and `PosBool` converge on cyclic data; `Counting` and `N[X]`
       never do, because the answer really is infinite.
@@ -197,7 +203,7 @@ new idea in the subject, and it is worth having next to the other two.
 - [ ] **8.2** `chain.py` — Merkle root and SPV proof. Assert proof length grows
       as `log2(n)`, and that changing **any** transaction moves the root — per
       transaction, not just the first.
-- [ ] **8.3** `pow.py` — assert hashes-to-block is **geometric**, not merely
+- [ ] **8.3** `pow.py` *(Nakamoto 2008)* — assert hashes-to-block is **geometric**, not merely
       that the mean is `2^d`. A constant would pass a mean-only check.
 - [ ] **8.4** `utxo.py` — the second spend must be refused **by the set**, not
       by a history scan. That is the whole double-spend defence.
@@ -205,10 +211,10 @@ new idea in the subject, and it is worth having next to the other two.
       validation cost is bounded by script length.
 - [ ] **8.6** `fork.py` — heaviest **work**, not most blocks. Build a case where
       the longer chain has less work; equal difficulty tests nothing.
-- [ ] **8.7** `fork.py` — Nakamoto's `(q/p)^k`, simulated against the closed
+- [ ] **8.7** `fork.py` *(Nakamoto 2008 §11)* — `(q/p)^k`, simulated against the closed
       form. Include `q > 0.5`, where the probability is 1 and the formula stops
       applying.
-- [ ] **8.8** `fork.py` — selfish mining, sweeping **gamma** (the share of
+- [ ] **8.8** `fork.py` *(Eyal & Sirer, FC 2014)* — selfish mining, sweeping **gamma** (the share of
       honest miners that build on the attacker's released block). Assert the
       profitability threshold moves with it; a single-gamma check hides the
       result.
@@ -217,10 +223,10 @@ new idea in the subject, and it is worth having next to the other two.
       set.
 - [ ] **8.10** `evm.py` — an infinite loop must **terminate** out of gas, the
       sender must still be charged, and state must revert.
-- [ ] **8.11** `trie.py` — inclusion proofs, and an **exclusion** proof for a
+- [ ] **8.11** `trie.py` *(Wood, Ethereum Yellow Paper, App. D)* — inclusion proofs, and an **exclusion** proof for a
       key that is absent. The exclusion proof is what a plain Merkle tree
       cannot do and why the trie is a trie.
-- [ ] **8.12** `pos.py` — hand-build conflicting finality and assert `slashable`
+- [ ] **8.12** `pos.py` *(Buterin & Griffith, Casper FFG, 2017)* — hand-build conflicting finality and assert `slashable`
       names at least a third of the stake. Same shape as Raft's Figure 8: a
       safety checker that has never caught anything is not evidence.
 - [ ] **8.13** Add to `progress.py`'s `PLAN`, cross-link from `raft/` and
@@ -239,7 +245,7 @@ would dilute a directory that currently sits at a verified 24/24.
 
 Three mechanisms are genuinely absent. The README names the first two itself.
 
-- [ ] **9.1 `cloudformation.py` — declarative desired state · ~8 h.**
+- [ ] **9.1 `cloudformation.py` — declarative desired state · ~8 h.** *(AWS CloudFormation docs on rollback and drift; the same mechanism as Terraform's plan/apply and Kubernetes' reconciliation loop)*
       A dependency graph with **rollback**, which nothing in the eight has.
       Topological ordering, partial failure, rollback to last-known-good, drift
       detection, and cycle detection. This is the mechanism under Terraform and
@@ -249,7 +255,7 @@ Three mechanisms are genuinely absent. The README names the first two itself.
       resource changed out of band; and a rollback that itself fails is
       reported rather than swallowed — that last one is where real deployments
       get stuck.
-- [ ] **9.2 `kinesis.py` — an ordered log with replay · ~8 h.**
+- [ ] **9.2 `kinesis.py` — an ordered log with replay · ~8 h.** *(Kreps, Narkhede & Rao, "Kafka: a Distributed Messaging System for Log Processing", NetDB 2011 — the same mechanism)*
       `sqs.py` deliberately has neither ordering nor replay, so this is a real
       contrast rather than a variant: per-shard ordering, a retention window,
       consumer checkpointing and iterators, and resharding. It is also Kafka.
@@ -458,7 +464,7 @@ by `check.py`**. It is a third kind of practice, distinct from both:
 | `drill.py` | arbitrary facts | spaced repetition |
 | `defend.py` | **whether you can hold a claim under challenge** | answer in four beats, self-marked |
 
-- [ ] **12.1** The card format is a claim plus a hostile challenge, answered in
+- [ ] **12.1** *(Roediger & Karpicke, "Test-Enhanced Learning", 2006 — retrieval beats review, which is why this is separate from `check.py`)* The card format is a claim plus a hostile challenge, answered in
       **four beats**: mechanism → the alternative you rejected → the limit case
       that complicates it → **the number that would change your mind**. The
       fourth beat is the one that makes a defence solid rather than confident,
@@ -550,7 +556,7 @@ no bug against it has never been shown to detect anything.
       neither.
 - [ ] **13.3** **Symptom only** — never the traceback, never the failing check
       name. The name gives away the file and collapses the exercise.
-- [ ] **13.4** Weight selection toward bugs that **do not crash**. Uniform
+- [ ] **13.4** Weight selection toward bugs that **do not crash**. *(the same argument as mutation testing: DeMillo, Lipton & Sayward, IEEE Computer 1978)* Uniform
       hemisphere sampling still renders; semi-naive over a non-idempotent
       semiring still terminates and undercounts; a missing `/2` in a VAE still
       trains. Plausible results are the hardest to find and the only kind worth

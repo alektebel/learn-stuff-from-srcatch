@@ -253,3 +253,17 @@ each train small models and take a minute or so; the rest are instant.
   can actually run them
 - [`vllm-engine/`](../../reference/vllm-engine/) — serving one of these at scale
 - [`PHILOSOPHY.md`](../../PHILOSOPHY.md) — why this repo is built the way it is
+
+## Sources
+
+Full list, including the distillation papers, in
+[`../../REFERENCES.md`](../../REFERENCES.md#week-2--llm-from-scratch).
+
+- Vaswani et al., **"Attention Is All You Need"**, NeurIPS 2017 — §3.2.1 is the
+  scaled dot product and the √d_k.
+- Sennrich et al., **ACL 2016** — BPE, and why merges apply in rank order.
+- Xiong et al., **ICML 2020** — why pre-norm trains without a warmup.
+- Holtzman et al., **ICLR 2020** — top-p, and what greedy decoding produces.
+- Hinton, Vinyals & Dean, **2015**; Wang et al., **MiniLM**, NeurIPS 2020;
+  Agarwal et al., **GKD**, 2023; Rafailov et al., **DPO**, NeurIPS 2023 — the
+  four behind `distill.py`.

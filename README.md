@@ -9,6 +9,9 @@ MVP-then-complicate driven by limit cases, and verification you can run.
 **Want the file-by-file list? Read [IMPLEMENTATION_ORDER.md](IMPLEMENTATION_ORDER.md)** —
 every file you will open, in the order you will open it, with its stub count.
 
+**Want the papers? Read [REFERENCES.md](REFERENCES.md)** — one canonical source
+per mechanism, by week, with what to read each for.
+
 **Working through it? Read [ROADMAP.md](ROADMAP.md)** — an 18-week schedule (24 Aug –
 27 Dec 2026) at three intensities. The daily notebook — expected work, expected
 publishable, one blog post per day — lives in [`journal/`](journal/):

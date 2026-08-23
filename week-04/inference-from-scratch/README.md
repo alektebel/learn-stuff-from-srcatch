@@ -45,3 +45,22 @@ Make it work. Watch it fall apart. Only then add the machinery that handles
 the case that broke it. That is [`PHILOSOPHY.md`](../../PHILOSOPHY.md) and it
 is why step 2 exists: a naive server that you never watched fail teaches
 you nothing about why vLLM is complicated.
+
+## Sources
+
+Full list in [`../../REFERENCES.md`](../../REFERENCES.md#week-4--inference-from-scratch).
+Read in this order, and read them **after** the step they belong to:
+
+- Yu et al., **"Orca"**, OSDI 2022 — continuous batching, and it predates vLLM.
+  For step 3.
+- Kwon et al., **"PagedAttention"**, SOSP 2023 — block allocation and
+  fragmentation. For step 6.
+- Pope et al., **"Efficiently Scaling Transformer Inference"**, 2022 — the
+  arithmetic behind why decode is memory-bandwidth bound. For step 4.
+- Leviathan et al., ICML 2023 **and** Chen et al., 2023 — two speculative
+  decoding papers that differ. Read both, for step 8.
+- Dao et al., **"FlashAttention"**, NeurIPS 2022 — for step 7.
+
+Step 11 of this curriculum is *go read vLLM, SGLang and TensorRT-LLM and compare
+their design decisions with yours* — that is [`../../reference/`](../../reference/),
+and it only works once your own version runs.
