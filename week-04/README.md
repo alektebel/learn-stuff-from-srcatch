@@ -1,45 +1,45 @@
 # Week 4 · Sep 14–Sep 20, 2026
 
-> **The cache in front of attention, then the first serving step.**
-> Bit-identical cached/uncached output, then the GPU path for one token.
+> **Serving it yourself.**
+> Twelve steps from 'what happens on the GPU for one token' to 'find the point where throughput stops scaling and explain why'. Build it, watch it fall apart, fix the specific thing that broke.
 
 ## Finish this week
 
-| Project | Hours | Track | Where it lives |
-|---|---|---|---|
-| `context-caching/` | 28 | core · spine | [`../week-08/context-caching/`](../week-08/context-caching/) |
-| `inference-from-scratch/` | start of 60 | core | [`../week-10/inference-from-scratch/`](../week-10/inference-from-scratch/) |
+| Project | Hours | Track |
+|---|---|---|
+| [`inference-from-scratch/`](inference-from-scratch/) | 60 | core · spine |
+| [`deploy-and-debug/`](deploy-and-debug/) | 10 | core |
 
-On the narrower tracks this same week is:
+**70 block hours**, plus the daily Lean slot (~8.4 h) = 78 h on the full track.
 
-core: context-caching 28 h, then inference step 1. spine: context-caching only.
-
-The week folder may not contain these directories. That is fine —
-`progress.py` finds them, and the links above are where the files live.
+Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
 ## What to do, in order
 
-1. `kv_cache.py` until cached and uncached attention agree to **zero**.
-2. Then prefix / radix / paged / serving_demo.
-3. If 16/16 lands: `inference_path.py` — name every kernel for one prefill and one decode.
+1. Work the directory's own order: `inference_path.py` → `naive_server.py` → `batching.py` → `kv_runtime.py` → `scheduler.py` → `paged_kv.py` → `gpu_opt.py` → `speculate.py` → `observe.py` → `traffic.py`.
+2. **Measure TTFT, TPOT and throughput from step 3 onward**, not at the end. The point of the naive server is to watch specific numbers degrade.
+3. `deploy-and-debug` alongside it — it is the one that teaches you to read a fault signature instead of guessing.
+4. `compare.py` and `deeper.py` last. Then go read [`../reference/vllm-engine/`](../reference/vllm-engine/) with your own scheduler open beside it. That comparison is why those directories are reference and not schedule.
 
 ## Done means
 
-- context-caching 16/16. `serving_demo.py` is bit-identical with the cache on and off.
-- You can name the prefill kernels and the cached-decode kernels.
+- Two checkers green: 12/12 and 12/12.
+- A latency-versus-throughput curve for your own server, and you can point at the knee and say what is saturating.
+- You can explain why decode is memory-bandwidth bound and prefill is not.
+- A written comparison against vLLM's design decisions.
 
 ## Every day
 
-1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
-2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
-3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — the journal post for today. The expected title is already there.
+1. **Implement** — longest block, first thing, hardest unfinished stub.
+2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap a passing test did not reveal.
+3. **Make it green** — `python3 check.py` where one exists.
+4. **Log, ten minutes** — one entry in [`../journal/`](../journal/).
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 4            # where you should be
-python3 ../progress.py --checks       # what actually passes
+python3 ../progress.py --week 4
+python3 ../progress.py --checks
 ```
 
 [← Week 3](../week-03/) · [Roadmap](../ROADMAP.md) · [Week 5 →](../week-05/)

@@ -1,45 +1,43 @@
 # Week 1 · Aug 24–Aug 30, 2026
 
-> **AWS, the eight mechanisms and the bill.**
-> Do not open `autograd/` until `check.py` prints 24/24. `iam.py` is always first.
+> **AWS, from its mechanisms up.**
+> Start where the leverage is. Eight services, each reduced to the one mechanism that makes it behave the way it does — and then a meter and a price sheet on top, so every later week has a cost model to reason with.
 
 ## Finish this week
 
-| Project | Hours | Track | Where it lives |
-|---|---|---|---|
-| `aws-from-scratch/` | 42 | core · spine | [`../week-06/aws-from-scratch/`](../week-06/aws-from-scratch/) |
+| Project | Hours | Track |
+|---|---|---|
+| [`aws-from-scratch/`](aws-from-scratch/) | 42 | core · spine |
 
-On the narrower tracks this same week is:
-
-core: the whole AWS directory, 42 h. spine: IAM → S3 → SQS → as far as 24/24 will go.
-
-The week folder may not contain these directories. That is fine —
-`progress.py` finds them, and the links above are where the files live.
+**42 block hours**, plus the daily Lean slot (~8.4 h) = 50 h on the full track.
 
 ## What to do, in order
 
-1. `iam.py` first. Everything else is gated by it.
-2. Then `s3.py` → `sqs.py` → `dynamodb.py` → `lambda_svc.py` → `sns.py` → `kms.py` → `vpc.py` → `capstone.py`.
-3. Then the bill: `pricing.py` → `billing.py` → `optimize.py`.
-4. **Predict the provisioned-vs-on-demand DynamoDB crossover before running `optimize.py`.**
+1. `iam.py` **first, always.** The checker enforces it and everything else in the directory is gated by it. Learn the three-line evaluation rule before anything.
+2. Then `s3.py`, `sqs.py`, `dynamodb.py` — checks 1 to 9. Flat keys, the visibility-timeout limit case, and the partition key that decides everything.
+3. Then `lambda_svc.py`, `sns.py`, `kms.py`, `vpc.py`, `capstone.py`.
+4. Finish with the billing layer: `pricing.py`, `billing.py`, `optimize.py`. **Predict the provisioned-vs-on-demand DynamoDB crossover before running `optimize.py`.** Most people are off by an order of magnitude.
+5. Start `drill.py` in [`../week-12/aws-certification/`](../week-12/aws-certification/) **today**, and run it every day for the rest of the plan. It is the part that cannot be crammed.
 
 ## Done means
 
-- `week-06/aws-from-scratch/` prints 24/24.
-- You can name the two rounding rules AWS bills by, and you wrote the crossover down before the demo.
+- `week-01/aws-from-scratch/` prints 24/24.
+- You can state IAM's evaluation rule from memory and say why policy order cannot change the answer.
+- You can explain why a hot partition key throttles a table that looks idle.
+- The drill is running and has a streak.
 
 ## Every day
 
-1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
-2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
-3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — the journal post for today. The expected title is already there.
+1. **Implement** — longest block, first thing, hardest unfinished stub.
+2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap a passing test did not reveal.
+3. **Make it green** — `python3 check.py` where one exists.
+4. **Log, ten minutes** — one entry in [`../journal/`](../journal/).
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 1            # where you should be
-python3 ../progress.py --checks       # what actually passes
+python3 ../progress.py --week 1
+python3 ../progress.py --checks
 ```
 
 [Roadmap](../ROADMAP.md) · [Week 2 →](../week-02/)

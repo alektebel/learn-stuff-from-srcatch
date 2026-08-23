@@ -32,13 +32,13 @@ Skeleton: [`tools/verify_checks.py`](tools/verify_checks.py).
 
       | Directory | Stubs | Checks | Pass N/N | Injections caught |
       |---|---|---|---|---|
-      | `week-08/provenance-semirings/` | 76 | 8 | ☐ | ☐ |
-      | `week-10/inference-from-scratch/` | 41 | 12 | ☐ | ☐ |
+      | `week-06/provenance-semirings/` | 76 | 8 | ☐ | ☐ |
+      | `week-04/inference-from-scratch/` | 41 | 12 | ☐ | ☐ |
       | `week-08/linc/` | 22 | 8 | ☐ | ☐ |
-      | `week-08/scasp/` | 22 | 8 | ☐ | ☐ |
-      | `week-08/spade/` | 19 | 8 | ☐ | ☐ |
-      | `week-08/mars-sql/` | 15 | 8 | ☐ | ☐ |
-      | `week-07/llm-from-scratch/distill.py` | 12 | 7 | ☐ | ☐ |
+      | `week-07/scasp/` | 22 | 8 | ☐ | ☐ |
+      | `week-05/spade/` | 19 | 8 | ☐ | ☐ |
+      | `week-05/mars-sql/` | 15 | 8 | ☐ | ☐ |
+      | `week-02/llm-from-scratch/distill.py` | 12 | 7 | ☐ | ☐ |
 
 - [ ] **1.6** Add a line to each directory's README recording the date it was
       verified and at what counts. An unverified checker should be visibly
@@ -51,7 +51,7 @@ implementation exists anywhere under the repo.
 
 ## 2. Replace the one check that grades recall · ~2 h
 
-`week-07/llm-from-scratch/check.py` step 14 grades `paper_choices()`, a dict of
+`week-02/llm-from-scratch/check.py` step 14 grades `paper_choices()`, a dict of
 strings — it tests whether you remember what a paper said. Every other check in
 this repo tests a mechanism.
 
@@ -100,7 +100,7 @@ at `.../scratchpad/superseded/llm/`. Merge or discard.
 
 ## 4. RL post-training · ~30 h · SKELETON IN PLACE
 
-[`week-05/rl-posttraining/`](week-05/rl-posttraining/) — 9 files, 32 stubs,
+[`week-03/rl-posttraining/`](week-03/rl-posttraining/) — 9 files, 32 stubs,
 9 checks named and unwritten. No `solutions/`.
 
 - [ ] **4.0** Decide what happens to
@@ -137,7 +137,7 @@ at `.../scratchpad/superseded/llm/`. Merge or discard.
 
 In the scratchpad at `.../scratchpad/superseded/provenance-reasoning/` — five
 templates **and** five working solutions with running demos. Overlaps
-`week-08/provenance-semirings/` and `week-08/linc/`. Two results in it are not
+`week-06/provenance-semirings/` and `week-08/linc/`. Two results in it are not
 in the shipped version:
 
 - [ ] **5.1** The **universality check** — evaluate a query once in `N[X]`, then
@@ -175,7 +175,7 @@ in the shipped version:
 
 ## 8. Bitcoin / Ethereum · ~55 h · SKELETON IN PLACE
 
-[`week-05/blockchain-from-scratch/`](week-05/blockchain-from-scratch/) — 9 files,
+[`week-11/blockchain-from-scratch/`](week-11/blockchain-from-scratch/) — 9 files,
 46 stubs, 11 checks named and unwritten. No `solutions/`.
 
 It sits beside `raft/` and `dynamo-paper/` on purpose. Those two cover
@@ -274,7 +274,7 @@ difference, and the map in the README is the right place to say so.
 
 ## 10. AWS certification · ~35 h + daily drill · SKELETON IN PLACE
 
-[`week-06/aws-certification/`](week-06/aws-certification/) — 7 files, 40 stubs,
+[`week-12/aws-certification/`](week-12/aws-certification/) — 7 files, 40 stubs,
 10 checks named and unwritten.
 
 **Do not plan on `aws-from-scratch/` clearing an exam by itself.** This repo is

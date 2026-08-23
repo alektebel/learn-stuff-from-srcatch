@@ -1,47 +1,43 @@
 # Week 16 · Dec 7–Dec 13, 2026
 
-> **Compilers, and a machine that runs what they emit.**
-> `int main(){return 2+3;}` on day one. Then a warp that diverges.
+> **CUDA.**
+> One directory, one hundred and twenty-two hours, no context switching. Memory hierarchy, coalescing, shared memory, occupancy, then a matmul you tune yourself.
 
 ## Finish this week
 
-| Project | Hours | Track | Where it lives |
-|---|---|---|---|
-| `c-compiler/` | 27 | core · spine | [`../week-03/c-compiler/`](../week-03/c-compiler/) |
-| `compiler-and-vgpu/` | 16 | core · spine | [`../week-03/compiler-and-vgpu/`](../week-03/compiler-and-vgpu/) |
-| `firewall-from-scratch/` | 25 | full | [`../week-03/firewall-from-scratch/`](../week-03/firewall-from-scratch/) |
-| `toralizer/` | 21 | full | [`../week-02/toralizer/`](../week-02/toralizer/) |
+| Project | Hours | Track |
+|---|---|---|
+| [`cuda-from-scratch/`](cuda-from-scratch/) | 122 | core · spine |
 
-On the narrower tracks this same week is:
+**122 block hours**, plus the daily Lean slot (~8.4 h) = 130 h on the full track.
 
-core · spine: both compilers. full: firewall and toralizer too.
-
-The week folder may not contain these directories. That is fine —
-`progress.py` finds them, and the links above are where the files live.
+Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
 ## What to do, in order
 
-1. Lexer, parser, then `return 2+3`.
-2. Semantic analysis, codegen, a spill.
-3. ISA, scalar CPU, then SIMT and the barrier that deadlocks.
+1. Strictly the directory's own order. Every kernel builds on the previous one's understanding of memory.
+2. **Profile every kernel you write.** `ncu` or `nsight-compute`. A kernel you have not profiled is a kernel you do not understand.
+3. Keep the table as you go: kernel, GB/s achieved, GB/s theoretical, occupancy. That table is the week's real deliverable.
+4. Delete each `TODO` comment as you satisfy it — the CUDA bars in `progress.py` only move if you do.
 
 ## Done means
 
-- 12/12 on compiler-and-vgpu if you can.
-- A mask stack is why warp divergence is not a mystery.
+- A naive, a tiled and a register-blocked matmul, with measured GFLOP/s for each.
+- You can say what fraction of peak bandwidth each kernel reaches and why the gap is what it is.
+- You can explain warp divergence in terms of the mask stack from week 15.
 
 ## Every day
 
-1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
-2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
-3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — the journal post for today. The expected title is already there.
+1. **Implement** — longest block, first thing, hardest unfinished stub.
+2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap a passing test did not reveal.
+3. **Make it green** — `python3 check.py` where one exists.
+4. **Log, ten minutes** — one entry in [`../journal/`](../journal/).
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 16            # where you should be
-python3 ../progress.py --checks       # what actually passes
+python3 ../progress.py --week 16
+python3 ../progress.py --checks
 ```
 
 [← Week 15](../week-15/) · [Roadmap](../ROADMAP.md) · [Week 17 →](../week-17/)

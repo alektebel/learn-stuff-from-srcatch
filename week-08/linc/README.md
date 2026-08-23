@@ -55,7 +55,7 @@ again. ContextCite (next week) attributes *tokens*; this attributes
 python3 check.py          # 8 graded checks against YOUR code
 ```
 
-Do [`../provenance-semirings/`](../provenance-semirings/) first — the
+Do [`../provenance-semirings/`](../../week-06/provenance-semirings/) first — the
 last check imports it. s(CASP) is the richer engine; this prover is
 the one LINC actually calls (a FOL solver with a label). You will
 recognise the justification tree when you meet it.

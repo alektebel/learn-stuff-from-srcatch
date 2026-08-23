@@ -1,47 +1,46 @@
 # Week 15 · Nov 30–Dec 6, 2026
 
-> **The server and the protocols under it.**
-> Hold HTTP under load. Then DNS, SHA-256, the buses.
+> **Compilers, and a machine for them.**
+> The clearest MVP-then-limit-case ladder in the repo: it works on `1+2`, then a nested expression breaks the register allocator, then a branch breaks the GPU's lockstep assumption.
 
 ## Finish this week
 
-| Project | Hours | Track | Where it lives |
-|---|---|---|---|
-| `http-server/` | rest of 86 | core · spine | [`../week-01/http-server/`](../week-01/http-server/) |
-| `dns-server/` | 9 | full | [`../week-02/dns-server/`](../week-02/dns-server/) |
-| `cryptographic-library/` | 5 | full | [`../week-02/cryptographic-library/`](../week-02/cryptographic-library/) |
-| `communication-protocols/` | 34 | full | [`../week-02/communication-protocols/`](../week-02/communication-protocols/) |
+| Project | Hours | Track |
+|---|---|---|
+| [`firewall-from-scratch/`](firewall-from-scratch/) | 25 | full only |
+| [`c-compiler/`](c-compiler/) | 27 | core · spine |
+| [`compiler-and-vgpu/`](compiler-and-vgpu/) | 16 | core · spine |
+| [`quantum-computing-lang/`](quantum-computing-lang/) | 8 | full only |
 
-On the narrower tracks this same week is:
+**76 block hours**, plus the daily Lean slot (~8.4 h) = 84 h on the full track.
 
-core · spine: HTTP concurrency and keep-alive. full: the rest.
-
-The week folder may not contain these directories. That is fine —
-`progress.py` finds them, and the links above are where the files live.
+Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
 ## What to do, in order
 
-1. Keep-alive. `ab -n 10000 -c 100`.
-2. DNS A record. SHA-256 padding.
-3. UART → SPI → I2C → CAN.
+1. `firewall-from-scratch` first — raw sockets and packet parsing, the last purely-systems thing before compilers.
+2. `c-compiler` is the week's spine. **Get `int main(){return 2+3;}` compiling and running end to end on day one, THEN add features.** A compiler that compiles nothing on Sunday is the standard way this week fails.
+3. `compiler-and-vgpu` after it — one 32-bit ISA, two execution models. `python3 check.py` grades you.
+4. `quantum-computing-lang` is a palate cleanser: an interpreter over complex amplitudes.
 
 ## Done means
 
-- What broke at 100 concurrent connections, written down.
-- A start bit is a contract.
+- Your C compiler compiles a program with a loop, a function call and recursion, and the binary runs.
+- `week-15/compiler-and-vgpu/` prints 12/12.
+- You can explain why right-nested expressions spill registers and left-nested ones do not, and what a warp does at an `if` where lanes disagree.
 
 ## Every day
 
-1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
-2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
-3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — the journal post for today. The expected title is already there.
+1. **Implement** — longest block, first thing, hardest unfinished stub.
+2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap a passing test did not reveal.
+3. **Make it green** — `python3 check.py` where one exists.
+4. **Log, ten minutes** — one entry in [`../journal/`](../journal/).
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 15            # where you should be
-python3 ../progress.py --checks       # what actually passes
+python3 ../progress.py --week 15
+python3 ../progress.py --checks
 ```
 
 [← Week 14](../week-14/) · [Roadmap](../ROADMAP.md) · [Week 16 →](../week-16/)

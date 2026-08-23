@@ -1,46 +1,44 @@
 # Week 17 · Dec 14–Dec 20, 2026
 
-> **Haskell, then a real GPU.**
-> Sunday is for nvidia-smi, so start the driver before Monday.
+> **Patterns, light, and Haskell.**
+> The heaviest week, and the most arbitrary — three unrelated things sharing a slot because they are what is left. If the plan slips, this is the week to cut from, and `system-design` is the first candidate: `aws-from-scratch` covers much of it from the mechanisms up.
 
 ## Finish this week
 
-| Project | Hours | Track | Where it lives |
-|---|---|---|---|
-| `haskell-projects/` | 61 | full | [`../week-04/haskell-projects/`](../week-04/haskell-projects/) |
-| `cuda-from-scratch/` | 122 | core · spine | [`../week-09/cuda-from-scratch/`](../week-09/cuda-from-scratch/) |
-| `ml-inference/` | 137 | core | [`../week-10/ml-inference/`](../week-10/ml-inference/) |
+| Project | Hours | Track |
+|---|---|---|
+| [`system-design/`](system-design/) | 48 | full only |
+| [`ray-tracer/`](ray-tracer/) | 35 | full only |
+| [`haskell-projects/`](haskell-projects/) | 61 | full only |
 
-On the narrower tracks this same week is:
+**144 block hours**, plus the daily Lean slot (~8.4 h) = 152 h on the full track.
 
-core · spine: CUDA. core: ml-inference too. full: Haskell first.
-
-The week folder may not contain these directories. That is fine —
-`progress.py` finds them, and the links above are where the files live.
+Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
 ## What to do, in order
 
-1. Full: JSONParser, Calculator, BuildTool, WebScraper. Delete each `-- TODO`.
-2. Vector add, then tiled matmul. Profile every kernel.
-3. A latency harness. fp32 vs fp16 vs int8, latency AND accuracy.
+1. `system-design` in groups: caching, then queues, then reliability, then distribution, then the applications. Do `consistent_hash.py` without looking at week 10's version, then diff.
+2. `ray-tracer`: `vec.py` → `shapes.py` → `bvh.py` → `material.py` → `render.py`. **Predict what noise does from 16 to 64 samples before reading the table.**
+3. `haskell-projects` last: JSON parser first — parser combinators are the payoff — then the calculator, then the build tool. Delete each `-- TODO`.
 
 ## Done means
 
-- `nvidia-smi` works. A kernel ran.
-- The accuracy you paid for the bytes you saved.
+- `week-17/ray-tracer/` prints 6/6 and `render.ppm` opens in an image viewer.
+- You can say why a BVH is 1.5x at four objects and 12x at a thousand.
+- Your JSON parser round-trips a nested document with escapes and unicode.
 
 ## Every day
 
-1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
-2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
-3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — the journal post for today. The expected title is already there.
+1. **Implement** — longest block, first thing, hardest unfinished stub.
+2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap a passing test did not reveal.
+3. **Make it green** — `python3 check.py` where one exists.
+4. **Log, ten minutes** — one entry in [`../journal/`](../journal/).
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 17            # where you should be
-python3 ../progress.py --checks       # what actually passes
+python3 ../progress.py --week 17
+python3 ../progress.py --checks
 ```
 
 [← Week 16](../week-16/) · [Roadmap](../ROADMAP.md) · [Week 18 →](../week-18/)

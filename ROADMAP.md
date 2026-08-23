@@ -26,11 +26,11 @@ Read this first, because it changes what you decide.
 
 | | |
 |---|---|
-| Directories | **41** |
-| Implementable units left (stubs, `sorry`s, TODO markers) | **~2,590** |
-| Estimated effort | **~1,800 hours** |
+| Directories | **39** scheduled, 5 in `reference/` |
+| Implementable units left (stubs, `sorry`s, TODO markers) | **2,407** |
+| Estimated effort | **~1,320 hours** |
 | Weeks available | **18** |
-| Therefore | **~93 h/week on `full` — still not a plan, see the tracks** |
+| Therefore | **73 h/week on `full` — 10.5 hours a day, seven days a week, for 126 days** |
 
 Where the hours come from: the directories that state their own estimate in
 their README (`ESTIMATED TIME: 6-8 hours`, and so on) are used directly. The
@@ -39,8 +39,8 @@ rest are units × a rate calibrated against the ones that do state a number
 specific). `python3 progress.py` prints the same table any time you want to
 re-check it.
 
-**87 h/week is not a plan.** It is more than a full-time job with no weekends
-and no slack for a single bad day, and 1,570 hours is the *optimistic* end,
+**73 h/week is still not a plan.** It is more than a full-time job with no weekends
+and no slack for a single bad day, and 1,320 hours is the *optimistic* end,
 because none of it includes the day you lose to a CUDA driver. Attempting it is
 how people finish week 6 and stop.
 
@@ -51,9 +51,9 @@ feels like failure, and switching down in August is just planning.
 
 | Track | Directories | Hours | Per week | Per day | Who it is for |
 |---|---|---|---|---|---|
-| **full** | 41 | ~1,800 | 100 h | 14 h × 7 | This is your full-time job and you have no other commitments |
-| **core** | 23 | ~1,050 | 58 h | 9.5 h × 6, one day off | You have a job, and you are serious |
-| **spine** | 12 | ~495 | 28 h | 4.5 h × 6, one day off | You have a job and a life, and you would rather finish |
+| **full** | 39 | 1,320 | 73 h | 10.5 h × 7 | This is your full-time job and you have no other commitments |
+| **core** | 21 | 799 | 44 h | 7.5 h × 6, one day off | You have a job, and you are serious |
+| **spine** | 10 | 509 | 28 h | 4.5 h × 6, one day off | You have a job and a life, and you would rather finish |
 
 All three finish on 27 December. They differ only in what they contain.
 
@@ -65,29 +65,30 @@ the claim [`PHILOSOPHY.md`](PHILOSOPHY.md) makes about this repo. Core is
 heavier than it was before those three directories existed; that is the
 trade you made on 23 August.
 
-### What changed, and why the narrow tracks got heavier
+### What changed, and why every track got lighter
 
-Four directories were cut from this plan — `deepfake-creation`,
-`deepfake-detection`, `quantitative-trading` and `sgl-lang`, 220 hours — and five
-built to replace them: `database-engine`, `autograd`, `llm-from-scratch`, `raft`
-and `ray-tracer`, about 190 hours.
+The order now starts where the leverage is: **AWS in week 1, LLMs in week 2**,
+and the systems half — sockets, protocols, compilers, CUDA — moved to weeks
+13–18. That is a deliberate reversal of the usual advice and it has a real cost:
+you build a serving stack in week 4 having not yet written a socket server.
 
-The trade is deliberate. The four that left were the least transferable material
-in the repo: two of them teach one media pipeline, one teaches one financial
-domain, and `sgl-lang` is genuinely subsumed by `vllm-engine` plus
-`context-caching`. The five that arrived are all *substrates* — things that other
-directories in this repo are written on top of. You cannot reason about
-`context-caching` without having built attention, or about `dynamo-paper`'s
-refusal of consensus without having built consensus, or about `vllm-engine`'s
-block allocator without having built a pager.
+Five directories left the schedule for [`reference/`](reference/), 599 hours.
+That is what took the full track from 100 h/week to 73, `core` from 58 to 44,
+and `spine` from 12 directories to 10. Three of the five were design briefs or
+near-briefs with **no templates and no checker** — `vllm-engine` alone was 156
+hours of ungradeable work, the largest single allocation in the plan. They are
+now reading, which is what the inference curriculum this plan follows actually
+asks for.
 
-The consequence to notice: **`core` moved from 42 h/week to 45, and `spine` from
-21 to 27.** All four cut directories were on the full track only, so dropping
-them saved the narrow tracks nothing while the new material costs them
-something. `system-design` and `communication-protocols` came off `core` to
-absorb part of it — the first because `aws-from-scratch` covers the same ground
-from the mechanisms up, the second because framing a UART packet is not on the
-path to anything else here. That is a real cost, stated rather than hidden.
+Two more things worth knowing before you pick a track:
+
+- **No directory is split across weeks any more.** Previously a project could
+  span three, so week folders and track weeks drifted apart and you had to
+  consult `progress.py` to know where you were. Now the folder is both a name
+  and a date.
+- **The AWS drill starts in week 1 and the AWS certification block is week 12.**
+  That gap is intentional: quotas and service names cannot be crammed, and the
+  graded block is worth most when the recall is already there.
 
 ---
 
@@ -185,90 +186,76 @@ And one rule per week:
 ## The 18 weeks
 
 Hours are the **full** track. `C` marks a directory in `core`, `S` in `spine`.
-A directory spanning several weeks is listed in each of them.
+Each directory appears in exactly one week now — the schedule no longer splits
+a project across weeks, so a week folder is both a name and a date.
 
-Lean sits outside the table on purpose: **504 proof obligations, ~8.4 h/week,
-every week of the full track**, as a fixed daily slot rather than a block. The
-`block h` column below therefore reads about 79; 79 + 8.4 is the 87 h headline.
-Proofs are the one thing here that goes better in ninety-minute pieces every day
-than in a marathon, and it keeps a hard, unrelated muscle warm while the rest of
-the plan is C and CUDA.
+Lean sits outside the table: **504 proof obligations, ~8.4 h/week**, as a fixed
+daily slot. The AWS drill sits outside it too — see the note below the table.
 
-### Phase 1 · AWS — week 1
+| [**1**](week-01/) | Aug 24–Aug 30 | AWS, from its mechanisms up | `aws-from-scratch` 42 **CS** | 42 |
+| [**2**](week-02/) | Aug 31–Sep 6 | LLMs | `autograd` 30 **CS** · `llm-from-scratch` 55 **CS** | 85 |
+| [**3**](week-03/) | Sep 7–Sep 13 | Teaching a model: distil, then reward | `rl-posttraining` 30 **C** · `context-caching` 28 **C** | 58 |
+| [**4**](week-04/) | Sep 14–Sep 20 | Serving it yourself | `inference-from-scratch` 60 **CS** · `deploy-and-debug` 10 **C** | 70 |
+| [**5**](week-05/) | Sep 21–Sep 27 | Attribution, on a real task | `contextcite` 13 **C** · `spade` 16 **C** · `mars-sql` 20 **C** | 49 |
+| [**6**](week-06/) | Sep 28–Oct 4 | Provenance, algebraically | `provenance-semirings` 45 **C** | 45 |
+| [**7**](week-07/) | Oct 5–Oct 11 | Goal-directed reasoning | `scasp` 45 | 45 |
+| [**8**](week-08/) | Oct 12–Oct 18 | Parser in front, prover behind | `linc` 30 · `distributed-training` 10 | 40 |
+| [**9**](week-09/) | Oct 19–Oct 25 | A database from the disk up | `database-engine` 50 **CS** | 50 |
+| [**10**](week-10/) | Oct 26–Nov 1 | Consensus, and its refusal | `dynamo-paper` 21 **CS** · `raft` 30 **C** | 51 |
+| [**11**](week-11/) | Nov 2–Nov 8 | Byzantine, and open membership | `blockchain-from-scratch` 55 **C** | 55 |
+| [**12**](week-12/) | Nov 9–Nov 15 | AWS certification block | `aws-certification` 35 **C** | 35 |
+| [**13**](week-13/) | Nov 16–Nov 22 | Sockets | `bash-from-scratch` 8 **C** · `http-server` 86 **CS** | 94 |
+| [**14**](week-14/) | Nov 23–Nov 29 | What a byte stream carries | `dns-server` 9 · `cryptographic-library` 5 · `communication-protocols` 34 · `toralizer` 21 | 69 |
+| [**15**](week-15/) | Nov 30–Dec 6 | Compilers, and a machine for them | `firewall-from-scratch` 25 · `c-compiler` 27 **CS** · `compiler-and-vgpu` 16 **CS** · `quantum-computing-lang` 8 | 76 |
+| [**16**](week-16/) | Dec 7–Dec 13 | CUDA | `cuda-from-scratch` 122 **CS** | 122 |
+| [**17**](week-17/) | Dec 14–Dec 20 | Patterns, light, and Haskell | `system-design` 48 · `ray-tracer` 35 · `haskell-projects` 61 | 144 |
+| [**18**](week-18/) | Dec 21–Dec 27 | The long tail | `spectral-graphs` 5 · `sas-lineage-tool` 8 · `web-scraping` 6 · `ml-in-production` 8 · `mlops` 12 | 39 |
 
-The cloud as eight mechanisms and a bill. Do the whole directory before you
-open `autograd/`. `iam.py` is always first; everything else is gated by it.
+**1,169 block hours.** Plus Lean, 1,320.
 
-| Week | Dates | Work | block h |
-|---|---|---|---|
-| [**1**](week-01/) | Aug 24–Aug 30 | `aws-from-scratch` 42 **CS** · start `autograd` if 24/24 lands early | 42+ |
+### Two things run daily, outside the table
 
-**Done means:** 24/24 on `python3 check.py`, and you predicted the
-provisioned-vs-on-demand DynamoDB crossover *before* running `optimize.py`.
+- **`lean-proofs/`** — ~8.4 h/week, every week. Proofs go better in
+  ninety-minute pieces than in a marathon, and it keeps an unrelated muscle warm
+  while the rest of the plan is C and CUDA.
+- **`week-12/aws-certification/drill.py`** — from **week 1**, not week 12.
+  Quotas, defaults, service names and limits are arbitrary facts: not derivable,
+  only memorable. Spaced repetition starting in August is the difference between
+  passing and not; the graded block in week 12 is the other half and is the half
+  this repo is actually good at.
 
-### Phase 2 · LLM work — weeks 2–6
+### What is not on the schedule
 
-Gradients, a transformer, distillation, the cache in front of attention, then
-a serving stack on a simulated GPU. Do not open `vllm-engine/` until step 11
-of `inference-from-scratch`.
+Five directories moved to [`reference/`](reference/) — **599 hours removed**,
+which is what takes the plan from 100 h/week to 73.
 
-| Week | Dates | Work | block h |
-|---|---|---|---|
-| [**2**](week-02/) | Aug 31–Sep 6 | `autograd` 30 **CS** · `llm-from-scratch` tokenizer + attention **CS** | — |
-| [**3**](week-03/) | Sep 7–Sep 13 | `llm-from-scratch` transformer, train, sample, `distill.py` **CS** | — |
-| [**4**](week-04/) | Sep 14–Sep 20 | `context-caching` 28 **CS** · start `inference-from-scratch` **C** | — |
-| [**5**](week-05/) | Sep 21–Sep 27 | `inference-from-scratch` steps 1–6 **C** | — |
-| [**6**](week-06/) | Sep 28–Oct 4 | `inference-from-scratch` steps 7–12 **C** · `deploy-and-debug` 10 **CS** | — |
+| Directory | Was | Why |
+|---|---|---|
+| `ml-inference` | 137 h | 6 stubs, no checker. `week-04/inference-from-scratch/` does the same ground in 60 h with 12 graded checks. |
+| `vllm-engine` | 156 h | A design brief. No templates, nothing gradeable. |
+| `tensorrt-inference` | 109 h | The same, and vendor-specific. |
+| `world-models` | 106 h | A genuine cut. GPU-bound, no checker. |
+| `diffusion-models` | 91 h | The same cut, same reasons. |
 
-**Done means:** 10/10 autograd, 15/15 llm (including distillation), 16/16
-context-caching with bit-identical cached/uncached output, 12/12 inference.
+The first three are **reading**, not a deletion, and the argument is step 11 of
+the inference curriculum this plan follows: *only then go read vLLM, SGLang and
+TensorRT-LLM, and compare their design decisions with yours.* That is a weekend
+with the source open after week 4 is green — not 402 hours of building, and far
+more valuable once you have something to compare against.
 
-### Phase 3 · Provenance-reasoning — weeks 7–10
+### The shape of the order
 
-An LLM answer is traceable when it is a proof object. It is replicable
-when the prover is deterministic given the parse. The LLM is only
-allowed to parse — and in this repo it is a fault-injected stand-in,
-because there is no model here that can emit FOL.
+**Weeks 1–12 are the ML and reasoning half; weeks 13–18 are the systems half.**
+That is a deliberate reversal of the usual advice, and it has a cost worth
+naming: you build a serving stack in week 4 having not yet written a socket
+server, which arrives in week 13. The trade is that AWS and LLMs are where your
+leverage is now, and the systems work is the part that keeps its value if the
+plan slips.
 
-| Week | Dates | Work | block h |
-|---|---|---|---|
-| [**7**](week-07/) | Oct 5–Oct 11 | `provenance-semirings` 45 **C** — evaluate once in ℕ[X] | 45 |
-| [**8**](week-08/) | Oct 12–Oct 18 | `scasp` 45 **C** — unification, duals, even loops, the tree | 45 |
-| [**9**](week-09/) | Oct 19–Oct 25 | `linc` 30 **C** — pluggable parse, prover, sweep the error rate | 30 |
-| [**10**](week-10/) | Oct 26–Nov 1 | `contextcite` 13 **C** · `spade` 16 **C** · `mars-sql` 20 **C** | 49 |
-
-**Done means:** 8/8 on the semirings (the homomorphism holds), 8/8 on
-s(CASP) (opus flies; tweety does not; the even loop is a tree), 8/8 on
-LINC (gold is 3/3; the sweep is monotone; lineage of p1 is `{p0,p1,p2}`
-via `specialize`). Then 14/14, 8/8, 8/8 on the citation layer.
-
-Spine skips this phase and jumps to the pager in week 11.
-
-### Phase 4 · Distributed training, then a database — weeks 11–12
-
-| Week | Dates | Work | block h |
-|---|---|---|---|
-| [**11**](week-11/) | Nov 2–Nov 8 | `distributed-training` 10 **C** · `database-engine` pager only **CS** | — |
-| [**12**](week-12/) | Nov 9–Nov 15 | `database-engine` MVCC, SQL, planner, executor **CS** | — |
-
-**Done means:** the data-parallel trainer runs; `database-engine` is 18/18.
-
-### Phase 5 · The rest — weeks 13–18
-
-Compressed: three weeks of provenance took three weeks from the tail.
-Dynamo and Raft still sit next to the database. The C / CUDA / vendor
-stack is now the first thing you cut if you slip — not the proof stack.
-
-| Week | Dates | Work | block h |
-|---|---|---|---|
-| [**13**](week-13/) | Nov 16–Nov 22 | `dynamo-paper` 21 **CS** · `raft` 30 **C** | 51 |
-| [**14**](week-14/) | Nov 23–Nov 29 | `bash-from-scratch` 8 **CS** · `http-server` start **CS** | — |
-| [**15**](week-15/) | Nov 30–Dec 6 | finish `http-server` · `dns-server` · crypto · protocols | — |
-| [**16**](week-16/) | Dec 7–Dec 13 | `c-compiler` **CS** · `compiler-and-vgpu` **CS** · firewall · toralizer | — |
-| [**17**](week-17/) | Dec 14–Dec 20 | Haskell · system-design · `cuda-from-scratch` **CS** · `ml-inference` **C** | — |
-| [**18**](week-18/) | Dec 21–Dec 27 | TensorRT · vLLM **C** · world-models · diffusion · the tail | — |
-
----
+If it does slip, **week 17 is the week to cut from** — `system-design` (48 h),
+`ray-tracer` (35 h) and `haskell-projects` (61 h) share a slot because they are
+what was left, not because they belong together. `system-design` goes first;
+`aws-from-scratch` covers much of it from the mechanisms up.
 
 ## Scoring yourself
 

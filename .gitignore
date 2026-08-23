@@ -12,7 +12,7 @@ lexer
 sha256
 quantum
 calculator
-week-09/cuda-from-scratch/cuda-compiler/cuda_compiler
+week-16/cuda-from-scratch/cuda-compiler/cuda_compiler
 
 # Python
 __pycache__/
@@ -61,12 +61,12 @@ output.txt
 log.txt
 
 # Diffusion models
-week-17/diffusion-models/data/
-week-17/diffusion-models/checkpoints/
-week-17/diffusion-models/samples/
-week-17/diffusion-models/logs/
-week-17/diffusion-models/*.pt
-week-17/diffusion-models/*.pth
+reference/diffusion-models/data/
+reference/diffusion-models/checkpoints/
+reference/diffusion-models/samples/
+reference/diffusion-models/logs/
+reference/diffusion-models/*.pt
+reference/diffusion-models/*.pth
 
 # Ray tracer output
-week-08/ray-tracer/**/*.ppm
+week-17/ray-tracer/**/*.ppm

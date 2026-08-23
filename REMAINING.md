@@ -39,13 +39,13 @@ these checks are passable at all.
 
 | Directory | Files | Stubs | Checks | Verified |
 |---|---|---|---|---|
-| `week-07/llm-from-scratch/distill.py` | 1 | 12 | 7 | no |
-| `week-08/provenance-semirings/` | 6 | 76 | 8 | no |
-| `week-08/scasp/` | 6 | 22 | 8 | no |
+| `week-02/llm-from-scratch/distill.py` | 1 | 12 | 7 | no |
+| `week-06/provenance-semirings/` | 6 | 76 | 8 | no |
+| `week-07/scasp/` | 6 | 22 | 8 | no |
 | `week-08/linc/` | 7 | 22 | 8 | no |
-| `week-08/spade/` | 5 | 19 | 8 | no |
-| `week-08/mars-sql/` | 4 | 15 | 8 | no |
-| `week-10/inference-from-scratch/` | 12 | 41 | 12 | no |
+| `week-05/spade/` | 5 | 19 | 8 | no |
+| `week-05/mars-sql/` | 4 | 15 | 8 | no |
+| `week-04/inference-from-scratch/` | 12 | 41 | 12 | no |
 | | | **207** | **59** | |
 
 **Why this is blocking and not pedantry.** An impossible check is worse than no
@@ -65,7 +65,7 @@ Order to do it in: `provenance-semirings` (76 stubs, the most exposed), then
 
 ## 1b. One check grades recall rather than a mechanism
 
-`week-07/llm-from-scratch/check.py` step 14 — *"MiniLM, GKD, SDPO, OPSD — the
+`week-02/llm-from-scratch/check.py` step 14 — *"MiniLM, GKD, SDPO, OPSD — the
 decisions"* — grades `paper_choices()`, a dict of strings. It tests whether you
 remember what a paper said. Every other check in this repo tests whether a
 mechanism you built behaves correctly, and that difference is most of why the
@@ -181,7 +181,7 @@ would make it runnable.
 - **`provenance-reasoning/` (mine) is superseded but not merged.** Five
   templates *and* five working solutions with running demos, in
   `.../scratchpad/superseded/provenance-reasoning/`. It overlaps
-  `week-08/provenance-semirings/` and `week-08/linc/`. Worth mining for two
+  `week-06/provenance-semirings/` and `week-08/linc/`. Worth mining for two
   things the shipped version does not have: the **homomorphism/universality
   check** (evaluate a query once in `N[X]`, derive nine semantics by mapping the
   answer — the property that makes provenance one feature instead of nine), and

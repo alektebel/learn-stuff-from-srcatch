@@ -1,46 +1,45 @@
 # Week 2 · Aug 31–Sep 6, 2026
 
-> **Gradients from nothing, then a tokenizer.**
-> The highest-leverage thirty hours in the repo, then BPE in rank order.
+> **LLMs.**
+> The arithmetic under everything downstream, then a working transformer on top of it. Eighty-five hours and the heaviest week in the plan — it is heavy because `autograd` has to be finished before `llm-from-scratch` can start.
 
 ## Finish this week
 
-| Project | Hours | Track | Where it lives |
-|---|---|---|---|
-| `autograd/` | 30 | core · spine | [`../week-07/autograd/`](../week-07/autograd/) |
-| `llm-from-scratch/` | start of 55 | core · spine | [`../week-07/llm-from-scratch/`](../week-07/llm-from-scratch/) |
+| Project | Hours | Track |
+|---|---|---|
+| [`autograd/`](autograd/) | 30 | core · spine |
+| [`llm-from-scratch/`](llm-from-scratch/) | 55 | core · spine |
 
-On the narrower tracks this same week is:
+**85 block hours**, plus the daily Lean slot (~8.4 h) = 93 h on the full track.
 
-core · spine: autograd 30 h, then tokenizer.py.
-
-The week folder may not contain these directories. That is fine —
-`progress.py` finds them, and the links above are where the files live.
+Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
 ## What to do, in order
 
-1. `tensor.py` first. Do not move on until every gradient matches central differences.
-2. Then `nn.py`, `optim.py`, `train.py`, `generative.py`. Aim at 10/10.
-3. Saturday: `tokenizer.py` — merges in **rank order**, not position order.
+1. `autograd/tensor.py` first: reverse mode over arrays, topological sort, gradient accumulation, `_unbroadcast`. **Do not move on until every operation's gradient matches central differences.**
+2. Then `nn.py`, `optim.py`, `train.py`, `generative.py`. 10/10 before you open the next directory.
+3. `llm-from-scratch/tokenizer.py` — BPE, merges applied in **rank order**. Pure string processing, so it needs none of the above.
+4. Then `attention.py` → `transformer.py` → `train.py` → `sample.py`.
+5. `distill.py` last: forward vs reverse KL, on-policy vs off-policy, the privilege illusion. It is the bridge into week 3.
 
 ## Done means
 
-- `autograd` is 10/10.
-- A tensor used twice gets the SUM of both paths.
-- `decode(encode(text))` is exact, and reversing merge rank changes the tokenisation.
+- Two checkers green: 10/10 and 15/15.
+- A tensor used twice gets the SUM of both paths, and you can say why running `backward` before the topological sort finishes trains a slightly worse model forever without ever raising an error.
+- You can demonstrate permutation-equivariance by shuffling the input of a transformer with its positional information removed.
 
 ## Every day
 
-1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
-2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
-3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — the journal post for today. The expected title is already there.
+1. **Implement** — longest block, first thing, hardest unfinished stub.
+2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap a passing test did not reveal.
+3. **Make it green** — `python3 check.py` where one exists.
+4. **Log, ten minutes** — one entry in [`../journal/`](../journal/).
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 2            # where you should be
-python3 ../progress.py --checks       # what actually passes
+python3 ../progress.py --week 2
+python3 ../progress.py --checks
 ```
 
 [← Week 1](../week-01/) · [Roadmap](../ROADMAP.md) · [Week 3 →](../week-03/)

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Verify a checker two ways, without shipping any answers.
 
-    python3 tools/verify_checks.py week-08/spade --references ~/refs/spade
-    python3 tools/verify_checks.py week-08/spade --inject injections/spade.py
+    python3 tools/verify_checks.py week-05/spade --references ~/refs/spade
+    python3 tools/verify_checks.py week-05/spade --inject injections/spade.py
 
 SKELETON — not implemented. See TODO.md step 1.
 

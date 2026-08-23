@@ -1,45 +1,45 @@
 # Week 3 · Sep 7–Sep 13, 2026
 
-> **A transformer, then distillation.**
-> Build the model, watch the causal-mask ablation, then teach a smaller one.
+> **Teaching a model: distil, then reward.**
+> Two ways to supervise a model that already runs. A teacher gives you a full distribution at every token; RL gives you one scalar at the end of the episode. Same axis, opposite ends.
 
 ## Finish this week
 
-| Project | Hours | Track | Where it lives |
-|---|---|---|---|
-| `llm-from-scratch/` | rest of 55 | core · spine | [`../week-07/llm-from-scratch/`](../week-07/llm-from-scratch/) |
+| Project | Hours | Track |
+|---|---|---|
+| [`rl-posttraining/`](rl-posttraining/) | 30 | core |
+| [`context-caching/`](context-caching/) | 28 | core |
 
-On the narrower tracks this same week is:
+**58 block hours**, plus the daily Lean slot (~8.4 h) = 66 h on the full track.
 
-core · spine: attention through distill.py.
-
-The week folder may not contain these directories. That is fine —
-`progress.py` finds them, and the links above are where the files live.
+Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
 ## What to do, in order
 
-1. `attention.py` — causal mask and sqrt(d_k). Measure the entropy table.
-2. `transformer.py`, `train.py`, `sample.py`. Run the mask ablation on purpose.
-3. `distill.py` — forward vs reverse KL, on vs off policy, OPD vs RL vs SFT, OPSD, Privilege Illusion.
+1. **Write the nine checks in `rl-posttraining/check.py` first.** The bodies are not written; each docstring says what to assert and names the weak version to avoid. Then implement against them.
+2. `policy_gradient.py` against finite differences before anything else — every later claim assumes it.
+3. Then `baselines.py`, `kl_estimators.py` (k3 is the only one both unbiased and non-negative), `ppo.py`, `grpo.py`, `async_rl.py`, `reward_hacking.py`, `dpo.py`.
+4. `context-caching/kv_cache.py` next, and **do not move past it until cached and uncached attention agree to zero** — not small, zero. You have your own attention from week 2 to check it against.
+5. Then the prefix, radix, paged, semantic and routing caches.
 
 ## Done means
 
-- `python3 check.py` prints 15/15.
-- Removing the causal mask made loss better and the model worthless.
-- You can separate a privilege tell from a capability token.
+- Two checkers green: 9/9 and 16/16.
+- `serving_demo.py` reports bit-identical output with the cache on and off. If it does not, the cache is a bug, not a cache.
+- You can say why k1 goes negative and k3 does not, and why that decided it.
 
 ## Every day
 
-1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
-2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
-3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — the journal post for today. The expected title is already there.
+1. **Implement** — longest block, first thing, hardest unfinished stub.
+2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap a passing test did not reveal.
+3. **Make it green** — `python3 check.py` where one exists.
+4. **Log, ten minutes** — one entry in [`../journal/`](../journal/).
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 3            # where you should be
-python3 ../progress.py --checks       # what actually passes
+python3 ../progress.py --week 3
+python3 ../progress.py --checks
 ```
 
 [← Week 2](../week-02/) · [Roadmap](../ROADMAP.md) · [Week 4 →](../week-04/)

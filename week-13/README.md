@@ -1,45 +1,43 @@
 # Week 13 · Nov 16–Nov 22, 2026
 
-> **Same partition, opposite answers.**
-> One machine ACID, then the paper that throws it away, then the consensus it refuses.
+> **Sockets.**
+> The systems half of the plan starts here. Everything you have built for twelve weeks sits on the other side of a file descriptor; this is that side.
 
 ## Finish this week
 
-| Project | Hours | Track | Where it lives |
-|---|---|---|---|
-| `dynamo-paper/` | 21 | core · spine | [`../week-05/dynamo-paper/`](../week-05/dynamo-paper/) |
-| `raft/` | 30 | core | [`../week-05/raft/`](../week-05/raft/) |
+| Project | Hours | Track |
+|---|---|---|
+| [`bash-from-scratch/`](bash-from-scratch/) | 8 | core |
+| [`http-server/`](http-server/) | 86 | core · spine |
 
-On the narrower tracks this same week is:
+**94 block hours**, plus the daily Lean slot (~8.4 h) = 102 h on the full track.
 
-core: both. spine: Dynamo only.
-
-The week folder may not contain these directories. That is fine —
-`progress.py` finds them, and the links above are where the files live.
+Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
 ## What to do, in order
 
-1. Preference lists and vector clocks. N/R/W, sloppy quorum, hinted handoff.
-2. Raft: read Figure 8 before `replication.py`.
-3. Write the Raft-versus-Dynamo table in the journal.
+1. `bash-from-scratch/shell.c` first — two days. `fork`, `exec`, `wait`, pipes, signals, exit statuses.
+2. Then `http-server` for the rest of the week: accept loop, then request parsing, then static files, then a real 404 — in that order, running a real browser against it after each one.
+3. Concurrency and keep-alive last, and do not stop until it survives load.
 
 ## Done means
 
-- 17/17 and 7/7 if you can.
-- The table exists.
+- `./shell` runs `ls | grep x > out.txt` and survives `Ctrl-C`.
+- A browser renders a page with its CSS and images, each with the right `Content-Type`.
+- `ab -n 10000 -c 100` completes with zero failed requests.
 
 ## Every day
 
-1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
-2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
-3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — the journal post for today. The expected title is already there.
+1. **Implement** — longest block, first thing, hardest unfinished stub.
+2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap a passing test did not reveal.
+3. **Make it green** — `python3 check.py` where one exists.
+4. **Log, ten minutes** — one entry in [`../journal/`](../journal/).
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 13            # where you should be
-python3 ../progress.py --checks       # what actually passes
+python3 ../progress.py --week 13
+python3 ../progress.py --checks
 ```
 
 [← Week 12](../week-12/) · [Roadmap](../ROADMAP.md) · [Week 14 →](../week-14/)

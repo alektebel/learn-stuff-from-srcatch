@@ -1,47 +1,46 @@
 # Week 18 · Dec 21–Dec 27, 2026
 
-> **Vendor engines, world models, the tail.**
-> Re-read your paged_kv.py before you open vLLM. Reserve the last day.
+> **The long tail.**
+> Five small directories, deliberately. Finishing on five completions beats finishing mid-way through something large.
 
 ## Finish this week
 
-| Project | Hours | Track | Where it lives |
-|---|---|---|---|
-| `tensorrt-inference/` | 109 | full | [`../week-12/tensorrt-inference/`](../week-12/tensorrt-inference/) |
-| `vllm-engine/` | 156 | core | [`../week-13/vllm-engine/`](../week-13/vllm-engine/) |
-| `world-models/` | 106 | full | [`../week-16/world-models/`](../week-16/world-models/) |
-| `diffusion-models/` | 91 | full | [`../week-17/diffusion-models/`](../week-17/diffusion-models/) |
+| Project | Hours | Track |
+|---|---|---|
+| [`spectral-graphs/`](spectral-graphs/) | 5 | full only |
+| [`sas-lineage-tool/`](sas-lineage-tool/) | 8 | full only |
+| [`web-scraping/`](web-scraping/) | 6 | full only |
+| [`ml-in-production/`](ml-in-production/) | 8 | full only |
+| [`mlops/`](mlops/) | 12 | full only |
 
-On the narrower tracks this same week is:
+**39 block hours**, plus the daily Lean slot (~8.4 h) = 47 h on the full track.
 
-core: vLLM if you have anything left. full: the rest, then five small directories. Last day: every checker.
-
-The week folder may not contain these directories. That is fine —
-`progress.py` finds them, and the links above are where the files live.
+Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
 ## What to do, in order
 
-1. TensorRT against the guide, then vLLM Phase 1. Fork still costs zero.
-2. World-models VAE (you measured this in autograd). Diffusion forward process first, analytically.
-3. Five small wins. Last day: every checker. Re-read the journal from 23 August.
+1. `spectral-graphs`, then `sas-lineage-tool`, then `web-scraping`, then `ml-in-production`, then `mlops` — a day or less each.
+2. Then go back to [`../reference/`](../reference/) and write the comparison you have been owed since week 4: your scheduler and paged allocator against vLLM's, your batching against TensorRT-LLM's.
+3. **Reserve the last day.** Run every checker in the repo, re-read the journal from week 1, and write the closing entry: what you can now re-derive that you could not in August.
 
 ## Done means
 
-- What you can re-derive today that you could not on 23 August.
-- The journal is closed.
+- `python3 ../progress.py --track <yours> --checks` reports every checker passing.
+- A written comparison of your serving stack against the production ones.
+- A closing journal entry. It is the only artifact of these eighteen weeks that will still be useful in a year.
 
 ## Every day
 
-1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
-2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
-3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — the journal post for today. The expected title is already there.
+1. **Implement** — longest block, first thing, hardest unfinished stub.
+2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap a passing test did not reveal.
+3. **Make it green** — `python3 check.py` where one exists.
+4. **Log, ten minutes** — one entry in [`../journal/`](../journal/).
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 18            # where you should be
-python3 ../progress.py --checks       # what actually passes
+python3 ../progress.py --week 18
+python3 ../progress.py --checks
 ```
 
 [← Week 17](../week-17/) · [Roadmap](../ROADMAP.md)
