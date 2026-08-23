@@ -336,13 +336,107 @@ arbitrary half and is **not** graded.
 
 ---
 
+## 11. Deploy it for real · ~20 h + a real account · SKELETON IN PLACE
+
+[`week-12/aws-deploy/`](week-12/aws-deploy/) — 5 files, 42 stubs, 10 checks
+named and unwritten, plus [`RUNBOOK.md`](week-12/aws-deploy/RUNBOOK.md) which is
+deliberately **not** graded.
+
+`aws-from-scratch` says of itself: *"Not API-compatible. No boto3 surface, no
+XML, no signatures, no regions."* So after week 1 you can derive why a hot
+partition key throttles an idle-looking table, and you cannot run
+`aws dynamodb put-item`. The "200 services reduce to 8 mechanisms" argument
+holds for understanding and for the exams, and does **not** hold for shipping.
+
+### 11a — the offline half, graded
+
+- [ ] **11.1** Write the ten checks first. `check_no_long_lived_keys` is worth
+      more than the other nine together — it is the mistake that is both
+      expensive and public.
+- [ ] **11.2** `credentials.py` — resolution order (flags → env → profile →
+      container role → instance role), role assumption, session expiry.
+      `redact` must never return a full secret, including in an exception.
+- [ ] **11.3** `policy.py` — granted-minus-needed. Include a policy that is
+      **tight on actions and wide on `Resource`**; a check comparing only
+      action lists passes that one, and that one is the real-world case.
+- [ ] **11.4** `policy.py` — wildcards on writes, tolerated on explicit reads.
+      Reuse week 1's evaluation rule: an explicit Deny still wins, so a wildcard
+      Allow under a Deny boundary is not a finding.
+- [ ] **11.5** `template.py` — dependency order including **implicit**
+      references inside properties, not just `DependsOn`. Explicit-only is the
+      version that passes tests and fails in production. Cycles must be
+      reported, not silently edge-dropped.
+- [ ] **11.6** `template.py` — inject a failure at each position in the apply
+      order; the rollback must remove exactly what was created, no more and no
+      less. Then assert no teardown orphans, **including retain-policy
+      resources** — those are the ones that quietly keep billing.
+- [ ] **11.7** `guard.py` — `bills_while_idle` names the per-hour resources
+      (NAT gateway, unattached elastic IP, load balancer, provisioned IOPS, idle
+      database) and not the per-request ones. Verify rates against the current
+      price sheet; the numbers move, the categories do not.
+- [ ] **11.8** `guard.py` — an alarm that fires monthly cannot catch a resource
+      that bills hourly. Assert `alarm_before_spend` is False when the forecast
+      crosses the limit faster than the alarm period can detect it.
+- [ ] **11.9** `deploy.py` — fail at every transition and assert a safe terminal
+      state each time, including the nasty one: health check passes, then fails
+      after promotion. A pipeline never failed on purpose has not been tested.
+- [ ] **11.10** `deploy.py` — the gate rejects a 200 serving the **wrong
+      content**, and waits out a cold start rather than failing it.
+
+### 11b — the real-account half, not graded
+
+Follow [`RUNBOOK.md`](week-12/aws-deploy/RUNBOOK.md) in order. Phase 0 is marked
+DO NOT SKIP because the two ways this goes badly — a leaked credential and a
+forgotten hourly resource — are both cheap to prevent now.
+
+- [ ] **11.11 Phase 0, before any other AWS work in this repo.** Root MFA then
+      never touch root; a budget alarm on **forecast** as well as actual, tested
+      by setting it to $0.01 and receiving the mail; IAM Identity Center rather
+      than IAM users, so credentials are short-lived by default; `~/.aws/` in
+      your global gitignore; a pre-commit secret scanner. **No long-lived access
+      keys, ever.**
+- [ ] **11.12 Phase 1** — CLI and boto3. `aws sts get-caller-identity` is the
+      first thing to run whenever something is mysteriously denied. Read errors
+      by `Error.Code`; the code is stable, the message is not.
+- [ ] **11.13 Phase 1** — the read-only tour across the eight services from week
+      1, comparing each real response shape to your toy version. This is the
+      hour where week 1 pays off.
+- [ ] **11.14 Phase 2** — S3 + CloudFront by CLI, broken on purpose (wrong
+      content type, missing index document, a cache serving the old file), then
+      deleted and rebuilt identically from IaC. Time both.
+- [ ] **11.15 Phase 3** — Amplify: a build spec, a push-to-deploy branch, a
+      **deliberately broken build** read from the log, a custom domain with an
+      hour budgeted for DNS. Then enumerate what Amplify provisioned on your
+      behalf and run its service role through 11.3.
+- [ ] **11.16 Phase 4** — API Gateway → Lambda → DynamoDB and a Cognito
+      authorizer, all from IaC, none from the console. **Do not add a NAT
+      gateway** unless you have proved you need one; use a VPC endpoint, which
+      is the crossover you already derived in `optimize.py`.
+- [ ] **11.17 Phase 5** — deploy a bad version and roll back, for real, timed.
+      Cause a DynamoDB throttle with a hot partition key and watch the alarm you
+      set. Read the bill line by line; every line should be a resource you can
+      name.
+- [ ] **11.18 Phase 6 — the test.** Destroy everything, confirm zero new spend
+      after 24 h, then **rebuild the whole stack from code in under an hour with
+      no console clicks**, and tear it down again. Twice. That is the only
+      claim here that cannot be faked, and it is what "I control this" means.
+- [ ] **11.19** Standing rules afterwards: nothing exists that is not in code;
+      check the bill weekly, not monthly; a credential on disk is an incident;
+      tear down what you are not using, because the free tier expires twelve
+      months in on a date you will not be watching for.
+
+---
+
 ## Last: the decision that is not a task
 
 The full track reads **41 directories, 1,799 h, 100 h/week**, up from 87 two
 commits ago, with weeks 14–18 holding 900 h between them. The twelve-week,
 ten-project cut discussed on 23 Aug was never applied.
 
-Every step above adds roughly **152 hours** (≈40 for 1–6, 55 for the blockchain,
-22 for the three AWS services, 35 for the certification layer) plus a daily
-drill, and removes none. Nothing in this file fixes the number,
+Every step above adds roughly **172 hours** (≈40 for 1–6, 55 for the blockchain,
+22 for the three AWS services, 35 for the certification layer, 20 for the deploy
+layer) plus a daily drill and a real AWS bill, and removes none.
+
+The schedule itself now reads 39 directories, 1,320 h, 73 h/week after moving
+599 h to `reference/`. These steps put roughly a quarter of that back. Nothing in this file fixes the number,
 and nothing should until you decide what the plan actually is.
