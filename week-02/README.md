@@ -7,20 +7,20 @@
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| `http-server/` | 13 of 86 | core · spine | [`../week-01/http-server/`](../week-01/http-server/) |
+| `http-server/` | 15 of 86 | core · spine | [`../week-01/http-server/`](../week-01/http-server/) |
 | [`dns-server/`](dns-server/) | 9 | full only | here |
 | [`cryptographic-library/`](cryptographic-library/) | 5 | full only | here |
-| [`communication-protocols/`](communication-protocols/) | 34 | core | here |
-| [`toralizer/`](toralizer/) | 19 of 21 | full only | here |
+| [`communication-protocols/`](communication-protocols/) | 34 | full only | here |
+| [`toralizer/`](toralizer/) | 16 of 21 | full only | here |
 
-**80 block hours**, plus the daily Lean slot (~8.4 h) = 88 h on the full track.
+**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
 
 On the narrower tracks this same week is:
 
 | Track | This week | Block h |
 |---|---|---|
-| **core** | `http-server` 42 h | 42 |
-| **spine** | `http-server` 21 h | 21 |
+| **core** | `http-server` 45 h | 45 |
+| **spine** | `http-server` 27 h | 27 |
 
 The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
 
@@ -48,8 +48,8 @@ The narrower tracks move through the same order more slowly and skip the directo
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 2    # where the plan says you should be
-python3 ../progress.py --checks    # what actually passes
+python3 ../progress.py --week 2            # where you should be
+python3 ../progress.py --checks       # what actually passes
 ```
 
 [← Week 1](../week-01/) · [Roadmap](../ROADMAP.md) · [Week 3 →](../week-03/)

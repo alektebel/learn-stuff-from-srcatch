@@ -1,36 +1,37 @@
 # Week 15 · Nov 30–Dec 6, 2026
 
-> **World models.**
-> The recurrent model, the controller, and then Dreamer.
+> **Finish vLLM, then training at scale.**
+> The pivot from serving to training. Ten weeks of making inference fast, and now the other half of the problem.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| [`world-models/`](world-models/) | 60 of 106 | full only | here |
-| `diffusion-models/` | 21 of 91 | full only | [`../week-16/diffusion-models/`](../week-16/diffusion-models/) |
+| `vllm-engine/` | 70 of 156 | core | [`../week-13/vllm-engine/`](../week-13/vllm-engine/) |
+| [`distributed-training/`](distributed-training/) | 10 | full only | here |
 
-**81 block hours**, plus the daily Lean slot (~8.4 h) = 89 h on the full track.
+**80 block hours**, plus the daily Lean slot (~8.4 h) = 88 h on the full track.
 
 On the narrower tracks this same week is:
 
 | Track | This week | Block h |
 |---|---|---|
-| **core** | `ml-inference` 10 h, `vllm-engine` 31 h | 41 |
-| **spine** | `cuda-from-scratch` 21 h | 21 |
+| **core** | `ml-inference` 24 h, `vllm-engine` 21 h | 45 |
+| **spine** | `cuda-from-scratch` 27 h | 27 |
 
 The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
 
 ## What to do, in order
 
-1. Finish `world-models`: the RNN, the controller, then Dreamer v1 through v3 in order.
-2. V1 to v3 is a lesson in incremental research — each version fixes a specific failure of the last. Write down what each one fixed. That note is worth more than the implementation.
-3. Start `../week-16/diffusion-models/` on Sunday with the forward process, which is arithmetic and needs no training run.
+1. Close out `../week-13/vllm-engine/`.
+2. `distributed-training` is short: data parallel, gradient accumulation, and the communication pattern underneath. You already wrote gradient accumulation in `../week-07/autograd/` — this is the same idea with a network in the middle.
+3. Start `../week-16/world-models/` on Sunday with the VAE. You built one in `autograd/generative.py`; this is the same reparameterisation trick against real observations.
 
 ## Done means
 
-- An agent trained in imagination that transfers to the real environment.
-- Three sentences: what v2 fixed in v1, and what v3 fixed in v2.
+- vLLM complete, with its throughput numbers written up.
+- A data-parallel training loop whose loss curve matches single-GPU training.
+- You can explain why `all_reduce` of gradients and averaging of weights give the same answer for SGD and different answers for Adam.
 
 ## Every day
 
@@ -42,8 +43,8 @@ The narrower tracks move through the same order more slowly and skip the directo
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 15   # where the plan says you should be
-python3 ../progress.py --checks    # what actually passes
+python3 ../progress.py --week 15            # where you should be
+python3 ../progress.py --checks       # what actually passes
 ```
 
 [← Week 14](../week-14/) · [Roadmap](../ROADMAP.md) · [Week 16 →](../week-16/)

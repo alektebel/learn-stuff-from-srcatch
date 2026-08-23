@@ -7,13 +7,13 @@ principles every directory follows: design choices named as problem-solving deci
 MVP-then-complicate driven by limit cases, and verification you can run.
 
 **Working through it? Read [ROADMAP.md](ROADMAP.md)** — an 18-week schedule (24 Aug –
-27 Dec 2026) at three intensities, with the honest arithmetic up front: 34 directories,
-2,227 implementable units, ~1,600 hours. Track where you actually are with:
+27 Dec 2026) at three intensities, with the honest arithmetic up front: 35 directories,
+2,382 implementable units, ~1,570 hours. Track where you actually are with:
 
 ```bash
 python3 progress.py                 # per-directory bars, and how far behind the plan you are
 python3 progress.py --checks        # also runs every check.py — the number that cannot be gamed
-python3 progress.py --track spine   # the 10-directory minimum, 21 h/week
+python3 progress.py --track spine   # the 12-directory minimum, 27 h/week
 ```
 
 ## The repo, in weeks
@@ -31,23 +31,23 @@ root because it is not a week: it is a ~1.2 h daily slot across all eighteen.
 | Week | Dates | Objective | Projects |
 |---|---|---|---|
 | [**1**](week-01/) | Aug 24–Aug 30 | Sockets, or nothing else works | `bash-from-scratch`, `http-server` |
-| [**2**](week-02/) | Aug 31–Sep 6 | Finish the server, then the protocols underneath | `http-server`, `dns-server`, `cryptographic-library`, `communication-protocols`, `toralizer` |
-| [**3**](week-03/) | Sep 7–Sep 13 | Compilers, and a machine that runs what they emit | `toralizer`, `firewall-from-scratch`, `c-compiler`, `compiler-and-vgpu`, `quantum-computing-lang`, `haskell-projects` |
-| [**4**](week-04/) | Sep 14–Sep 20 | Functional programming, and the paper the cloud is built on | `haskell-projects`, `dynamo-paper`, `system-design` |
-| [**5**](week-05/) | Sep 21–Sep 27 | The cloud, from its mechanisms up | `system-design`, `aws-from-scratch` |
-| [**6**](week-06/) | Sep 28–Oct 4 | Four checkers green in one week | `aws-from-scratch`, `deploy-and-debug`, `context-caching`, `contextcite`, `cuda-from-scratch` |
-| [**7**](week-07/) | Oct 5–Oct 11 | CUDA, all week | `cuda-from-scratch` |
-| [**8**](week-08/) | Oct 12–Oct 18 | Finish CUDA, start the inference stack | `cuda-from-scratch`, `ml-inference` |
-| [**9**](week-09/) | Oct 19–Oct 25 | Quantisation, batching, and what a server does | `ml-inference`, `tensorrt-inference` |
-| [**10**](week-10/) | Oct 26–Nov 1 | TensorRT | `tensorrt-inference` |
-| [**11**](week-11/) | Nov 2–Nov 8 | Finish TensorRT, start vLLM | `tensorrt-inference`, `vllm-engine` |
-| [**12**](week-12/) | Nov 9–Nov 15 | PagedAttention and continuous batching | `vllm-engine` |
-| [**13**](week-13/) | Nov 16–Nov 22 | Finish vLLM, start SGLang | `vllm-engine`, `sgl-lang` |
-| [**14**](week-14/) | Nov 23–Nov 29 | Finish SGLang, then training at scale and world models | `sgl-lang`, `distributed-training`, `world-models` |
-| [**15**](week-15/) | Nov 30–Dec 6 | World models | `world-models`, `diffusion-models` |
-| [**16**](week-16/) | Dec 7–Dec 13 | Diffusion | `diffusion-models`, `deepfake-creation` |
-| [**17**](week-17/) | Dec 14–Dec 20 | Generation and detection, as a pair | `deepfake-creation`, `deepfake-detection`, `quantitative-trading` |
-| [**18**](week-18/) | Dec 21–Dec 27 | The long tail — six small wins | `quantitative-trading`, `spectral-graphs`, `sas-lineage-tool`, `web-scraping`, `ml-in-production`, `mlops` |
+| [**2**](week-02/) | Aug 31–Sep 6 | Finish the server, then the protocols underneath it | `http-server`, `dns-server`, `cryptographic-library`, `communication-protocols`, `toralizer` |
+| [**3**](week-03/) | Sep 7–Sep 13 | Compilers, and a machine that runs what they emit | `toralizer`, `firewall-from-scratch`, `c-compiler`, `compiler-and-vgpu`, `quantum-computing-lang` |
+| [**4**](week-04/) | Sep 14–Sep 20 | Haskell, then a database from the disk up | `haskell-projects`, `database-engine` |
+| [**5**](week-05/) | Sep 21–Sep 27 | Indexes, logs, and the paper that gave all three up | `database-engine`, `dynamo-paper`, `raft` |
+| [**6**](week-06/) | Sep 28–Oct 4 | Consensus, then the cloud built on top of it | `raft`, `system-design`, `aws-from-scratch` |
+| [**7**](week-07/) | Oct 5–Oct 11 | Finish AWS, then build gradients from nothing | `aws-from-scratch`, `autograd`, `llm-from-scratch` |
+| [**8**](week-08/) | Oct 12–Oct 18 | A transformer, then the cache in front of it | `llm-from-scratch`, `deploy-and-debug`, `context-caching`, `contextcite`, `ray-tracer` |
+| [**9**](week-09/) | Oct 19–Oct 25 | Rays, then the machine built to trace a billion of them | `ray-tracer`, `cuda-from-scratch` |
+| [**10**](week-10/) | Oct 26–Nov 1 | CUDA, most of the week | `cuda-from-scratch`, `ml-inference` |
+| [**11**](week-11/) | Nov 2–Nov 8 | Quantisation, batching, and what a server actually does | `ml-inference` |
+| [**12**](week-12/) | Nov 9–Nov 15 | Finish the inference stack, then meet the vendor's version | `ml-inference`, `tensorrt-inference` |
+| [**13**](week-13/) | Nov 16–Nov 22 | TensorRT, then open vLLM | `tensorrt-inference`, `vllm-engine` |
+| [**14**](week-14/) | Nov 23–Nov 29 | PagedAttention and continuous batching | `vllm-engine` |
+| [**15**](week-15/) | Nov 30–Dec 6 | Finish vLLM, then training at scale | `vllm-engine`, `distributed-training` |
+| [**16**](week-16/) | Dec 7–Dec 13 | World models | `world-models` |
+| [**17**](week-17/) | Dec 14–Dec 20 | Finish world models, start diffusion | `world-models`, `diffusion-models` |
+| [**18**](week-18/) | Dec 21–Dec 27 | Diffusion, then five small wins to finish on | `diffusion-models`, `spectral-graphs`, `sas-lineage-tool`, `web-scraping`, `ml-in-production`, `mlops` |
 
 ---
 
@@ -65,8 +65,13 @@ The same directories, grouped by subject rather than by week.
 - **[firewall-from-scratch/](week-03/firewall-from-scratch/)** - Packet filtering firewall with raw sockets, protocol parsing, and rule-based filtering
 - **[communication-protocols/](week-02/communication-protocols/)** - Serial & parallel communication protocol implementations: UART/USART, SPI, I2C, CAN bus, RS-232/RS-485 (with Linux spidev/i2c-dev/SocketCAN hardware support)
 
+### Databases & Consensus
+- **[database-engine/](week-04/database-engine/)** - A relational database from the disk up: slotted pages and a buffer pool with LRU, a B+tree index, write-ahead logging with ARIES-style redo-then-undo recovery, MVCC snapshot isolation (and the write skew it lets through), a recursive-descent SQL parser with precedence climbing, a cost-based planner, and a Volcano iterator executor (18 graded checks via `python3 check.py`)
+- **[raft/](week-05/raft/)** - Consensus one mechanism at a time, tested against a network that partitions, crashes and drops messages: the log matching property, terms and the election restriction, nextIndex/matchIndex repair, and the Figure 8 commit rule that makes "a majority has it" wrong - the deliberate opposite of `dynamo-paper` (7 graded checks via `python3 check.py`)
+
 ### GPU Programming & Parallel Computing
-- **[cuda-from-scratch/](week-07/cuda-from-scratch/)** - CUDA parallel programming from basics to neural networks on GPU
+- **[cuda-from-scratch/](week-09/cuda-from-scratch/)** - CUDA parallel programming from basics to neural networks on GPU
+- **[ray-tracer/](week-08/ray-tracer/)** - A path tracer in pure Python: reflection, refraction and Fresnel, the ray-sphere quadratic and AABB slabs, a BVH with both median and surface-area-heuristic splits, matte/metal/glass materials, and a Monte Carlo integrator with a lens camera - where the 1/sqrt(N) noise bill comes from, and why `t_min = 0.001` is a guess about scene scale (6 graded checks via `python3 check.py`)
 - **[compiler-and-vgpu/](week-03/compiler-and-vgpu/)** - A compiler and a virtual GPU sharing one instruction set: 32-bit ISA, two-pass assembler, scalar CPU, recursive-descent front end, code generation with linear-scan register allocation and spilling, and a SIMT warp with divergence, mask stacks and barrier deadlock detection (12 graded checks via `python3 check.py`)
 
 ### Functional Programming & Formal Verification
@@ -74,37 +79,33 @@ The same directories, grouped by subject rather than by week.
 - **[lean-proofs/](lean-proofs/)** - Mathematical proofs in Lean, progressing toward Galois theorem
 
 ### Machine Learning & MLOps
-- **[distributed-training/](week-14/distributed-training/)** - Distributed training systems (data parallelism, model parallelism, multi-node training)
+- **[distributed-training/](week-15/distributed-training/)** - Distributed training systems (data parallelism, model parallelism, multi-node training)
 - **[ml-in-production/](week-18/ml-in-production/)** - Production ML systems (model serving, monitoring, A/B testing)
 - **[mlops/](week-18/mlops/)** - MLOps pipelines (experiment tracking, CI/CD, feature stores)
-- **[ml-inference/](week-09/ml-inference/)** - High-performance inference (optimization, quantization, edge deployment)
+- **[ml-inference/](week-10/ml-inference/)** - High-performance inference (optimization, quantization, edge deployment)
 
 ### Generative AI & Deep Learning
-- **[diffusion-models/](week-16/diffusion-models/)** - Diffusion models from scratch (DDPM, DDIM, U-Net, image generation like Stable Diffusion)
-- **[deepfake-creation/](week-17/deepfake-creation/)** - Deepfake generation techniques (face swapping, reenactment, First Order Motion Model, Wav2Lip)
-- **[deepfake-detection/](week-17/deepfake-detection/)** - Deepfake detection methods (CNN-based, temporal analysis, frequency domain, biological signals)
+- **[autograd/](week-07/autograd/)** - A reverse-mode automatic differentiation engine over arrays, then a neural network library on top of it: topological sort and gradient accumulation, broadcast folding, fused softmax cross-entropy, He/Xavier initialisation, SGD/momentum/RMSProp/Adam/AdamW, dropout, gradient clipping, and a VAE with the reparameterisation trick - pure Python, no numpy (10 graded checks via `python3 check.py`)
+- **[llm-from-scratch/](week-07/llm-from-scratch/)** - A transformer language model built on that engine: BPE tokenisation in merge-rank order, scaled dot-product attention with a causal mask, multi-head attention, pre-norm blocks with the residual gradient highway, weight tying, training with gradient accumulation, and greedy/temperature/top-k/top-p sampling (8 graded checks via `python3 check.py`)
+- **[diffusion-models/](week-17/diffusion-models/)** - Diffusion models from scratch (DDPM, DDIM, U-Net, image generation like Stable Diffusion)
 
 ### ML Infrastructure & Serving
-- **[sgl-lang/](week-13/sgl-lang/)** - Structured Generation Language (SGL) for LLMs - constrained generation, grammar enforcement, compilation
-- **[tensorrt-inference/](week-10/tensorrt-inference/)** - TensorRT-style inference engine - graph optimization, quantization, kernel auto-tuning
-- **[vllm-engine/](week-12/vllm-engine/)** - vLLM serving engine - PagedAttention, continuous batching, high-throughput LLM serving
-- **[context-caching/](week-06/context-caching/)** - LLM context caching from scratch on a tiny pure-Python transformer: KV cache, block-hash and radix-tree prefix caching, paged KV blocks with copy-on-write, semantic response caching, and cache-aware request routing (16 graded checks via `python3 check.py`)
-- **[contextcite/](week-06/contextcite/)** - ContextCite (NeurIPS 2024) replicated from scratch: context attribution by ablating sources and fitting a sparse LASSO surrogate - source partitioning, logit-probability scoring, coordinate-descent LASSO, held-out LDS evaluation, and the paper's three applications (14 graded checks via `python3 check.py`)
+- **[tensorrt-inference/](week-12/tensorrt-inference/)** - TensorRT-style inference engine - graph optimization, quantization, kernel auto-tuning
+- **[vllm-engine/](week-13/vllm-engine/)** - vLLM serving engine - PagedAttention, continuous batching, high-throughput LLM serving
+- **[context-caching/](week-08/context-caching/)** - LLM context caching from scratch on a tiny pure-Python transformer: KV cache, block-hash and radix-tree prefix caching, paged KV blocks with copy-on-write, semantic response caching, and cache-aware request routing (16 graded checks via `python3 check.py`)
+- **[contextcite/](week-08/contextcite/)** - ContextCite (NeurIPS 2024) replicated from scratch: context attribution by ablating sources and fitting a sparse LASSO surrogate - source partitioning, logit-probability scoring, coordinate-descent LASSO, held-out LDS evaluation, and the paper's three applications (14 graded checks via `python3 check.py`)
 
 ### System Design & Distributed Systems
-- **[system-design/](week-05/system-design/)** - Core distributed systems patterns: caching (LRU, cache-aside, stampede), async queues (retries, backoff, DLQ, idempotency), reliability (circuit breaker, bulkhead, backpressure), consistent hashing, leaderboards, URL shortener, rate limiter, and capacity math
-- **[dynamo-paper/](week-04/dynamo-paper/)** - Amazon's Dynamo paper (SOSP 2007) implemented directly: consistent hashing with preference lists, vector clocks, N/R/W quorums, sloppy quorum with hinted handoff, Merkle-tree anti-entropy, and gossip membership (17 graded checks via `python3 check.py`)
-- **[aws-from-scratch/](week-05/aws-from-scratch/)** - Learn AWS by implementing toy versions of its core services: IAM policy evaluation, S3 with versioning and delete markers, SQS visibility timeouts, DynamoDB hot partitions, Lambda concurrency and cold starts, SNS filter policies and EventBridge patterns, KMS envelope encryption, VPC stateful-vs-stateless networking, plus a capstone pipeline wiring them together - then a meter and a price sheet on top of all of it: the two rounding rules AWS bills by, graduated tiers, fixed vs variable lines, and the crossover behind every cost rule of thumb (provisioned DynamoDB pays above 14.44% utilisation; a CPU-bound Lambda costs the same at 128 MB and 10 GB; an S3 gateway endpoint has no crossover at all) - and a map of which remaining AWS services are variations of which mechanism (24 graded checks via `python3 check.py`)
+- **[system-design/](week-06/system-design/)** - Core distributed systems patterns: caching (LRU, cache-aside, stampede), async queues (retries, backoff, DLQ, idempotency), reliability (circuit breaker, bulkhead, backpressure), consistent hashing, leaderboards, URL shortener, rate limiter, and capacity math
+- **[dynamo-paper/](week-05/dynamo-paper/)** - Amazon's Dynamo paper (SOSP 2007) implemented directly: consistent hashing with preference lists, vector clocks, N/R/W quorums, sloppy quorum with hinted handoff, Merkle-tree anti-entropy, and gossip membership (17 graded checks via `python3 check.py`)
+- **[aws-from-scratch/](week-06/aws-from-scratch/)** - Learn AWS by implementing toy versions of its core services: IAM policy evaluation, S3 with versioning and delete markers, SQS visibility timeouts, DynamoDB hot partitions, Lambda concurrency and cold starts, SNS filter policies and EventBridge patterns, KMS envelope encryption, VPC stateful-vs-stateless networking, plus a capstone pipeline wiring them together - then a meter and a price sheet on top of all of it: the two rounding rules AWS bills by, graduated tiers, fixed vs variable lines, and the crossover behind every cost rule of thumb (provisioned DynamoDB pays above 14.44% utilisation; a CPU-bound Lambda costs the same at 128 MB and 10 GB; an S3 gateway endpoint has no crossover at all) - and a map of which remaining AWS services are variations of which mechanism (24 graded checks via `python3 check.py`)
 
 ### Operations & Reliability
-- **[deploy-and-debug/](week-06/deploy-and-debug/)** - Running the systems in this repo and debugging them when they break: capacity math (KV cache sizing, N/R/W failure tolerance), percentiles/queueing/error budgets, root-cause diagnosis of 11 injected faults from metrics alone, and safe rollout (liveness vs readiness, canary analysis, budget-based auto-rollback) - plus a runbook of the real vllm/nodetool/nvidia-smi/k8s commands (12 graded checks via `python3 check.py`)
+- **[deploy-and-debug/](week-08/deploy-and-debug/)** - Running the systems in this repo and debugging them when they break: capacity math (KV cache sizing, N/R/W failure tolerance), percentiles/queueing/error budgets, root-cause diagnosis of 11 injected faults from metrics alone, and safe rollout (liveness vs readiness, canary analysis, budget-based auto-rollback) - plus a runbook of the real vllm/nodetool/nvidia-smi/k8s commands (12 graded checks via `python3 check.py`)
 
 ### Data Engineering & Analytics
 - **[sas-lineage-tool/](week-18/sas-lineage-tool/)** - SAS field lineage parser for tracking data transformations and dependencies
 - **[web-scraping/](week-18/web-scraping/)** - Industrial web scraping/crawler library (Python/C, CUDA acceleration, CAPTCHA bypass, distributed architecture)
-
-### Quantitative Finance & Trading
-- **[quantitative-trading/](week-18/quantitative-trading/)** - Algorithmic trading systems (statistical arbitrage, ML strategies, RL agents, market microstructure)
 
 ## Philosophy
 
@@ -169,7 +170,7 @@ To complement the hands-on projects in this repository, we've curated relevant v
 - [6.0001 - Introduction to Computer Science and Programming in Python - MIT OCW](https://ocw.mit.edu/courses/6-0001-introduction-to-computer-science-and-programming-in-python-fall-2016/video_galleries/lecture-videos/)
 
 ### Systems Programming & Operating Systems
-*Relevant for: bash-from-scratch, http-server, dns-server, c-compiler*
+*Relevant for: bash-from-scratch, http-server, dns-server, c-compiler, database-engine*
 - [15-213 Introduction to Computer Systems - CMU](https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22b96d90ae-9871-4fae-91e2-b1627b43e25e%22&maxResults=150)
 - [CS 162 Operating Systems - UC Berkeley](https://archive.org/details/ucberkeley-webcast-PL-XXv-cvA_iBDyz-ba4yDskqMDY6A1w_c?sort=titleSorter)
 - [6.824 - Distributed Systems - MIT](https://pdos.csail.mit.edu/6.824/schedule.html)
@@ -188,7 +189,7 @@ To complement the hands-on projects in this repository, we've curated relevant v
 - [Parallel Computing and GPU Programming courses](https://github.com/Developer-Y/cs-video-courses#computer-organization-and-architecture)
 
 ### Machine Learning & Deep Learning
-*Relevant for: distributed-training, ml-in-production, mlops, ml-inference, diffusion-models, deepfake-creation, deepfake-detection, world-models*
+*Relevant for: autograd, llm-from-scratch, distributed-training, ml-in-production, mlops, ml-inference, diffusion-models, world-models*
 - [CS229 - Machine Learning - Stanford](http://cs229.stanford.edu/)
 - [6.S191 - Introduction to Deep Learning - MIT](http://introtodeeplearning.com/)
 - [Deep Learning Specialization - Various Universities](https://github.com/Developer-Y/cs-video-courses#deep-learning)
@@ -196,7 +197,7 @@ To complement the hands-on projects in this repository, we've curated relevant v
 - [Generative AI and LLMs](https://github.com/Developer-Y/cs-video-courses#generative-ai-and-llms)
 
 ### MLOps & Production ML
-*Relevant for: sgl-lang, tensorrt-inference, vllm-engine*
+*Relevant for: tensorrt-inference, vllm-engine, context-caching*
 - [Full Stack Deep Learning](https://fullstackdeeplearning.com/)
 - [Machine Learning Systems Design](https://github.com/Developer-Y/cs-video-courses#machine-learning)
 
@@ -213,9 +214,15 @@ To complement the hands-on projects in this repository, we've curated relevant v
 *Relevant for: quantum-computing-lang*
 - [Quantum Computing Courses](https://github.com/Developer-Y/cs-video-courses#quantum-computing)
 
-### Computational Finance
-*Relevant for: quantitative-trading*
-- [Computational Finance Courses](https://github.com/Developer-Y/cs-video-courses#computational-finance)
+### Databases
+*Relevant for: database-engine, dynamo-paper, raft*
+- [CMU 15-445 Database Systems](https://15445.courses.cs.cmu.edu/fall2022/)
+- [CMU 15-721 Advanced Database Systems](https://15721.courses.cs.cmu.edu/spring2023/)
+
+### Computer Graphics
+*Relevant for: ray-tracer*
+- [Ray Tracing in One Weekend](https://raytracing.github.io/)
+- [Computer Graphics courses](https://github.com/Developer-Y/cs-video-courses#computer-graphics)
 
 ### System Design & Distributed Systems
 *Relevant for: system-design*

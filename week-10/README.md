@@ -1,34 +1,38 @@
 # Week 10 · Oct 26–Nov 1, 2026
 
-> **TensorRT.**
-> A vendor's answer to the week you just spent building your own. The value is in the comparison, not the API.
+> **CUDA, most of the week.**
+> One directory, sixty-three hours, minimal context switching. Memory hierarchy, coalescing, shared memory, occupancy, and then a matmul you tune yourself.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| [`tensorrt-inference/`](tensorrt-inference/) | 81 of 109 | full only | here |
+| `cuda-from-scratch/` | 63 of 122 | core · spine | [`../week-09/cuda-from-scratch/`](../week-09/cuda-from-scratch/) |
+| [`ml-inference/`](ml-inference/) | 16 of 137 | core | here |
 
-**81 block hours**, plus the daily Lean slot (~8.4 h) = 89 h on the full track.
+**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
 
 On the narrower tracks this same week is:
 
 | Track | This week | Block h |
 |---|---|---|
-| **core** | `cuda-from-scratch` 42 h | 42 |
-| **spine** | `aws-from-scratch` 14 h, `deploy-and-debug` 7 h | 21 |
+| **core** | `cuda-from-scratch` 45 h | 45 |
+| **spine** | `aws-from-scratch` 8 h, `autograd` 19 h | 27 |
 
 The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
 
 ## What to do, in order
 
-1. Engine building, precision calibration, and profiling.
-2. For every optimisation TensorRT applies, write one line on what it is doing and whether you could have done it by hand in week 7. Layer fusion, kernel auto-tuning, precision calibration — these are not magic and the point of having written CUDA first is that you can now see through them.
-3. Compare against your week-9 server on the same model and the same hardware.
+1. Keep working the directory's order. Naive matmul, then tiled, then register blocked, measuring GFLOP/s at each step.
+2. Delete each `TODO` comment as you satisfy it — the C and CUDA bars in `progress.py` only move if you do.
+3. Open `../week-10/ml-inference/` on Saturday and start with the quantisation material, because everything else in that directory is downstream of understanding what int8 actually costs you.
+4. Benchmark fp32 against fp16 against int8 on the same model and record accuracy alongside latency. Latency without the accuracy column is a meaningless number.
 
 ## Done means
 
-- A TensorRT engine beating your own server, with the speedup attributed to specific optimisations rather than to 'TensorRT is faster'.
+- A naive, a tiled and a register-blocked matmul, with measured GFLOP/s for each.
+- You can say what fraction of peak bandwidth each of your kernels reaches, and why the gap is what it is.
+- You can explain warp divergence in terms of the mask stack you built in `week-03/compiler-and-vgpu/`.
 
 ## Every day
 
@@ -40,8 +44,8 @@ The narrower tracks move through the same order more slowly and skip the directo
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 10   # where the plan says you should be
-python3 ../progress.py --checks    # what actually passes
+python3 ../progress.py --week 10            # where you should be
+python3 ../progress.py --checks       # what actually passes
 ```
 
 [← Week 9](../week-09/) · [Roadmap](../ROADMAP.md) · [Week 11 →](../week-11/)

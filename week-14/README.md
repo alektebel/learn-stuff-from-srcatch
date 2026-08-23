@@ -1,38 +1,37 @@
 # Week 14 · Nov 23–Nov 29, 2026
 
-> **Finish SGLang, then training at scale and world models.**
-> The pivot from serving to training.
+> **PagedAttention and continuous batching.**
+> The most valuable single directory in the repo if you want to work on inference. Seventy-nine hours, one project, which lives in week 13.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| `sgl-lang/` | 24 of 87 | full only | [`../week-13/sgl-lang/`](../week-13/sgl-lang/) |
-| [`distributed-training/`](distributed-training/) | 10 | full only | here |
-| `world-models/` | 46 of 106 | full only | [`../week-15/world-models/`](../week-15/world-models/) |
+| `vllm-engine/` | 79 of 156 | core | [`../week-13/vllm-engine/`](../week-13/vllm-engine/) |
 
-**80 block hours**, plus the daily Lean slot (~8.4 h) = 88 h on the full track.
+**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
 
 On the narrower tracks this same week is:
 
 | Track | This week | Block h |
 |---|---|---|
-| **core** | `ml-inference` 42 h | 42 |
-| **spine** | `cuda-from-scratch` 21 h | 21 |
+| **core** | `ml-inference` 44 h | 44 |
+| **spine** | `context-caching` 13 h, `cuda-from-scratch` 14 h | 27 |
 
 The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
 
 ## What to do, in order
 
-1. Close out `../week-13/sgl-lang/`.
-2. `distributed-training` is short: data parallel, gradient accumulation, and the communication pattern underneath. Ten hours.
-3. Then `../week-15/world-models/`, starting with the VAE. Paper 1 only this week — Dreamer versions 1 to 3 are week 15.
+1. PagedAttention first: a block allocator with a per-sequence block table.
+2. Continuous batching second, and it is the week's centre — prefill and decode interleaved across many sequences in one forward pass.
+3. Then the scheduler and preemption. Preemption is where paged memory earns its complexity, and where the design decision becomes obvious in retrospect.
+4. Hold the invariant from week 8 the whole way: **a cache that changes the output is not a cache, it is a bug.** Assert it in a test on day one.
 
 ## Done means
 
-- SGLang complete.
-- A data-parallel training loop whose loss curve matches single-GPU training.
-- A VAE reconstructing observations well enough that the latents are worth modelling.
+- Forking a sequence costs zero additional blocks, and you can show it.
+- Concurrent requests served with bit-identical output to the unbatched path.
+- A measured throughput gain over static batching, and you can say which part came from paging and which from the scheduler.
 
 ## Every day
 
@@ -44,8 +43,8 @@ The narrower tracks move through the same order more slowly and skip the directo
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 14   # where the plan says you should be
-python3 ../progress.py --checks    # what actually passes
+python3 ../progress.py --week 14            # where you should be
+python3 ../progress.py --checks       # what actually passes
 ```
 
 [← Week 13](../week-13/) · [Roadmap](../ROADMAP.md) · [Week 15 →](../week-15/)

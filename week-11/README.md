@@ -1,36 +1,36 @@
 # Week 11 · Nov 2–Nov 8, 2026
 
-> **Finish TensorRT, start vLLM.**
-> No new directory this week. Both projects live in week 10 and week 12.
+> **Quantisation, batching, and what a server actually does.**
+> The bridge week between a kernel and a service. No new directory: the project lives in week 10.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| `tensorrt-inference/` | 23 of 109 | full only | [`../week-10/tensorrt-inference/`](../week-10/tensorrt-inference/) |
-| `vllm-engine/` | 57 of 156 | core | [`../week-12/vllm-engine/`](../week-12/vllm-engine/) |
+| `ml-inference/` | 79 of 137 | core | [`../week-10/ml-inference/`](../week-10/ml-inference/) |
 
-**80 block hours**, plus the daily Lean slot (~8.4 h) = 88 h on the full track.
+**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
 
 On the narrower tracks this same week is:
 
 | Track | This week | Block h |
 |---|---|---|
-| **core** | `cuda-from-scratch` 39 h, `ml-inference` 2 h | 41 |
-| **spine** | `deploy-and-debug` 3 h, `context-caching` 18 h | 21 |
+| **core** | `cuda-from-scratch` 45 h | 45 |
+| **spine** | `autograd` 11 h, `llm-from-scratch` 16 h | 27 |
 
 The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
 
 ## What to do, in order
 
-1. Close out `../week-10/tensorrt-inference/`.
-2. Then `../week-12/vllm-engine/`. Re-read your own `../week-06/context-caching/paged_kv_cache.py` before you start — you have already built the core idea at small scale, and the fastest way through this directory is to notice that.
-3. PagedAttention first, continuous batching second.
+1. `../week-10/ml-inference/` is the whole week.
+2. Dynamic batching is the concept to spend real time on. It is the same throughput-versus-latency trade you will meet again in vLLM, and meeting it twice from different directions is why both directories are here.
+3. Re-read your own `../week-08/context-caching/kv_cache.py` when you reach the serving material. You have already built the core of it.
+4. Plot a latency-versus-throughput curve for your own server at several batch sizes and find the knee.
 
 ## Done means
 
-- TensorRT complete.
-- A block allocator with a per-sequence block table, and forking a sequence costs zero additional blocks.
+- A quantised model running, with a measured latency AND accuracy delta versus fp32.
+- A latency-versus-throughput curve for your own server, and you can point at the knee and explain what is saturating.
 
 ## Every day
 
@@ -42,8 +42,8 @@ The narrower tracks move through the same order more slowly and skip the directo
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 11   # where the plan says you should be
-python3 ../progress.py --checks    # what actually passes
+python3 ../progress.py --week 11            # where you should be
+python3 ../progress.py --checks       # what actually passes
 ```
 
 [← Week 10](../week-10/) · [Roadmap](../ROADMAP.md) · [Week 12 →](../week-12/)

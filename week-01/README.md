@@ -8,16 +8,16 @@
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
 | [`bash-from-scratch/`](bash-from-scratch/) | 8 | core · spine | here |
-| [`http-server/`](http-server/) | 73 of 86 | core · spine | here |
+| [`http-server/`](http-server/) | 71 of 86 | core · spine | here |
 
-**81 block hours**, plus the daily Lean slot (~8.4 h) = 89 h on the full track.
+**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
 
 On the narrower tracks this same week is:
 
 | Track | This week | Block h |
 |---|---|---|
-| **core** | `bash-from-scratch` 8 h, `http-server` 34 h | 42 |
-| **spine** | `bash-from-scratch` 8 h, `http-server` 13 h | 21 |
+| **core** | `bash-from-scratch` 8 h, `http-server` 37 h | 45 |
+| **spine** | `bash-from-scratch` 8 h, `http-server` 19 h | 27 |
 
 The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
 
@@ -42,8 +42,8 @@ The narrower tracks move through the same order more slowly and skip the directo
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 1    # where the plan says you should be
-python3 ../progress.py --checks    # what actually passes
+python3 ../progress.py --week 1            # where you should be
+python3 ../progress.py --checks       # what actually passes
 ```
 
 [Roadmap](../ROADMAP.md) · [Week 2 →](../week-02/)

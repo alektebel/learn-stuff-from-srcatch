@@ -1,35 +1,37 @@
 # Week 12 · Nov 9–Nov 15, 2026
 
-> **PagedAttention and continuous batching.**
-> The most valuable single directory in the repo if you want to work on inference. Eighty-one hours, one project.
+> **Finish the inference stack, then meet the vendor's version.**
+> TensorRT is a vendor's answer to the two months you just spent building your own. The value is entirely in the comparison, not the API.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| [`vllm-engine/`](vllm-engine/) | 81 of 156 | core | here |
+| `ml-inference/` | 42 of 137 | core | [`../week-10/ml-inference/`](../week-10/ml-inference/) |
+| [`tensorrt-inference/`](tensorrt-inference/) | 37 of 109 | full only | here |
 
-**81 block hours**, plus the daily Lean slot (~8.4 h) = 89 h on the full track.
+**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
 
 On the narrower tracks this same week is:
 
 | Track | This week | Block h |
 |---|---|---|
-| **core** | `ml-inference` 42 h | 42 |
-| **spine** | `context-caching` 10 h, `contextcite` 11 h | 21 |
+| **core** | `cuda-from-scratch` 21 h, `ml-inference` 24 h | 45 |
+| **spine** | `llm-from-scratch` 29 h | 29 |
 
 The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
 
 ## What to do, in order
 
-1. Continuous batching is the week's centre: prefill and decode interleaved across many sequences in one forward pass.
-2. Then the scheduler and preemption. Preemption is where paged memory earns its complexity, and where the design decision becomes obvious in retrospect.
-3. Hold the invariant from week 6 the whole way: **a cache that changes the output is not a cache, it is a bug.** Assert it in a test on day one.
+1. Close out `../week-10/ml-inference/` in the first half of the week.
+2. `tensorrt-inference` after it: engine building, precision calibration, profiling.
+3. For every optimisation TensorRT applies, write one line on what it is doing and whether you could have done it by hand in week 10. Layer fusion, kernel auto-tuning, precision calibration — these are not magic, and the point of having written CUDA first is that you can now see through them.
+4. Get its toolchain installed before you need it. TensorRT setup can eat a day.
 
 ## Done means
 
-- Concurrent requests served with bit-identical output to the unbatched path.
-- A measured throughput gain over static batching, and you can say which part of it came from paging and which from the scheduler.
+- `ml-inference` complete.
+- A TensorRT engine built and running on your own model.
 
 ## Every day
 
@@ -41,8 +43,8 @@ The narrower tracks move through the same order more slowly and skip the directo
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 12   # where the plan says you should be
-python3 ../progress.py --checks    # what actually passes
+python3 ../progress.py --week 12            # where you should be
+python3 ../progress.py --checks       # what actually passes
 ```
 
 [← Week 11](../week-11/) · [Roadmap](../ROADMAP.md) · [Week 13 →](../week-13/)

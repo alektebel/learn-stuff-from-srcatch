@@ -12,7 +12,7 @@ lexer
 sha256
 quantum
 calculator
-cuda-from-scratch/cuda-compiler/cuda_compiler
+week-09/cuda-from-scratch/cuda-compiler/cuda_compiler
 
 # Python
 __pycache__/
@@ -60,40 +60,13 @@ lake-packages/
 output.txt
 log.txt
 
-# Quantitative trading specific
-quantitative-trading/data/
-quantitative-trading/cache/
-quantitative-trading/models/
-quantitative-trading/logs/
-quantitative-trading/*.csv
-quantitative-trading/*.parquet
-quantitative-trading/*.h5
-quantitative-trading/*.pkl
-quantitative-trading/*.joblib
-
 # Diffusion models
-diffusion-models/data/
-diffusion-models/checkpoints/
-diffusion-models/samples/
-diffusion-models/logs/
-diffusion-models/*.pt
-diffusion-models/*.pth
-
-# Deepfake projects
-deepfake-creation/data/
-deepfake-creation/videos/
-deepfake-creation/checkpoints/
-deepfake-creation/outputs/
-deepfake-creation/*.pt
-deepfake-creation/*.pth
-deepfake-creation/*.dat
-
-deepfake-detection/data/
-deepfake-detection/datasets/
-deepfake-detection/checkpoints/
-deepfake-detection/logs/
-deepfake-detection/*.pt
-deepfake-detection/*.pth
+week-17/diffusion-models/data/
+week-17/diffusion-models/checkpoints/
+week-17/diffusion-models/samples/
+week-17/diffusion-models/logs/
+week-17/diffusion-models/*.pt
+week-17/diffusion-models/*.pth
 
 # Ray tracer output
-ray-tracer/**/*.ppm
+week-08/ray-tracer/**/*.ppm

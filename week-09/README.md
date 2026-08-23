@@ -1,36 +1,38 @@
 # Week 9 · Oct 19–Oct 25, 2026
 
-> **Quantisation, batching, and what a server actually does.**
-> The bridge week between a kernel and a service.
+> **Rays, then the machine built to trace a billion of them.**
+> `ray-tracer` finishes on Tuesday and it is deliberately placed here: it is the purest embarrassingly-parallel workload in the repo, and you meet it the week before you learn the hardware designed for exactly that shape.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| [`ml-inference/`](ml-inference/) | 76 of 137 | core | here |
-| `tensorrt-inference/` | 5 of 109 | full only | [`../week-10/tensorrt-inference/`](../week-10/tensorrt-inference/) |
+| `ray-tracer/` | 20 of 35 | full only | [`../week-08/ray-tracer/`](../week-08/ray-tracer/) |
+| [`cuda-from-scratch/`](cuda-from-scratch/) | 59 of 122 | core · spine | here |
 
-**81 block hours**, plus the daily Lean slot (~8.4 h) = 89 h on the full track.
+**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
 
 On the narrower tracks this same week is:
 
 | Track | This week | Block h |
 |---|---|---|
-| **core** | `contextcite` 1 h, `cuda-from-scratch` 41 h | 42 |
-| **spine** | `aws-from-scratch` 21 h | 21 |
+| **core** | `deploy-and-debug` 6 h, `context-caching` 28 h, `cuda-from-scratch` 11 h | 45 |
+| **spine** | `aws-from-scratch` 26 h | 26 |
 
 The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
 
 ## What to do, in order
 
-1. `ml-inference` is the whole week apart from a first look at TensorRT.
-2. Dynamic batching is the concept to spend real time on: it is the same throughput-versus-latency trade you will meet again in vLLM, and meeting it twice from different directions is why both directories are here.
-3. Open `../week-10/tensorrt-inference/` on Sunday and get its toolchain installed. TensorRT setup can eat a day; do not let it eat a Monday.
+1. Finish `ray-tracer`: `bvh.py`, `material.py`, `render.py`.
+2. **Before running the sample sweep, write down what you expect the noise to do when samples go from 16 to 64.** Then read the table. Four times the work for half the noise is the entire cost structure of rendering, and it is the same 1/sqrt(N) you will meet again in `diffusion-models`.
+3. `cuda-from-scratch` from Wednesday, strictly in the directory's own order. Every kernel builds on the previous one's understanding of memory.
+4. **Profile every kernel you write.** `ncu` or `nsight-compute`. A CUDA kernel you have not profiled is a kernel you do not understand, and this is the week to make that a habit rather than a chore.
 
 ## Done means
 
-- `ml-inference` complete.
-- A latency-versus-throughput curve for your own server at several batch sizes, and you can point at the knee and explain it.
+- `week-08/ray-tracer/` prints 6/6, and `render.ppm` opens in an image viewer.
+- You can say why a BVH is 1.5x at four objects and 12x at a thousand — and why that makes 'we tried an acceleration structure and it did not help' a statement about the benchmark.
+- A measurement table started: kernel, GB/s achieved, GB/s theoretical, occupancy. That table is the next two weeks' real deliverable.
 
 ## Every day
 
@@ -42,8 +44,8 @@ The narrower tracks move through the same order more slowly and skip the directo
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 9    # where the plan says you should be
-python3 ../progress.py --checks    # what actually passes
+python3 ../progress.py --week 9            # where you should be
+python3 ../progress.py --checks       # what actually passes
 ```
 
 [← Week 8](../week-08/) · [Roadmap](../ROADMAP.md) · [Week 10 →](../week-10/)

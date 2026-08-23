@@ -3,8 +3,8 @@
 progress.py — where you actually are against the 18-week plan in ROADMAP.md.
 
     python3 progress.py                 # the core track, this week
-    python3 progress.py --track full    # all 34 directories
-    python3 progress.py --track spine   # the 10-directory minimum
+    python3 progress.py --track full    # all 35 directories
+    python3 progress.py --track spine   # the 12-directory minimum
     python3 progress.py --week 7        # pretend it is week 7
     python3 progress.py --checks        # also run every check.py (slower, exact)
 
@@ -23,12 +23,13 @@ Two consequences worth knowing before you rely on the number:
   * The C, CUDA and Haskell counts are NOT honest unless you DELETE each TODO
     comment as you satisfy it. Do that. It costs nothing and it is the only
     thing keeping those bars meaningful.
-  * `--checks` is the number that cannot be gamed: it runs the six graded
-    checkers and reports what actually passes. Trust that column over the bars.
+  * `--checks` is the number that cannot be gamed: it runs every graded
+    checker in the repo and reports what actually passes. Trust that column
+    over the bars.
 
-Three directories (vllm-engine, sgl-lang, tensorrt-inference) are design briefs
-with no template to count. They are tracked by hours only, and their real
-completion signal is whether their README's benchmarks run.
+Two directories (vllm-engine, tensorrt-inference) are design briefs with no
+template to count. They are tracked by hours only, and their real completion
+signal is whether their README's benchmarks run.
 """
 
 import argparse
@@ -49,40 +50,41 @@ GREEN, RED, YELLOW, GREY, BOLD, RESET = (
 # Hours come from each directory's own README estimate where it states one, and
 # otherwise from unit count x a rate calibrated against the ones that do.
 PLAN = [
-    ("bash-from-scratch",        8,  1, "FCS"),
-    ("http-server",             86,  2, "FCS"),
-    ("dns-server",               9,  2, "F"),
-    ("cryptographic-library",    5,  2, "F"),
-    ("communication-protocols", 34,  2, "FC"),
-    ("toralizer",               21,  3, "F"),
-    ("firewall-from-scratch",   25,  3, "F"),
-    ("c-compiler",              27,  3, "FCS"),
-    ("compiler-and-vgpu",       16,  3, "FCS"),
-    ("quantum-computing-lang",   8,  3, "F"),
-    ("haskell-projects",        61,  4, "F"),
-    ("dynamo-paper",            21,  4, "FCS"),
-    ("system-design",           48,  5, "FC"),
-    ("aws-from-scratch",        42,  6, "FCS"),
-    ("deploy-and-debug",        10,  6, "FCS"),
-    ("context-caching",         28,  6, "FCS"),
-    ("contextcite",             13,  6, "FCS"),
-    ("cuda-from-scratch",      122,  8, "FCS"),
-    ("ml-inference",           137,  9, "FC"),
-    ("tensorrt-inference",     109, 11, "F"),
-    ("vllm-engine",            156, 13, "FC"),
-    ("sgl-lang",                87, 14, "F"),
-    ("distributed-training",    10, 14, "F"),
-    ("world-models",           106, 15, "F"),
-    ("diffusion-models",        91, 16, "F"),
-    ("deepfake-creation",       48, 17, "F"),
-    ("deepfake-detection",      33, 17, "F"),
-    ("quantitative-trading",    52, 18, "F"),
-    ("spectral-graphs",          5, 18, "F"),
-    ("sas-lineage-tool",         8, 18, "F"),
-    ("web-scraping",             6, 18, "F"),
-    ("ml-in-production",         8, 18, "F"),
-    ("mlops",                   12, 18, "F"),
-    ("lean-proofs",            151,  0, "F"),      # week 0 = every week, daily
+    ("bash-from-scratch",         8,  1, "FCS"),
+    ("http-server",              86,  2, "FCS"),
+    ("dns-server",                9,  2, "F"),
+    ("cryptographic-library",     5,  2, "F"),
+    ("communication-protocols",  34,  2, "F"),
+    ("toralizer",                21,  3, "F"),
+    ("firewall-from-scratch",    25,  3, "F"),
+    ("c-compiler",               27,  3, "FCS"),
+    ("compiler-and-vgpu",        16,  3, "FCS"),
+    ("quantum-computing-lang",    8,  3, "F"),
+    ("haskell-projects",         61,  4, "F"),
+    ("database-engine",          50,  5, "FCS"),
+    ("dynamo-paper",             21,  5, "FCS"),
+    ("raft",                     30,  6, "FC"),
+    ("system-design",            48,  6, "F"),
+    ("aws-from-scratch",         42,  7, "FCS"),
+    ("autograd",                 30,  7, "FCS"),
+    ("llm-from-scratch",         45,  8, "FCS"),
+    ("deploy-and-debug",         10,  8, "FCS"),
+    ("context-caching",          28,  8, "FCS"),
+    ("contextcite",              13,  8, "F"),
+    ("ray-tracer",               35,  9, "F"),
+    ("cuda-from-scratch",       122, 10, "FCS"),
+    ("ml-inference",            137, 12, "FC"),
+    ("tensorrt-inference",      109, 13, "F"),
+    ("vllm-engine",             156, 15, "FC"),
+    ("distributed-training",     10, 15, "F"),
+    ("world-models",            106, 17, "F"),
+    ("diffusion-models",         91, 18, "F"),
+    ("spectral-graphs",           5, 18, "F"),
+    ("sas-lineage-tool",          8, 18, "F"),
+    ("web-scraping",              6, 18, "F"),
+    ("ml-in-production",          8, 18, "F"),
+    ("mlops",                    12, 18, "F"),
+    ("lean-proofs",             151,  0, "F"),      # week 0 = every week, daily
 ]
 
 TRACKS = {"full": "F", "core": "C", "spine": "S"}
@@ -93,16 +95,16 @@ TRACKS = {"full": "F", "core": "C", "spine": "S"}
 # templates; a baseline computed by any other rule than the one above invents
 # progress you did not make.
 BASELINE = {
-    "aws-from-scratch": 140, "bash-from-scratch": 18, "c-compiler": 149,
-    "communication-protocols": 115, "compiler-and-vgpu": 53,
-    "context-caching": 94, "contextcite": 42, "cryptographic-library": 12,
-    "cuda-from-scratch": 105, "deepfake-creation": 54,
-    "deepfake-detection": 64, "deploy-and-debug": 34, "diffusion-models": 63,
+    "autograd": 67, "aws-from-scratch": 140, "bash-from-scratch": 18,
+    "c-compiler": 149, "communication-protocols": 115,
+    "compiler-and-vgpu": 53, "context-caching": 94, "contextcite": 42,
+    "cryptographic-library": 12, "cuda-from-scratch": 105,
+    "database-engine": 114, "deploy-and-debug": 34, "diffusion-models": 63,
     "distributed-training": 10, "dns-server": 20, "dynamo-paper": 70,
     "firewall-from-scratch": 68, "haskell-projects": 67, "http-server": 16,
-    "lean-proofs": 504, "ml-in-production": 7, "ml-inference": 6, "mlops": 13,
-    "quantitative-trading": 16, "quantum-computing-lang": 17,
-    "sas-lineage-tool": 23, "sgl-lang": 0, "spectral-graphs": 11,
+    "lean-proofs": 504, "llm-from-scratch": 37, "ml-in-production": 7,
+    "ml-inference": 6, "mlops": 13, "quantum-computing-lang": 17, "raft": 30,
+    "ray-tracer": 41, "sas-lineage-tool": 23, "spectral-graphs": 11,
     "system-design": 159, "tensorrt-inference": 0, "toralizer": 46,
     "vllm-engine": 0, "web-scraping": 0, "world-models": 231,
 }

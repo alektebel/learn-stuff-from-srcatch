@@ -1,36 +1,36 @@
 # Week 13 · Nov 16–Nov 22, 2026
 
-> **Finish vLLM, start SGLang.**
-> Structured generation, and the radix cache you already built once.
+> **TensorRT, then open vLLM.**
+> The last week before the largest single directory in the repo.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| `vllm-engine/` | 18 of 156 | core | [`../week-12/vllm-engine/`](../week-12/vllm-engine/) |
-| [`sgl-lang/`](sgl-lang/) | 63 of 87 | full only | here |
+| `tensorrt-inference/` | 72 of 109 | full only | [`../week-12/tensorrt-inference/`](../week-12/tensorrt-inference/) |
+| [`vllm-engine/`](vllm-engine/) | 7 of 156 | core | here |
 
-**81 block hours**, plus the daily Lean slot (~8.4 h) = 89 h on the full track.
+**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
 
 On the narrower tracks this same week is:
 
 | Track | This week | Block h |
 |---|---|---|
-| **core** | `ml-inference` 42 h | 42 |
-| **spine** | `contextcite` 2 h, `cuda-from-scratch` 18 h | 20 |
+| **core** | `ml-inference` 45 h | 45 |
+| **spine** | `deploy-and-debug` 10 h, `context-caching` 15 h | 25 |
 
 The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
 
 ## What to do, in order
 
-1. Close out `../week-12/vllm-engine/` in two days.
-2. `sgl-lang` after it. RadixAttention will be familiar — you wrote `radix_cache.py` in week 6 — so spend the time on the parts that are not: the frontend language, constrained decoding, and the grammar-compiled state machine.
-3. Constrained decoding is the genuinely new mechanism. Do not skim it.
+1. Finish `../week-12/tensorrt-inference/`, and benchmark it against your own week-11 server on the same model and the same hardware.
+2. The deliverable is not 'TensorRT is faster'. It is a speedup attributed to specific optimisations you can name.
+3. Open `vllm-engine` on Sunday. Re-read `../week-08/context-caching/paged_kv_cache.py` before you start — you have already built the core idea at small scale, and the fastest way through this directory is to notice that.
 
 ## Done means
 
-- vLLM complete.
-- Generation constrained to a JSON schema, with the mask applied at the logits and no invalid token ever sampled.
+- A TensorRT engine beating your own server, with the speedup attributed to specific optimisations rather than to the brand.
+- PagedAttention read and understood well enough to sketch the block table on paper before you implement it.
 
 ## Every day
 
@@ -42,8 +42,8 @@ The narrower tracks move through the same order more slowly and skip the directo
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 13   # where the plan says you should be
-python3 ../progress.py --checks    # what actually passes
+python3 ../progress.py --week 13            # where you should be
+python3 ../progress.py --checks       # what actually passes
 ```
 
 [← Week 12](../week-12/) · [Roadmap](../ROADMAP.md) · [Week 14 →](../week-14/)

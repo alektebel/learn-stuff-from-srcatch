@@ -1,38 +1,38 @@
 # Week 17 · Dec 14–Dec 20, 2026
 
-> **Generation and detection, as a pair.**
-> Deliberately in the same week: build the forger and the detector together, because each one is the honest test of the other.
+> **Finish world models, start diffusion.**
+> Two ways of learning a generative model, back to back — one that compresses into a latent and one that learns to reverse noise.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| [`deepfake-creation/`](deepfake-creation/) | 37 of 48 | full only | here |
-| [`deepfake-detection/`](deepfake-detection/) | 33 | full only | here |
-| `quantitative-trading/` | 10 of 52 | full only | [`../week-18/quantitative-trading/`](../week-18/quantitative-trading/) |
+| `world-models/` | 28 of 106 | full only | [`../week-16/world-models/`](../week-16/world-models/) |
+| [`diffusion-models/`](diffusion-models/) | 51 of 91 | full only | here |
 
-**80 block hours**, plus the daily Lean slot (~8.4 h) = 88 h on the full track.
+**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
 
 On the narrower tracks this same week is:
 
 | Track | This week | Block h |
 |---|---|---|
-| **core** | `vllm-engine` 42 h | 42 |
-| **spine** | `cuda-from-scratch` 21 h | 21 |
+| **core** | `vllm-engine` 45 h | 45 |
+| **spine** | `cuda-from-scratch` 27 h | 27 |
 
 The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
 
 ## What to do, in order
 
-1. `deepfake-creation` first — faceswap and reenactment.
-2. `deepfake-detection` immediately after, and **test your detector on your own generator's output**, not only on a public dataset. A detector that only works on someone else's artefacts has learned the dataset, not the problem.
-3. Start `../week-18/quantitative-trading/` on Sunday.
-4. One line worth writing down before you start: this pairing is the reason to build both. Detection research that never faces a generator it did not expect is how detectors ship broken.
+1. Finish `../week-16/world-models/`: Dreamer v1 through v3, in order.
+2. Three sentences before you move on: what v2 fixed in v1, what v3 fixed in v2.
+3. `diffusion-models` from Thursday. The forward noising process first, and verify it analytically before you train anything — it is arithmetic and it needs no training run.
+4. Then the reverse process and DDPM sampling.
 
 ## Done means
 
-- A working faceswap pipeline.
-- A detector with reported accuracy on a public set AND on your own output. Expect the second number to be much worse. That gap is the finding.
+- `world-models` complete.
+- The closed-form `q(x_t | x_0)` verified against iterated single-step noising, to floating-point agreement.
+- A first sample out of your own trained model, however bad it looks.
 
 ## Every day
 
@@ -44,8 +44,8 @@ The narrower tracks move through the same order more slowly and skip the directo
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
 ```bash
-python3 ../progress.py --week 17   # where the plan says you should be
-python3 ../progress.py --checks    # what actually passes
+python3 ../progress.py --week 17            # where you should be
+python3 ../progress.py --checks       # what actually passes
 ```
 
 [← Week 16](../week-16/) · [Roadmap](../ROADMAP.md) · [Week 18 →](../week-18/)
