@@ -223,3 +223,11 @@ make clean
 - [Embedded Systems courses](https://github.com/Developer-Y/cs-video-courses#computer-organization-and-architecture)
 - [Ben Eater's SPI/I2C/UART series on YouTube](https://www.youtube.com/@BenEater)
 - [Computer Networks Courses](https://github.com/Developer-Y/cs-video-courses#computer-networks)
+
+## Sources
+
+- **NXP UM10204** — the I²C specification, and the only authority on it.
+- **Bosch CAN 2.0 specification** — arbitration and the bit-stuffing rules.
+- Each MCU's own datasheet for UART framing; there is no single RFC.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-1314--sockets-and-protocols)

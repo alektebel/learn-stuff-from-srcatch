@@ -41,3 +41,10 @@ Build a Unix shell to understand:
 **Additional Resources**:
 - [Advanced Programming in the UNIX Environment](https://stevens.netmeister.org/631/)
 - [Beej's Guide to Unix IPC](https://beej.us/guide/bgipc/)
+
+## Sources
+
+- Kerrisk, **The Linux Programming Interface** — `fork`, `exec`, `wait`, pipes and signals, chapters 24–27 and 34.
+- Stevens & Rago, **Advanced Programming in the UNIX Environment** — the shorter path to the same material.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-1314--sockets-and-protocols)

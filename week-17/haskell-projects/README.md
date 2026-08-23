@@ -291,3 +291,10 @@ Once you've completed these projects, consider:
 - [Learn You a Haskell for Great Good](http://learnyouahaskell.com/)
 - [Real World Haskell](http://book.realworldhaskell.org/)
 >>>>>>> main
+
+## Sources
+
+- Hutton, **Programming in Haskell** — the textbook.
+- Hutton & Meijer, **"Monadic Parser Combinators"**, 1996 — the payoff in `JSONParser.hs`.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-17--patterns-light-haskell)

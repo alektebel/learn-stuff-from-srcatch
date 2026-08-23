@@ -258,3 +258,10 @@ Legend:
 **Mathematics Foundations**:
 - [Math for Computer Scientists](https://github.com/Developer-Y/cs-video-courses#math-for-computer-scientist)
 >>>>>>> main
+
+## Sources
+
+- **FIPS 180-4** — the SHA-2 specification. The padding rule and the message schedule are both in §5, and it is the authority when your digest disagrees with `sha256sum`.
+- Ferguson, Schneier & Kohno, **Cryptography Engineering** — for why not to use any of this in production.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-1314--sockets-and-protocols)

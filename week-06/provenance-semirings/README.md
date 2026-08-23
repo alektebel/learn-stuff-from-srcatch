@@ -74,3 +74,11 @@ Do this directory before s(CASP) and before LINC.
 - You can say, without opening a file, why a set of source ids cannot
   answer "what did this cost" and "how many ways" at the same time.
 - You refused to finish a cyclic path query in ℕ[X].
+
+## Sources
+
+- Green, Karvounarakis & Tannen, **"Provenance Semirings"**, PODS 2007 — the whole directory. **Prop. 3.4** is the universality theorem `check.py` tests.
+- Cheney, Chiticariu & Tan, **"Provenance in Databases: Why, How, and Where"**, FnTDB 2009 — the taxonomy, and where lineage loses information.
+- Green & Tannen, **"The Semiring Framework for Database Provenance"**, PODS 2017 — absorption, ω-continuity, and recursion.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-6--provenance-semirings)

@@ -518,3 +518,12 @@ Inspired by:
 - LLVM and GCC compiler projects
 - "Let's Build a Compiler" by Jack Crenshaw
 - The Dragon Book authors
+
+## Sources
+
+- Aho, Lam, Sethi & Ullman, **Compilers: Principles, Techniques, and Tools** — the Dragon Book. Chapters 3–6 are this directory.
+- Sandler, **Writing a C Compiler**, 2024 — the closest thing to a walk-through of exactly this project.
+- Poletto & Sarkar, **"Linear Scan Register Allocation"**, TOPLAS 1999 — the allocator and its spilling, which is what `codegen.c` implements.
+- Appel, **Modern Compiler Implementation in C** — if you want the intermediate representation treated properly.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-15--compilers)

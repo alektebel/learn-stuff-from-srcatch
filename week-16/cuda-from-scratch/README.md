@@ -633,3 +633,12 @@ Inspired by:
 - Stanford CS231n and CS149 courses
 - "Programming Massively Parallel Processors" book
 - PyTorch and TensorFlow CUDA kernels
+
+## Sources
+
+- The **NVIDIA CUDA C++ Programming Guide** and the **Best Practices Guide** — the primary sources, and genuinely good. Read the memory-hierarchy chapter before writing kernel 1.
+- Harris, **"Optimizing Parallel Reduction in CUDA"** — seven versions of one kernel, each faster than the last, with the reason stated. The best worked example of the profile-then-fix loop this directory is about.
+- Kirk & Hwu, **Programming Massively Parallel Processors** — the textbook.
+- Volkov & Demmel, **"Benchmarking GPUs to Tune Dense Linear Algebra"**, SC 2008 — why occupancy is not the goal, which is the thing your profiler will not tell you.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-16--cuda-from-scratch)

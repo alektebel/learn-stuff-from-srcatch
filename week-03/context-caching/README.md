@@ -268,3 +268,11 @@ No dependencies beyond the Python 3 standard library.
   instinct, applied to distributed storage
 - [`contextcite/`](../../week-05/contextcite/) — a different "context" problem despite the name:
   explaining which parts of a context caused a response, rather than caching it
+
+## Sources
+
+- Kwon et al., **"PagedAttention"**, SOSP 2023 — the paged KV cache and copy-on-write in `paged_kv_cache.py`.
+- Zheng et al., **"SGLang"**, 2023 — RadixAttention, i.e. `radix_cache.py`.
+- Pope et al., **"Efficiently Scaling Transformer Inference"**, 2022 — the arithmetic behind why decode is memory-bound.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-3--rl-posttraining)

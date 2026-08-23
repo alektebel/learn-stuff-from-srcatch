@@ -151,3 +151,11 @@ smallest eigenpairs efficiently.
 ### Courses
 - [CS224W: Machine Learning with Graphs (Stanford)](https://web.stanford.edu/class/cs224w/)
 - [Spectral Graph Theory (Yale)](https://cs.yale.edu/homes/spielman/561/)
+
+## Sources
+
+- von Luxburg, **"A Tutorial on Spectral Clustering"**, 2007 — start here; it explains which Laplacian to use and why it matters.
+- Shi & Malik, **"Normalized Cuts and Image Segmentation"**, PAMI 2000.
+- Chung, **Spectral Graph Theory** — the book, for the eigenvalue bounds.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-18--the-tail)

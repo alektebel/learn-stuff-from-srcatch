@@ -313,3 +313,12 @@ several small models and take about a minute each; the rest are instant.
   — where `import torch` stops being a black box
 - [`ml-inference/`](../../reference/ml-inference/) — what happens to a trained model next
 - [`PHILOSOPHY.md`](../../PHILOSOPHY.md) — why this repo is built the way it is
+
+## Sources
+
+- Baydin, Pearlmutter, Radul & Siskind, **"Automatic Differentiation in Machine Learning: a Survey"**, JMLR 2018 — why reverse mode, and the cost asymmetry `tensor.py`'s demo measures.
+- Kingma & Ba, **"Adam"**, ICLR 2015 — §2 for bias correction; check which direction it cuts before writing about it.
+- Kingma & Welling, **"Auto-Encoding Variational Bayes"**, ICLR 2014 — the reparameterisation trick in `generative.py`.
+- Glorot & Bengio, AISTATS 2010; He et al., ICCV 2015 — the two init scales in `init_scale`.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-2--autograd)

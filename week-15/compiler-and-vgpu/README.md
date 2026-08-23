@@ -203,3 +203,12 @@ Pure Python 3 standard library. Everything runs in about a second.
 - [`cuda-from-scratch/`](../../week-16/cuda-from-scratch/) — real CUDA, once you know what a warp is
 - [`context-caching/`](../../week-03/context-caching/) — where GPU memory actually goes in practice
 - [`PHILOSOPHY.md`](../../PHILOSOPHY.md) — why this repo is built the way it is
+
+## Sources
+
+- Nickolls, Buck, Garland & Skadron, **"Scalable Parallel Programming with CUDA"**, ACM Queue 2008 — what SIMT is, and the one-PC-per-warp model `vgpu.py` implements.
+- Fung, Sham, Yuan & Aamodt, **"Dynamic Warp Formation"**, MICRO 2007 — branch divergence, the mask stack, and what hardware does about it.
+- Patterson & Hennessy, **Computer Organization and Design** — instruction encoding, for `isa.py` and `assembler.py`.
+- Poletto & Sarkar, **"Linear Scan Register Allocation"**, TOPLAS 1999 — the spilling in `codegen.py`.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-15--compilers)

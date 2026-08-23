@@ -30,3 +30,9 @@ Build a quantum computing simulator to understand:
 - [Qiskit Documentation](https://qiskit.org/)
 - [IBM Quantum Learning](https://learning.quantum.ibm.com/)
 
+## Sources
+
+- Nielsen & Chuang, **Quantum Computation and Quantum Information**, ch. 4 — gates, circuits and measurement.
+- Aaronson, **Quantum Computing Since Democritus** — for the intuition the textbook assumes.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-15--compilers)

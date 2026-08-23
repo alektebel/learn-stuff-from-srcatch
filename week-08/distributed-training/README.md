@@ -143,3 +143,11 @@ python test_phase2.py  # Test your Phase 2 implementation
 ## Note
 
 These implementations are for educational purposes. They prioritize clarity and understanding over production-ready performance. The Phase 4 production system demonstrates best practices but may need additional hardening for critical production use.
+
+## Sources
+
+- Goyal et al., **"Accurate, Large Minibatch SGD"**, 2017 — the linear scaling rule and why warmup is needed.
+- Li et al., **"PyTorch Distributed"**, VLDB 2020 — gradient bucketing and overlap.
+- Rajbhandari et al., **"ZeRO"**, SC 2020 — where the memory actually goes, which is not where people assume.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-8--distributed-training)

@@ -404,3 +404,11 @@ system-design/
 
 ### Computer Networks
 - [Computer Networks Courses](https://github.com/Developer-Y/cs-video-courses#computer-networks)
+
+## Sources
+
+- Kleppmann, **Designing Data-Intensive Applications** — for this directory, and honestly for the whole repo.
+- Karger et al., **"Consistent Hashing and Random Trees"**, STOC 1997 — `consistent_hash.py`.
+- Nygard, **Release It!** — circuit breakers, bulkheads and backpressure.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-17--patterns-light-haskell)

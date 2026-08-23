@@ -800,3 +800,12 @@ Inspired by:
 - HuggingFace TGI's serving architecture
 - Flash Attention's memory efficiency
 - Distributed systems literature
+
+## Sources
+
+**Read, do not build** — see [`../README.md`](../README.md) for why.
+
+- Kwon et al., **"Efficient Memory Management for Large Language Model Serving with PagedAttention"**, SOSP 2023 — the paper. You will have read it twice by now; read it here a third time against your own block allocator.
+- Yu et al., **"Orca"**, OSDI 2022 — continuous batching, and it predates this.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#not-scheduled--reference)

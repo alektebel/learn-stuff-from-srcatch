@@ -337,3 +337,11 @@ This is a learning repository. Feel free to:
 - Report inaccuracies
 
 Remember: The goal is **learning**, not building production scrapers without understanding the implications.
+
+## Sources
+
+- **RFC 9309** — the Robots Exclusion Protocol. Short, and the part with obligations attached.
+- Olston & Najork, **"Web Crawling"**, FnTIR 2010 — politeness, frontier management and duplicate detection.
+- Check the terms of service of anything you point this at. That is not a citation, it is the same category of obligation as the RFC.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-18--the-tail)

@@ -318,3 +318,10 @@ This implementation is educational and demonstrates core lineage concepts. Produ
 
 **Compilers & Parsing**:
 - [Theoretical CS and Programming Languages](https://github.com/Developer-Y/cs-video-courses#theoretical-cs-and-programming-languages)
+
+## Sources
+
+- Cheney, Chiticariu & Tan, **"Provenance in Databases"**, FnTDB 2009 — lineage is provenance with the algebra removed, which is how to read this directory after week 6.
+- The **SAS Language Reference**, for the DATA step semantics being parsed.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-18--the-tail)

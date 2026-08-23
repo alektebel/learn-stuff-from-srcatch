@@ -139,3 +139,11 @@ After building a basic DNS server, consider:
 **Additional Resources**:
 - [DNS RFC 1035](https://tools.ietf.org/html/rfc1035)
 - [DNSSEC Overview](https://www.cloudflare.com/dns/dnssec/how-dnssec-works/)
+
+## Sources
+
+- **RFC 1035** — the wire format, §4 for the message structure and the pointer compression scheme that trips everyone up.
+- **RFC 1034** — the concepts, if 1035 reads like a byte layout with no explanation.
+- **RFC 7766** — DNS over TCP, for the truncation-and-retry path.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-1314--sockets-and-protocols)

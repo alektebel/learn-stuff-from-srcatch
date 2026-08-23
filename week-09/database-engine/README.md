@@ -328,3 +328,13 @@ No dependencies beyond the Python 3 standard library.
   with more of a type system
 - [`system-design/`](../../week-17/system-design/) — the patterns a database sits under
 - [`PHILOSOPHY.md`](../../PHILOSOPHY.md) — why this repo is built the way it is
+
+## Sources
+
+- Hellerstein, Stonebraker & Hamilton, **"Architecture of a Database System"**, FnTDB 2007 — read this first; it is the map for the whole directory.
+- Mohan et al., **"ARIES"**, TODS 1992 — redo-then-undo, and why in that order.
+- Berenson et al., **"A Critique of ANSI SQL Isolation Levels"**, SIGMOD 1995 — where write skew comes from.
+- Graefe, **"Volcano"**, TKDE 1994 — the iterator model in `executor.py`.
+- Selinger et al., SIGMOD 1979 — cost-based planning and the crossover in `planner.py`.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-9--database-engine)

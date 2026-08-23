@@ -373,3 +373,11 @@ Educational project for learning purposes.
 **Additional Resources**:
 - [HTTP/1.1 RFC 2616](https://tools.ietf.org/html/rfc2616)
 - [Beej's Guide to Network Programming](https://beej.us/guide/bgnet/)
+
+## Sources
+
+- **RFC 9110** (HTTP semantics) and **RFC 9112** (HTTP/1.1) — these **supersede RFC 2616**, which most tutorials still cite. Read 9112 §6 for message framing, which is where keep-alive and chunked encoding actually live.
+- Stevens, Fenner & Rudoff, **UNIX Network Programming, Vol. 1** — the reference for the socket calls.
+- **Beej's Guide to Network Programming** — free, and the fastest way to a working `accept` loop.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-1314--sockets-and-protocols)

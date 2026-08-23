@@ -383,3 +383,10 @@ Inspired by:
 - proxychains and torsocks
 - "TCP/IP Illustrated" by W. Richard Stevens
 - Various SOCKS proxy implementations
+
+## Sources
+
+- **RFC 1928** — SOCKS5, and it is short. The handshake is §3, the request format §4.
+- Dingledine, Mathewson & Syverson, **"Tor: The Second-Generation Onion Router"**, USENIX Security 2004 — what a real onion router does that a proxy does not.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-1314--sockets-and-protocols)

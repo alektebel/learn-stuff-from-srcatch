@@ -191,3 +191,10 @@ kubectl apply -f deployment/
 ## Note
 
 These implementations demonstrate core MLOps concepts. Production MLOps platforms require additional features for security, compliance, multi-tenancy, and enterprise scale.
+
+## Sources
+
+- Sculley et al., NeurIPS 2015 (above) — configuration debt and entanglement.
+- Beyer et al., **Site Reliability Engineering** — the operational half.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-18--the-tail)

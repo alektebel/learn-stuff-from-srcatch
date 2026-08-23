@@ -190,3 +190,10 @@ Pure Python 3 standard library. Everything runs in about a second.
 - [`dynamo-paper/`](../../week-10/dynamo-paper/) — the store this one operates
 - [`context-caching/`](../../week-03/context-caching/) — the serving mechanisms this one sizes
 - [`system-design/`](../../week-17/system-design/) — circuit breakers, backpressure, rate limiting
+
+## Sources
+
+- Beyer et al., **Site Reliability Engineering** (Google), ch. 3 — error budgets, and alerting on symptoms rather than causes.
+- Dean & Barroso, **"The Tail at Scale"**, CACM 2013 — why p99 is the number and the mean is not.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-4--inference-from-scratch)

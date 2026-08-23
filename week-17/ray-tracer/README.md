@@ -291,3 +291,12 @@ remaining source of randomness is the pixel jitter.
 
 **Next:** the demos, in order — `vec.py`, `shapes.py`, `bvh.py`, `material.py`,
 `render.py`. Then compare with [`solutions/`](solutions/).
+
+## Sources
+
+- Shirley, **Ray Tracing in One Weekend** — the structure here follows it; the measurements do not.
+- Pharr, Jakob & Humphreys, **Physically Based Rendering** (free online) — ch. 4 for BVH and the surface area heuristic.
+- Kajiya, **"The Rendering Equation"**, SIGGRAPH 1986 — the integral this whole directory estimates.
+- MacDonald & Booth, **"Heuristics for Ray Tracing Using Space Subdivision"**, 1990 — where the SAH comes from.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-17--patterns-light-haskell)

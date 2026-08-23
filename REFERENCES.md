@@ -217,7 +217,17 @@ Algorithms"**, 2017 for the clip.
 - Sandler, **Writing a C Compiler**, 2024 — the closest thing to a walk-through
   of exactly this project.
 - Poletto & Sarkar, **"Linear Scan Register Allocation"**, TOPLAS 1999 — the
-  allocator and its spilling, which is what `codegen.c` implements.
+  allocator and its spilling, which is what
+  [`c-compiler/`](week-15/c-compiler/)'s `codegen.c` implements.
+- Patterson & Hennessy, **Computer Organization and Design** — instruction
+  encoding and the fetch/decode/execute loop, for
+  [`compiler-and-vgpu/`](week-15/compiler-and-vgpu/)'s `isa.py` and `cpu.py`.
+- Nickolls, Buck, Garland & Skadron, **"Scalable Parallel Programming with
+  CUDA"**, ACM Queue 2008 — what SIMT *is*, and the one-PC-per-warp model
+  `vgpu.py` implements.
+- Fung, Sham, Yuan & Aamodt, **"Dynamic Warp Formation and Scheduling for
+  Efficient GPU Control Flow"**, MICRO 2007 — branch divergence and the mask
+  stack, and what hardware does about it.
 - **RFC 791 / 793** — IP and TCP headers, for
   [`firewall-from-scratch/`](week-15/firewall-from-scratch/).
 - Nielsen & Chuang, **Quantum Computation and Quantum Information** — ch. 4 for
@@ -256,6 +266,12 @@ Algorithms"**, 2017 for the clip.
 - Sculley et al., **"Hidden Technical Debt in Machine Learning Systems"**,
   NeurIPS 2015 — the one paper to read before
   [`ml-in-production/`](week-18/ml-in-production/) or [`mlops/`](week-18/mlops/).
+- Olston & Najork, **"Web Crawling"**, FnTIR 2010; and **RFC 9309** (Robots
+  Exclusion Protocol) — for [`web-scraping/`](week-18/web-scraping/). The RFC is
+  short and is the part with obligations attached.
+- Cheney, Chiticariu & Tan (week 6, above) — data lineage is provenance with the
+  algebra removed, which is the right way to read
+  [`sas-lineage-tool/`](week-18/sas-lineage-tool/) after week 6.
 
 ## Daily · [`lean-proofs/`](lean-proofs/)
 
@@ -267,7 +283,25 @@ Algorithms"**, 2017 for the clip.
 
 Those five directories carry their own reading lists. `vllm-engine` and
 `tensorrt-inference` are where you go **after** week 4, with your own scheduler
-open beside them.
+open beside them. The primary sources, so you can read without opening them:
+
+- [`vllm-engine/`](reference/vllm-engine/) — Kwon et al., **PagedAttention**,
+  SOSP 2023. The same paper as week 3 and week 4; read it a third time here,
+  against your own block allocator.
+- [`tensorrt-inference/`](reference/tensorrt-inference/) — the **NVIDIA TensorRT
+  Developer Guide**, on layer fusion, precision calibration and kernel
+  auto-tuning. Vendor documentation, and the honest place for it.
+- [`ml-inference/`](reference/ml-inference/) — Jacob et al., **"Quantization and
+  Training of Neural Networks for Efficient Integer-Arithmetic-Only
+  Inference"**, CVPR 2018; and Dettmers et al., **"LLM.int8()"**, 2022, for what
+  changes at transformer scale.
+- [`world-models/`](reference/world-models/) — Ha & Schmidhuber, **"World
+  Models"**, 2018; then Hafner et al., **Dreamer** v1 (ICLR 2020), v2 (ICLR
+  2021) and v3 (2023); then Micheli et al., **IRIS**, ICLR 2023.
+- [`diffusion-models/`](reference/diffusion-models/) — Ho, Jain & Abbeel,
+  **"Denoising Diffusion Probabilistic Models"**, NeurIPS 2020; Song, Meng &
+  Ermon, **"DDIM"**, ICLR 2021; Ho & Salimans, **"Classifier-Free Diffusion
+  Guidance"**, 2022; Ronneberger, Fischer & Brox, **"U-Net"**, MICCAI 2015.
 
 ---
 

@@ -155,3 +155,10 @@ docker-compose up
 ## Note
 
 These implementations are for educational purposes. Production systems require additional security, compliance, and reliability features not fully covered here.
+
+## Sources
+
+- Sculley et al., **"Hidden Technical Debt in Machine Learning Systems"**, NeurIPS 2015 — the one paper to read first.
+- Breck et al., **"The ML Test Score"**, IEEE Big Data 2017 — what to actually test.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-18--the-tail)

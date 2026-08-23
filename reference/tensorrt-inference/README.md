@@ -644,3 +644,12 @@ Inspired by:
 - PyTorch JIT compiler
 - TensorFlow XLA compiler
 - Modern inference serving systems
+
+## Sources
+
+**Read, do not build** — see [`../README.md`](../README.md) for why.
+
+- The **NVIDIA TensorRT Developer Guide** — layer fusion, precision calibration, kernel auto-tuning. Vendor documentation, and the honest place for it.
+- Jacob et al., **"Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference"**, CVPR 2018 — what INT8 calibration is doing.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#not-scheduled--reference)

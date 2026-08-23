@@ -525,3 +525,11 @@ Educational project for learning purposes.
 ---
 
 **⚠️ Important Note**: This is an educational project. For production use, rely on established firewall solutions like iptables, nftables, pfSense, or commercial firewalls. This implementation prioritizes learning and understanding over security and performance.
+
+## Sources
+
+- **RFC 791** (IP) and **RFC 793** (TCP) — the headers being parsed, byte by byte.
+- The **netfilter/iptables** documentation — for what a production packet filter's rule evaluation looks like, and how it differs from a linear scan.
+- Compare with `vpc.py` in week 1: a security group is stateful and a NACL is not, and this directory is where you see why that costs what it costs.
+
+Full list: [`../../REFERENCES.md`](../../REFERENCES.md#week-15--compilers)
