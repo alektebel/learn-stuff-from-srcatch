@@ -18,7 +18,10 @@ Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill
 1. `pager.py` first: slotted pages, free-space arithmetic, the buffer pool and its LRU. **Predict how many rows fit in a 4096-byte page before running the demo.**
 2. Then `btree.py`, then **`wal.py` before `mvcc.py`** — durability is one writer and a disk, isolation is several writers and each other. The other order makes both confusing.
 3. Then `sql.py` (recursive descent, precedence climbing), `executor.py` (Volcano iterators), `planner.py`, `database.py`.
-4. The eighteen checks are the order.
+4. The eighteen checks are the order — for the SQL half.
+5. `lsm.py` next, the counterweight to `btree.py`: memtable, immutable sorted runs, bloom filters, tombstones, and both compaction policies. **Measure read, write AND space amplification** — the RUM conjecture says you get two of three, and the point is seeing which corner each policy stands in rather than being told.
+6. **The head-to-head is the check to write first:** run both structures on a write-heavy and a read-heavy workload. If one wins both, the workload is not exercising the difference.
+7. `datastep.py` last. The PDV, the implicit loop, `RETAIN`, BY-groups with `first.`/`last.`, `MERGE`, `OUTPUT`/`DELETE`. Then the same five transformations in SQL — the interesting rows are the two SQL cannot express cleanly.
 
 ## Done means
 

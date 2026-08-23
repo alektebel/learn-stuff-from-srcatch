@@ -1,7 +1,7 @@
 # Week 17 · Dec 14–Dec 20, 2026
 
-> **Patterns, light, and Haskell.**
-> The heaviest week, and the most arbitrary — three unrelated things sharing a slot because they are what is left. If the plan slips, this is the week to cut from, and `system-design` is the first candidate: `aws-from-scratch` covers much of it from the mechanisms up.
+> **Databases deeper, light, and Haskell.**
+> The heaviest week, and still the most arbitrary — three unrelated things sharing a slot. If the plan slips this is the week to cut from, and `haskell-projects` (61 h) is the first candidate: it is orthogonal to everything else you are keeping, and the other two have checkers while it does not.
 
 ## Finish this week
 
