@@ -94,3 +94,6 @@ deepfake-detection/checkpoints/
 deepfake-detection/logs/
 deepfake-detection/*.pt
 deepfake-detection/*.pth
+
+# Ray tracer output
+ray-tracer/**/*.ppm
