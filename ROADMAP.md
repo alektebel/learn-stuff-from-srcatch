@@ -5,7 +5,9 @@ Start **Monday 24 August 2026**. Finish **Sunday 27 December 2026**. Eighteen we
 The repo is laid out to match: **`week-01/` … `week-18/`**, each with a README
 carrying that week's objective, the order to work in, and a concrete *done
 means*. This file is the whole plan and the arithmetic behind it; the week
-folders are what you actually open on a Monday. **[Start at `week-01/`](week-01/).**
+folders are what you actually open on a Monday, and
+[`IMPLEMENTATION_ORDER.md`](IMPLEMENTATION_ORDER.md) is the file-by-file list
+underneath both. **[Start at `week-01/`](week-01/).**
 
 ## The arithmetic, before the calendar
 

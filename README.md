@@ -6,6 +6,9 @@ A collection of from-scratch implementations of various systems and projects for
 principles every directory follows: design choices named as problem-solving decisions,
 MVP-then-complicate driven by limit cases, and verification you can run.
 
+**Want the file-by-file list? Read [IMPLEMENTATION_ORDER.md](IMPLEMENTATION_ORDER.md)** —
+every file you will open, in the order you will open it, with its stub count.
+
 **Working through it? Read [ROADMAP.md](ROADMAP.md)** — an 18-week schedule (24 Aug –
 27 Dec 2026) at three intensities, with the honest arithmetic up front: 35 directories,
 2,382 implementable units, ~1,570 hours. Track where you actually are with:
