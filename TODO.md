@@ -515,17 +515,71 @@ This is literally what "know what to look for" means.
 
 ---
 
+## 13. Debug it · ~4 h · THE CATALOGUE ALREADY EXISTS
+
+Every exercise in this repo is *"build this correctly"*. The actual job is
+*"someone built it wrong and you do not know where"*, and nothing here practises
+that. [`week-04/deploy-and-debug/`](week-04/deploy-and-debug/) is the one
+exception — root-cause diagnosis of 11 injected faults from metrics alone — and
+it is one of the better-designed things in the repo. This generalises it.
+
+**It is cheap because the hard part is already done.**
+[`tools/bugs/`](tools/bugs/) holds **93 characteristic bugs** across six
+directories, each one already written, already injected into a working
+implementation, and already confirmed to make a specific check fail. Nothing
+needs inventing; the exercises exist.
+
+It also turns the shipped `solutions/` directories from a liability into an
+asset. They currently make five directories transcribable — but a debugging mode
+*needs* a working reference to break.
+
+- [ ] **13.1** `tools/breakit.py`, sharing `stage()` and `apply_injection()`
+      with [`tools/verify_checks.py`](tools/verify_checks.py) — §1 has to build
+      those anyway, so this is mostly wiring.
+
+      ```
+      python3 tools/breakit.py week-17/ray-tracer
+        -> a broken working tree, and ONE symptom. Which bug is not disclosed.
+      python3 tools/breakit.py --reveal   # after you have committed to an answer
+      ```
+- [ ] **13.2** **Score by observations, not by time or success.** Record how
+      many times you ran something before naming the bug. Someone who
+      binary-searches the pipeline beats someone who reads every file, and time
+      taken measures neither. This is the only metric here worth keeping.
+- [ ] **13.3** Present the **symptom only** — a wrong number, a flat image, a
+      loss that plateaus — never the traceback and never the failing check name.
+      The check name gives away the file and collapses the exercise.
+- [ ] **13.4** Weight selection toward the bugs that **do not crash**. Those are
+      the ones worth practising: uniform-hemisphere sampling still renders,
+      semi-naive over a non-idempotent semiring still terminates and undercounts,
+      a missing `/2` in a VAE still trains. A bug that produces a plausible
+      result is the hardest kind to find and the only kind worth drilling.
+- [ ] **13.5** Extend the catalogues to the check-only directories once §1 has
+      produced references for them — `inference-from-scratch`, `linc`, `scasp`,
+      `provenance-semirings`, `spade`, `mars-sql`. Write the bug at the same time
+      as the check; that is when you know what the check is defending against.
+- [ ] **13.6** Put it on **Sunday's regression day**, which currently says
+      "re-run every checker" and nothing else. One injected bug a week, in a
+      directory finished at least a fortnight ago, is also a memory test.
+- [ ] **13.7** Keep a log of the ones you failed to find. Same principle as
+      §12.2 — the list of what you could not diagnose is the signal; a success
+      rate is not.
+
+**Do not read `tools/bugs/` while learning.** It is the answer key.
+
+---
+
 ## Last: the decision that is not a task
 
 The full track reads **41 directories, 1,799 h, 100 h/week**, up from 87 two
 commits ago, with weeks 14–18 holding 900 h between them. The twelve-week,
 ten-project cut discussed on 23 Aug was never applied.
 
-Every step above adds roughly **178 hours** (≈40 for 1–6, 55 for the blockchain,
+Every step above adds roughly **182 hours** (≈40 for 1–6, 55 for the blockchain,
 22 for the three AWS services, 35 for the certification layer, 20 for the deploy
 layer, 6 for the defence loop) plus a daily drill and a real AWS bill.
 
-**Section 12 is the only one that removes anything** — it cuts `system-design`,
+**Section 12 is the only one that removes anything** (§13 adds 4 h but needs no new content — the 93 bugs are already written)**,** and — it cuts `system-design`,
 48 h, for a net −42. Every other section adds and removes nothing. That
 asymmetry is the whole problem with this file.
 
