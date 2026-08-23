@@ -515,55 +515,105 @@ This is literally what "know what to look for" means.
 
 ---
 
-## 13. Debug it · ~4 h · THE CATALOGUE ALREADY EXISTS
+## 13. Debug it · one catalogue per project
 
 Every exercise in this repo is *"build this correctly"*. The actual job is
-*"someone built it wrong and you do not know where"*, and nothing here practises
-that. [`week-04/deploy-and-debug/`](week-04/deploy-and-debug/) is the one
-exception — root-cause diagnosis of 11 injected faults from metrics alone — and
-it is one of the better-designed things in the repo. This generalises it.
+*"someone built it wrong and you do not know where"*, and only
+[`week-04/deploy-and-debug/`](week-04/deploy-and-debug/) practises it.
+[`tools/bugs/`](tools/bugs/) generalises that, and doubles as the half of
+checker verification (§1) that actually finds problems.
 
-**It is cheap because the hard part is already done.**
-[`tools/bugs/`](tools/bugs/) holds **93 characteristic bugs** across six
-directories, each one already written, already injected into a working
-implementation, and already confirmed to make a specific check fail. Nothing
-needs inventing; the exercises exist.
+**The rule: every check gets at least one bug proving it bites.** A check with
+no bug against it has never been shown to detect anything.
 
-It also turns the shipped `solutions/` directories from a liability into an
-asset. They currently make five directories transcribable — but a debugging mode
-*needs* a working reference to break.
+### The harness · ~4 h
 
 - [ ] **13.1** `tools/breakit.py`, sharing `stage()` and `apply_injection()`
-      with [`tools/verify_checks.py`](tools/verify_checks.py) — §1 has to build
-      those anyway, so this is mostly wiring.
+      with [`tools/verify_checks.py`](tools/verify_checks.py) — §1 builds those
+      anyway, so this is mostly wiring.
 
       ```
-      python3 tools/breakit.py week-17/ray-tracer
-        -> a broken working tree, and ONE symptom. Which bug is not disclosed.
-      python3 tools/breakit.py --reveal   # after you have committed to an answer
+      python3 tools/breakit.py week-01/aws-from-scratch
+        -> a broken tree and ONE symptom. Which bug is not disclosed.
+      python3 tools/breakit.py --reveal    # only after you commit to an answer
       ```
-- [ ] **13.2** **Score by observations, not by time or success.** Record how
-      many times you ran something before naming the bug. Someone who
-      binary-searches the pipeline beats someone who reads every file, and time
-      taken measures neither. This is the only metric here worth keeping.
-- [ ] **13.3** Present the **symptom only** — a wrong number, a flat image, a
-      loss that plateaus — never the traceback and never the failing check name.
-      The check name gives away the file and collapses the exercise.
-- [ ] **13.4** Weight selection toward the bugs that **do not crash**. Those are
-      the ones worth practising: uniform-hemisphere sampling still renders,
-      semi-naive over a non-idempotent semiring still terminates and undercounts,
-      a missing `/2` in a VAE still trains. A bug that produces a plausible
-      result is the hardest kind to find and the only kind worth drilling.
-- [ ] **13.5** Extend the catalogues to the check-only directories once §1 has
-      produced references for them — `inference-from-scratch`, `linc`, `scasp`,
-      `provenance-semirings`, `spade`, `mars-sql`. Write the bug at the same time
-      as the check; that is when you know what the check is defending against.
-- [ ] **13.6** Put it on **Sunday's regression day**, which currently says
-      "re-run every checker" and nothing else. One injected bug a week, in a
-      directory finished at least a fortnight ago, is also a memory test.
-- [ ] **13.7** Keep a log of the ones you failed to find. Same principle as
-      §12.2 — the list of what you could not diagnose is the signal; a success
-      rate is not.
+- [ ] **13.2** **Score by observations**, not time or success. Someone who
+      binary-searches beats someone who reads every file, and time measures
+      neither.
+- [ ] **13.3** **Symptom only** — never the traceback, never the failing check
+      name. The name gives away the file and collapses the exercise.
+- [ ] **13.4** Weight selection toward bugs that **do not crash**. Uniform
+      hemisphere sampling still renders; semi-naive over a non-idempotent
+      semiring still terminates and undercounts; a missing `/2` in a VAE still
+      trains. Plausible results are the hardest to find and the only kind worth
+      drilling.
+- [ ] **13.5** Put it on **Sunday's regression day**, which currently says
+      "re-run every checker" and nothing else. One bug a week, in a directory
+      finished at least a fortnight ago, is also a memory test.
+- [ ] **13.6** Log the ones you failed to find. Same principle as §12.2 — the
+      list of what you could not diagnose is the signal, a success rate is not.
+
+### Per project
+
+`existing` counts what is already in `tools/bugs/`. Directories with
+`solutions/` can be written today; check-only ones need a reference from §1
+first; skeletons need their checks written before there is anything to prove.
+
+**AWS is done.** It was the biggest gap: 24 checks with bugs against only 6 of
+them. Writing the other 18 found **four checks that could not detect the very
+thing they existed to test** — see the note under the table.
+
+| | Directory | Checks | Existing | Write | Blocked on |
+|---|---|---|---|---|---|
+| ~~13.7~~ | `week-01/aws-from-scratch` | 24 | **52** | 0 | **DONE** — 52/52 caught, all 24 checks proven |
+| 13.8 | `week-02/llm-from-scratch` | 15 | 14 | 1 | nothing |
+| 13.9 | `week-03/context-caching` | 16 | 0 | 16 | nothing |
+| 13.10 | `week-04/deploy-and-debug` | 12 | 0 | 12 | nothing |
+| 13.11 | `week-05/contextcite` | 14 | 0 | 14 | nothing |
+| 13.12 | `week-10/dynamo-paper` | 17 | 0 | 17 | nothing |
+| 13.13 | `week-15/compiler-and-vgpu` | 12 | 0 | 12 | nothing |
+| 13.14 | `week-04/inference-from-scratch` | 12 | 0 | 12 | §1.5 reference |
+| 13.15 | `week-06/provenance-semirings` | 8 | 0 | 8 | §1.5 reference |
+| 13.16 | `week-07/scasp` | 8 | 0 | 8 | §1.5 reference |
+| 13.17 | `week-08/linc` | 8 | 0 | 8 | §1.5 reference |
+| 13.18 | `week-05/spade` | 8 | 0 | 8 | §1.5 reference |
+| 13.19 | `week-05/mars-sql` | 8 | 0 | 8 | §1.5 reference |
+| 13.20 | `week-03/rl-posttraining` | 9 | 0 | 9 | §4.1 checks |
+| 13.21 | `week-11/blockchain-from-scratch` | 11 | 0 | 11 | §8.1 checks |
+| 13.22 | `week-12/aws-certification` | 10 | 0 | 10 | §10.1 checks |
+| 13.23 | `week-12/aws-deploy` | 10 | 0 | 10 | §11.1 checks |
+| — | `week-02/autograd` | 10 | 18 | 0 | **covered** |
+| — | `week-09/database-engine` | 18 | 20 | 0 | **covered** |
+| — | `week-10/raft` | 7 | 12 | 0 | **covered** |
+| — | `week-17/ray-tracer` | 6 | 16 | 0 | **covered** |
+
+**What writing the AWS catalogue actually found.** Four checks passed against a
+deliberately broken implementation and had to be strengthened:
+
+- **check 4** verified a multipart ETag ended in `-N` but never that the digest
+  half was the MD5 of the *concatenated part digests*. Hashing the whole body
+  and appending the suffix passed.
+- **check 11** proved a reservation was a *floor* (others lost capacity) but
+  never a *ceiling* — a function that ignored its own reservation passed. It
+  also never tested that a timed-out invocation is billed for the full timeout.
+- **check 12** asserted `matches_filter` worked in isolation but every
+  subscriber in the delivery test had no filter policy, so a topic that ignored
+  filter policies entirely passed.
+- **check 18** ran the capstone end to end without ever checking that the stored
+  object was *encrypted*, or that a failed message *survived* to be redelivered.
+
+That is the argument for this whole section in one paragraph: a checker nobody
+has tried to fool is a checker nobody has tested.
+
+- [ ] **13.24** The remaining directories have **no `check.py` at all** —
+      `bash-from-scratch`, `http-server`, `dns-server`, `cryptographic-library`,
+      `communication-protocols`, `toralizer`, `firewall-from-scratch`,
+      `c-compiler`, `quantum-computing-lang`, `cuda-from-scratch`,
+      `haskell-projects`, `distributed-training`, and the week-18 tail. Writing a
+      checker for those is a larger job than this section and is not scheduled.
+      When you do write one, **write the bug at the same time** — that is the
+      moment you know what the check is defending against, and it never comes
+      back.
 
 **Do not read `tools/bugs/` while learning.** It is the answer key.
 

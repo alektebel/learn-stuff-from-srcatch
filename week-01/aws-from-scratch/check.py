@@ -153,6 +153,23 @@ def check_s3_objects() -> None:
         "the MD5 of the concatenated part MD5s, NOT the MD5 of the object — "
         "which is why you cannot verify a multipart upload against a local md5.")
     assert multi != compute_etag(b"x" * 300)
+    # The suffix alone is not the property. The digest half must be the MD5 of
+    # the CONCATENATED PART DIGESTS, so re-splitting the same bytes differently
+    # gives a different ETag -- which is the actual reason a multipart object
+    # cannot be verified against a local md5.
+    import hashlib
+    parts = [b"x" * 100] * 3
+    expected = hashlib.md5(b"".join(hashlib.md5(p).digest() for p in parts)).hexdigest()
+    assert multi.split("-")[0] == expected, (
+        f"the digest half of a multipart ETag is {multi.split('-')[0]}; it must "
+        f"be the MD5 of the concatenated part MD5s ({expected}). Hashing the "
+        "whole body and appending '-N' produces a plausible-looking ETag that "
+        "is wrong, and the part count alone does not catch it.")
+    other = compute_etag(b"x" * 300, parts=[b"x" * 150] * 2)
+    assert other.split("-")[0] != multi.split("-")[0], (
+        "the same 300 bytes split into 2 parts instead of 3 must give a "
+        "DIFFERENT digest. The part size changes the answer; that is why the "
+        "ETag is not the object's MD5.")
 
 
 def check_s3_listing_and_versioning() -> None:
@@ -454,6 +471,29 @@ def check_lambda_concurrency() -> None:
         f"'api' was never changed, yet it can now only run {succeeded}. That "
         "silent reduction is the point of the check.")
 
+    # A reservation is a floor AND a ceiling. The assertions above only prove
+    # the floor -- that other functions lost capacity. Prove the ceiling too, or
+    # a function that ignores its own reservation passes every test here.
+    succeeded, throttled = service.concurrent_invoke(
+        "critical", [{} for _ in range(10)], now=200)
+    assert succeeded == 6 and throttled == 4, (
+        f"'critical' reserved 6 and ran {succeeded}. Reserved concurrency caps "
+        "the function as well as protecting it -- it cannot borrow from the "
+        "unreserved pool, which is the half people forget when they reserve "
+        "capacity to make a function faster.")
+
+    # A timeout is billed for the full timeout, not for the work actually done.
+    slow = Function("slow", lambda e, c: "ok", init_ms=0, timeout_s=1)
+    service.register(slow)
+    before = slow.stats["billed_ms"]
+    result = service.invoke("slow", {}, now=300, duration_ms=5000)
+    assert result.error, "a 5s run against a 1s timeout must fail"
+    assert slow.stats["billed_ms"] - before == 1000, (
+        f"a timed-out invocation billed {slow.stats['billed_ms'] - before} ms; "
+        "it must be billed for the full timeout (1000 ms). Billing the actual "
+        "duration makes a runaway function look cheap in the very run where it "
+        "cost you the most.")
+
     dlq: List[object] = []
 
     def explode(event, context):
@@ -493,6 +533,23 @@ def check_sns_fanout_and_filters() -> None:
         "look empty, `now` is not being threaded through to the subscriber and "
         "messages landed in the future.")
     assert seen == ["hello"]
+
+    # Everything above subscribed WITHOUT a filter policy, so none of it proves
+    # publish() consults one. A topic that ignores filter policies entirely
+    # passes every assertion so far -- and quietly fans every message out to
+    # every subscriber, which is a correctness bug and a bill.
+    filtered = Topic("f")
+    prod, dev = Queue("prod"), Queue("dev")
+    filtered.subscribe("sqs", prod, "prod", filter_policy={"env": ["prod"]})
+    filtered.subscribe("sqs", dev, "dev", filter_policy={"env": ["dev"]})
+    result = filtered.publish("deploy", attributes={"env": "prod"}, now=0)
+    assert result["delivered"] == 1 and result["filtered"] == 1, (
+        f"one matching subscriber and one filtered out, got {result}. If both "
+        "were delivered, publish() is not applying the filter policy at all.")
+    assert prod.depth(now=0)["visible"] == 1 and dev.depth(now=0)["visible"] == 0, (
+        "the message must reach 'prod' and NOT 'dev'. The filter runs at the "
+        "topic, before delivery -- which is the whole reason it saves money "
+        "rather than merely saving the subscriber some work.")
 
     assert matches_filter(None, {"any": "thing"}), "no policy means deliver"
     assert matches_filter({"s": ["a", "b"]}, {"s": "b"}), \
@@ -723,6 +780,42 @@ def check_capstone() -> None:
 
     denied = [line for line in system["cloud"].audit if line.startswith("DENY")]
     assert denied, "the audit trail must record denied calls, not only allowed ones"
+
+    # The pipeline "works" end to end whether or not the payload was ever
+    # encrypted -- the row lands in DynamoDB either way. Check the bytes.
+    stored = system["cloud"].s3.get_object("uploads", "report.pdf")
+    assert stored.body != b"payload", (
+        "the object in S3 is the plaintext that was uploaded. Envelope "
+        "encryption that returns a ciphertext and then stores the original is "
+        "the failure mode this capstone exists to make visible: every assertion "
+        "above still passes.")
+    assert stored.metadata.get("kms_version"), (
+        "the object must record which key version wrapped it. Without it the "
+        "ciphertext is unreadable after a rotation retires that version.")
+
+    # A message whose handler failed must NOT be deleted -- the visibility
+    # timeout is what returns it. Deleting first loses the work silently.
+    from lambda_svc import Function
+    system["cloud"].lambda_service.register(
+        Function("boom", lambda e, c: (_ for _ in ()).throw(ValueError("x"))))
+    system["queue"].send("acme/again.pdf", now=200)
+    original = system["cloud"].lambda_service.functions["indexer"]
+    system["cloud"].lambda_service.functions["indexer"] = \
+        system["cloud"].lambda_service.functions["boom"]
+    outcome = drain(system, now=200)
+    system["cloud"].lambda_service.functions["indexer"] = original
+    assert outcome["processed"] == 0, f"the handler raised, so nothing was processed: {outcome}"
+    held = system["queue"].depth(now=200)
+    assert held["visible"] + held["in_flight"] >= 1, (
+        "a message whose handler FAILED is gone from the queue. Deleting on "
+        "receive rather than on SUCCESS loses the work with no error anywhere "
+        "-- which is the reason the queue sits between the topic and the "
+        f"function at all. Depth after the failed drain: {held}")
+    recovered = drain(system, now=400)
+    assert recovered["processed"] == 1, (
+        f"once the lease expired the message must be redelivered and succeed "
+        f"this time, got {recovered}. That redelivery is the whole value of "
+        "acknowledging on success instead of on receipt.")
 
 
 # ---------------------------------------------------------------------------
