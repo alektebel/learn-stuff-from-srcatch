@@ -359,7 +359,7 @@ have already built, with different packaging:
 | ECS, Fargate, App Runner | Lambda with longer-lived containers | `lambda_svc.py` |
 | Step Functions | A state machine over Lambda invocations | `lambda_svc.py` |
 | RDS, Aurora | A database; the AWS part is failover and backups | — |
-| ElastiCache | A cache; see [`system-design/`](../../week-17/system-design/) | — |
+| ElastiCache | A cache; see [`system-design/`](../../reference/system-design/) | — |
 | EFS, FSx | A filesystem, so *not* S3's flat model | `s3.py` (by contrast) |
 | CloudFront | A CDN; edge caching and invalidation | [`context-caching/`](../../week-03/context-caching/) |
 | ELB, API Gateway | Routing + throttling + health checks | `vpc.py`, `lambda_svc.py` |
@@ -457,5 +457,5 @@ Pure Python 3 standard library. Everything runs in about a second.
 
 - [`dynamo-paper/`](../../week-10/dynamo-paper/) — the 2007 paper DynamoDB is built on
 - [`deploy-and-debug/`](../../week-04/deploy-and-debug/) — operating and debugging this kind of system
-- [`system-design/`](../../week-17/system-design/) — the patterns underneath most of these services
+- [`system-design/`](../../reference/system-design/) — the patterns underneath most of these services
 - [`PHILOSOPHY.md`](../../PHILOSOPHY.md) — why this repo is built the way it is

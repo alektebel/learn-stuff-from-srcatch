@@ -64,7 +64,7 @@ PLAN = [
     ("scasp",                      45,  7, "F"),
     ("linc",                       30,  8, "F"),
     ("distributed-training",       10,  8, "F"),
-    ("database-engine",            50,  9, "FCS"),
+    ("database-engine",           77,  9, "FCS"),
     ("dynamo-paper",               21, 10, "FCS"),
     ("raft",                       30, 10, "FC"),
     ("blockchain-from-scratch",    55, 11, "FC"),
@@ -80,7 +80,7 @@ PLAN = [
     ("compiler-and-vgpu",          16, 15, "FCS"),
     ("quantum-computing-lang",      8, 15, "F"),
     ("cuda-from-scratch",         122, 16, "FCS"),
-    ("system-design",              48, 17, "F"),
+    ("database-internals",       45, 17, "FC"),
     ("ray-tracer",                 35, 17, "F"),
     ("haskell-projects",           61, 17, "F"),
     ("spectral-graphs",             5, 18, "F"),
@@ -103,7 +103,8 @@ BASELINE = {
     "bash-from-scratch": 18, "blockchain-from-scratch": 46, "c-compiler": 149,
     "communication-protocols": 115, "compiler-and-vgpu": 53,
     "context-caching": 94, "contextcite": 42, "cryptographic-library": 12,
-    "cuda-from-scratch": 105, "database-engine": 114, "deploy-and-debug": 34,
+    "cuda-from-scratch": 105, "database-engine": 124,
+    "database-internals": 36, "deploy-and-debug": 34,
     "distributed-training": 10, "dns-server": 20, "dynamo-paper": 70,
     "firewall-from-scratch": 68, "haskell-projects": 67, "http-server": 16,
     "inference-from-scratch": 41, "lean-proofs": 504, "linc": 22,
@@ -111,7 +112,7 @@ BASELINE = {
     "mlops": 13, "provenance-semirings": 76, "quantum-computing-lang": 17,
     "raft": 30, "ray-tracer": 41, "rl-posttraining": 32,
     "sas-lineage-tool": 23, "scasp": 22, "spade": 19, "spectral-graphs": 11,
-    "system-design": 159, "toralizer": 46, "web-scraping": 0,
+    "toralizer": 46, "web-scraping": 0,
 }
 
 

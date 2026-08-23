@@ -56,7 +56,7 @@ slot across all eighteen.
 | [**14**](week-14/) | Nov 23–Nov 29 | What a byte stream carries | `dns-server`, `cryptographic-library`, `communication-protocols`, `toralizer` |
 | [**15**](week-15/) | Nov 30–Dec 6 | Compilers, and a machine for them | `firewall-from-scratch`, `c-compiler`, `compiler-and-vgpu`, `quantum-computing-lang` |
 | [**16**](week-16/) | Dec 7–Dec 13 | CUDA | `cuda-from-scratch` |
-| [**17**](week-17/) | Dec 14–Dec 20 | Patterns, light, and Haskell | `system-design`, `ray-tracer`, `haskell-projects` |
+| [**17**](week-17/) | Dec 14–Dec 20 | Databases deeper, light, and Haskell | `database-internals`, `ray-tracer`, `haskell-projects` |
 | [**18**](week-18/) | Dec 21–Dec 27 | The long tail | `spectral-graphs`, `sas-lineage-tool`, `web-scraping`, `ml-in-production`, `mlops` |
 
 ---
@@ -112,7 +112,7 @@ The same directories, grouped by subject rather than by week.
 - **[inference-from-scratch/](week-04/inference-from-scratch/)** - A serving stack on a simulated GPU, in the order you actually assemble one: the per-token path, a naive server that fails under overlap, continuous batching, KV bandwidth, a scheduler, paged KV, GPU-path opts, speculative decoding, observability, a load test, then — only then — a comparison with vLLM / SGLang / TensorRT-LLM (12 graded checks)
 
 ### System Design & Distributed Systems
-- **[system-design/](week-17/system-design/)** - Core distributed systems patterns: caching (LRU, cache-aside, stampede), async queues (retries, backoff, DLQ, idempotency), reliability (circuit breaker, bulkhead, backpressure), consistent hashing, leaderboards, URL shortener, rate limiter, and capacity math
+- **[system-design/](reference/system-design/)** - Core distributed systems patterns: caching (LRU, cache-aside, stampede), async queues (retries, backoff, DLQ, idempotency), reliability (circuit breaker, bulkhead, backpressure), consistent hashing, leaderboards, URL shortener, rate limiter, and capacity math
 - **[dynamo-paper/](week-10/dynamo-paper/)** - Amazon's Dynamo paper (SOSP 2007) implemented directly: consistent hashing with preference lists, vector clocks, N/R/W quorums, sloppy quorum with hinted handoff, Merkle-tree anti-entropy, and gossip membership (17 graded checks via `python3 check.py`)
 - **[aws-from-scratch/](week-01/aws-from-scratch/)** - Learn AWS by implementing toy versions of its core services: IAM policy evaluation, S3 with versioning and delete markers, SQS visibility timeouts, DynamoDB hot partitions, Lambda concurrency and cold starts, SNS filter policies and EventBridge patterns, KMS envelope encryption, VPC stateful-vs-stateless networking, plus a capstone pipeline wiring them together - then a meter and a price sheet on top of all of it: the two rounding rules AWS bills by, graduated tiers, fixed vs variable lines, and the crossover behind every cost rule of thumb (provisioned DynamoDB pays above 14.44% utilisation; a CPU-bound Lambda costs the same at 128 MB and 10 GB; an S3 gateway endpoint has no crossover at all) - and a map of which remaining AWS services are variations of which mechanism (24 graded checks via `python3 check.py`)
 

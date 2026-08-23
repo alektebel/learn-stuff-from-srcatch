@@ -7,9 +7,9 @@
 
 | Project | Hours | Track |
 |---|---|---|
-| [`database-engine/`](database-engine/) | 50 | core · spine |
+| [`database-engine/`](database-engine/) | 77 | core · spine |
 
-**50 block hours**, plus the daily Lean slot (~8.4 h) = 58 h on the full track.
+**77 block hours**, plus the daily Lean slot (~8.4 h) = 58 h on the full track.
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
@@ -22,7 +22,11 @@ Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill
 
 ## Done means
 
-- `week-09/database-engine/` prints 18/18.
+- `week-09/database-engine/` prints 18/18, plus the LSM and DATA step checks.
+- You can say why an LSM is write-optimised in one sentence without using the
+  word "fast", and name what it gave up to get there.
+- You can name a transformation the DATA step expresses cleanly and SQL does
+  not, and say why.
 - You can say in one sentence what `wal.py` promises after a crash and what `mvcc.py` promises a concurrent reader — and why write skew slips past the second one.
 
 ## Every day

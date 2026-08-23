@@ -159,6 +159,27 @@ Algorithms"**, 2017 for the clip.
   System"**, SIGMOD 1979 — cost-based planning, and the crossover.
 - **CMU 15-445** lectures, if you want the whole thing narrated.
 
+### `lsm.py` and `datastep.py`
+
+- O'Neil, Cheng, Gawlick & O'Neil, **"The Log-Structured Merge-Tree (LSM-Tree)"**,
+  Acta Informatica 1996 — the original.
+- Athanassoulis et al., **"Designing Access Methods: The RUM Conjecture"**,
+  EDBT 2016 — read, write and space amplification, and why you get two of three.
+  This is what `lsm.py`'s demo measures.
+- Dayan, Athanassoulis & Idreos, **"Monkey: Optimal Navigable Key-Value Store"**,
+  SIGMOD 2017 — how to size bloom filters ACROSS levels rather than uniformly,
+  which is the non-obvious part.
+- Bloom, **"Space/Time Trade-offs in Hash Coding with Allowable Errors"**,
+  CACM 1970.
+- The **RocksDB wiki** on leveled vs universal compaction — the clearest
+  practitioner account of the same trade.
+- **SAS Language Reference**, the DATA step chapter — the PDV, the implicit
+  loop, `RETAIN`, BY-groups and `MERGE`. There is no paper; the manual is the
+  specification, and the `MERGE` many-to-many behaviour is documented rather
+  than derivable.
+- Wickham, **"The Split-Apply-Combine Strategy for Data Analysis"**, JSS 2011 —
+  the same problems, solved declaratively, for the comparison.
+
 ## Week 10 · consensus, and its refusal
 
 - DeCandia et al., **"Dynamo"**, SOSP 2007 — [`dynamo-paper/`](week-10/dynamo-paper/).
@@ -246,8 +267,26 @@ Algorithms"**, 2017 for the clip.
 
 ## Week 17 · patterns, light, Haskell
 
+- Leis, Gubichev, Mirchev, Boncz, Kemper & Neumann, **"How Good Are Query
+  Optimizers, Really?"**, VLDB 2015 — the single deepest result in query
+  processing: estimation error compounds multiplicatively with join count, so
+  the planner picks a bad plan **correctly**. `database-internals/estimation.py`.
+- Flajolet, Fusy, Gandouet & Meunier, **"HyperLogLog"**, AofA 2007; Cormode &
+  Muthukrishnan, **"Count-Min Sketch"**, J. Algorithms 2005 — what a planner's
+  statistics actually are.
+- Stonebraker et al., **"C-Store"**, VLDB 2005; Abadi, Madden & Ferreira,
+  **"Integrating Compression and Execution in Column-Oriented Database
+  Systems"**, SIGMOD 2006 — column layout and late materialization.
+- Boncz, Zukowski & Nes, **"MonetDB/X100"**, CIDR 2005; Neumann, **"Efficiently
+  Compiling Efficient Query Plans for Modern Hardware"**, VLDB 2011 — the two
+  answers to the Volcano model's per-tuple overhead.
+- Kung & Robinson, **"On Optimistic Methods for Concurrency Control"**, TODS
+  1981; Cahill, Röhm & Fekete, **"Serializable Isolation for Snapshot
+  Databases"**, SIGMOD 2008.
+- Petrov, **Database Internals**, 2019 — most of the above in one narrative.
 - Kleppmann, **Designing Data-Intensive Applications** — for
-  [`system-design/`](week-17/system-design/), and honestly for the whole repo.
+  [`reference/system-design/`](reference/system-design/), and honestly for the
+  whole repo.
 - Karger et al., **"Consistent Hashing and Random Trees"**, STOC 1997.
 - Nygard, **Release It!** — circuit breakers, bulkheads, backpressure.
 - Shirley, **Ray Tracing in One Weekend** — [`ray-tracer/`](week-17/ray-tracer/).

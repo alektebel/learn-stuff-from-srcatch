@@ -28,9 +28,9 @@ Read this first, because it changes what you decide.
 |---|---|
 | Directories | **39** scheduled, 5 in `reference/` |
 | Implementable units left (stubs, `sorry`s, TODO markers) | **2,407** |
-| Estimated effort | **~1,320 hours** |
+| Estimated effort | **~1,344 hours** |
 | Weeks available | **18** |
-| Therefore | **73 h/week on `full` — 10.5 hours a day, seven days a week, for 126 days** |
+| Therefore | **75 h/week on `full` — 10.5 hours a day, seven days a week, for 126 days** |
 
 Where the hours come from: the directories that state their own estimate in
 their README (`ESTIMATED TIME: 6-8 hours`, and so on) are used directly. The
@@ -51,9 +51,9 @@ feels like failure, and switching down in August is just planning.
 
 | Track | Directories | Hours | Per week | Per day | Who it is for |
 |---|---|---|---|---|---|
-| **full** | 39 | 1,320 | 73 h | 10.5 h × 7 | This is your full-time job and you have no other commitments |
-| **core** | 21 | 799 | 44 h | 7.5 h × 6, one day off | You have a job, and you are serious |
-| **spine** | 10 | 509 | 28 h | 4.5 h × 6, one day off | You have a job and a life, and you would rather finish |
+| **full** | 39 | 1,344 | 75 h | 10.7 h × 7 | This is your full-time job and you have no other commitments |
+| **core** | 22 | 871 | 48 h | 8 h × 6, one day off | You have a job, and you are serious |
+| **spine** | 10 | 536 | 30 h | 5 h × 6, one day off | You have a job and a life, and you would rather finish |
 
 All three finish on 27 December. They differ only in what they contain.
 
@@ -192,26 +192,26 @@ a project across weeks, so a week folder is both a name and a date.
 Lean sits outside the table: **504 proof obligations, ~8.4 h/week**, as a fixed
 daily slot. The AWS drill sits outside it too — see the note below the table.
 
-| [**1**](week-01/) | Aug 24–Aug 30 | AWS, from its mechanisms up | `aws-from-scratch` 42 **CS** | 42 |
-| [**2**](week-02/) | Aug 31–Sep 6 | LLMs | `autograd` 30 **CS** · `llm-from-scratch` 55 **CS** | 85 |
+| [**1**](week-01/) | Aug 24–Aug 30 | AWS, from its mechanisms up | `aws-from-scratch` 42 **C** **S** | 42 |
+| [**2**](week-02/) | Aug 31–Sep 6 | LLMs | `autograd` 30 **C** **S** · `llm-from-scratch` 55 **C** **S** | 85 |
 | [**3**](week-03/) | Sep 7–Sep 13 | Teaching a model: distil, then reward | `rl-posttraining` 30 **C** · `context-caching` 28 **C** | 58 |
-| [**4**](week-04/) | Sep 14–Sep 20 | Serving it yourself | `inference-from-scratch` 60 **CS** · `deploy-and-debug` 10 **C** | 70 |
+| [**4**](week-04/) | Sep 14–Sep 20 | Serving it yourself | `inference-from-scratch` 60 **C** **S** · `deploy-and-debug` 10 **C** | 70 |
 | [**5**](week-05/) | Sep 21–Sep 27 | Attribution, on a real task | `contextcite` 13 **C** · `spade` 16 **C** · `mars-sql` 20 **C** | 49 |
 | [**6**](week-06/) | Sep 28–Oct 4 | Provenance, algebraically | `provenance-semirings` 45 **C** | 45 |
 | [**7**](week-07/) | Oct 5–Oct 11 | Goal-directed reasoning | `scasp` 45 | 45 |
 | [**8**](week-08/) | Oct 12–Oct 18 | Parser in front, prover behind | `linc` 30 · `distributed-training` 10 | 40 |
-| [**9**](week-09/) | Oct 19–Oct 25 | A database from the disk up | `database-engine` 50 **CS** | 50 |
-| [**10**](week-10/) | Oct 26–Nov 1 | Consensus, and its refusal | `dynamo-paper` 21 **CS** · `raft` 30 **C** | 51 |
+| [**9**](week-09/) | Oct 19–Oct 25 | A database from the disk up | `database-engine` 77 **C** **S** | 77 |
+| [**10**](week-10/) | Oct 26–Nov 1 | Consensus, and its refusal | `dynamo-paper` 21 **C** **S** · `raft` 30 **C** | 51 |
 | [**11**](week-11/) | Nov 2–Nov 8 | Byzantine, and open membership | `blockchain-from-scratch` 55 **C** | 55 |
 | [**12**](week-12/) | Nov 9–Nov 15 | AWS certification block | `aws-certification` 35 **C** | 35 |
-| [**13**](week-13/) | Nov 16–Nov 22 | Sockets | `bash-from-scratch` 8 **C** · `http-server` 86 **CS** | 94 |
+| [**13**](week-13/) | Nov 16–Nov 22 | Sockets | `bash-from-scratch` 8 **C** · `http-server` 86 **C** **S** | 94 |
 | [**14**](week-14/) | Nov 23–Nov 29 | What a byte stream carries | `dns-server` 9 · `cryptographic-library` 5 · `communication-protocols` 34 · `toralizer` 21 | 69 |
-| [**15**](week-15/) | Nov 30–Dec 6 | Compilers, and a machine for them | `firewall-from-scratch` 25 · `c-compiler` 27 **CS** · `compiler-and-vgpu` 16 **CS** · `quantum-computing-lang` 8 | 76 |
-| [**16**](week-16/) | Dec 7–Dec 13 | CUDA | `cuda-from-scratch` 122 **CS** | 122 |
-| [**17**](week-17/) | Dec 14–Dec 20 | Patterns, light, and Haskell | `system-design` 48 · `ray-tracer` 35 · `haskell-projects` 61 | 144 |
+| [**15**](week-15/) | Nov 30–Dec 6 | Compilers, and a machine for them | `firewall-from-scratch` 25 · `c-compiler` 27 **C** **S** · `compiler-and-vgpu` 16 **C** **S** · `quantum-computing-lang` 8 | 76 |
+| [**16**](week-16/) | Dec 7–Dec 13 | CUDA | `cuda-from-scratch` 122 **C** **S** | 122 |
+| [**17**](week-17/) | Dec 14–Dec 20 | Databases deeper, light, and Haskell | `database-internals` 45 **C** · `ray-tracer` 35 · `haskell-projects` 61 | 141 |
 | [**18**](week-18/) | Dec 21–Dec 27 | The long tail | `spectral-graphs` 5 · `sas-lineage-tool` 8 · `web-scraping` 6 · `ml-in-production` 8 · `mlops` 12 | 39 |
 
-**1,169 block hours.** Plus Lean, 1,320.
+**1,193 block hours.** Plus Lean, 1,344.
 
 ### Two things run daily, outside the table
 
@@ -226,7 +226,7 @@ daily slot. The AWS drill sits outside it too — see the note below the table.
 
 ### What is not on the schedule
 
-Five directories moved to [`reference/`](reference/) — **599 hours removed**,
+Six directories moved to [`reference/`](reference/) — **647 hours removed**,
 which is what takes the plan from 100 h/week to 73.
 
 | Directory | Was | Why |
@@ -236,6 +236,7 @@ which is what takes the plan from 100 h/week to 73.
 | `tensorrt-inference` | 109 h | The same, and vendor-specific. |
 | `world-models` | 106 h | A genuine cut. GPU-bound, no checker. |
 | `diffusion-models` | 91 h | The same cut, same reasons. |
+| `system-design` | 48 h | Displaced by `database-internals`. Its patterns are covered from the mechanisms up by `aws-from-scratch` and `deploy-and-debug`; Kleppmann covers the rest better than 159 stubs will. |
 
 The first three are **reading**, not a deletion, and the argument is step 11 of
 the inference curriculum this plan follows: *only then go read vLLM, SGLang and
@@ -252,10 +253,9 @@ server, which arrives in week 13. The trade is that AWS and LLMs are where your
 leverage is now, and the systems work is the part that keeps its value if the
 plan slips.
 
-If it does slip, **week 17 is the week to cut from** — `system-design` (48 h),
-`ray-tracer` (35 h) and `haskell-projects` (61 h) share a slot because they are
-what was left, not because they belong together. `system-design` goes first;
-`aws-from-scratch` covers much of it from the mechanisms up.
+If it does slip, **week 17 is the week to cut from** — `haskell-projects` (61 h) is
+the first to go — it is orthogonal to everything else you are keeping, and
+`database-internals` and `ray-tracer` both have checkers while it does not.
 
 ## Scoring yourself
 

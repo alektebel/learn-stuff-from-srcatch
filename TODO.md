@@ -6,8 +6,8 @@ build and how you will know it is right; the *why* for each is in
 
 Steps 1–2 block everything else. Do them before the plan starts.
 
-> **This file is a menu, not a plan.** Ninety-seven boxes across thirteen
-> sections, roughly 178 hours, against a schedule already reading 73 h/week.
+> **This file is a menu, not a plan.** A hundred and eighteen boxes across fourteen
+> sections, roughly 250 hours, against a schedule already reading 73 h/week.
 > Only §12 removes anything. Nothing here is committed to until you write it
 > into `ROADMAP.md` and take the hours out of somewhere — so pick a subset, put
 > it on the line below, and treat the rest as a backlog.
@@ -630,6 +630,113 @@ has tried to fool is a checker nobody has tested.
       back.
 
 **Do not read `tools/bugs/` while learning.** It is the answer key.
+
+---
+
+## 14. Databases, deeper · ~72 h · PARTLY PAID FOR BY A CUT
+
+Two additions to [`week-09/database-engine/`](week-09/database-engine/) (50 h →
+77 h) and one new directory,
+[`week-17/database-internals/`](week-17/database-internals/) (45 h), which
+displaces `system-design` into `reference/`. Net **+24 h**; the full track moves
+73 → 75 h/week and `core` 44 → 48.
+
+### 14a — LSM trees · ~15 h · `week-09/database-engine/lsm.py`
+
+*(O'Neil et al., Acta Informatica 1996; Athanassoulis et al., RUM conjecture,
+EDBT 2016; Dayan et al., Monkey, SIGMOD 2017)*
+
+- [ ] **14.1** Memtable, immutable SSTables with a sparse index, tombstones,
+      and the read path memtable → L0 → Ln in age order.
+- [ ] **14.2** Bloom filters. Measure what they save by counting **file opens
+      on ABSENT keys** — that is where the saving is, and a check that only
+      looks up present keys will show nothing.
+- [ ] **14.3** Both compaction policies: **leveled** (one run per level, high
+      write amplification, low read) and **tiered** (several runs, the reverse).
+      RocksDB is the first, Cassandra the second, and neither is a bug.
+- [ ] **14.4** Measure **all three amplifications** — read, write, space. The
+      RUM conjecture says you get two; the deliverable is seeing which corner
+      each policy stands in, not being told.
+- [ ] **14.5** Head-to-head against `btree.py` on a write-heavy and a read-heavy
+      workload. **If one structure wins both, the workload is not exercising
+      the difference** — that is the check to write first.
+
+### 14b — a DATA step engine · ~12 h · `week-09/database-engine/datastep.py`
+
+*(SAS Language Reference — no paper; the manual is the specification. Wickham,
+"Split-Apply-Combine", JSS 2011, for the declarative comparison.)*
+
+- [ ] **14.6** The PDV, and the implicit loop that runs the whole step once per
+      input row and writes out at the bottom unless told otherwise.
+- [ ] **14.7** `RETAIN` — a variable that survives the iteration. This is how a
+      running total exists without a window function.
+- [ ] **14.8** BY-groups with `first.`/`last.` flags. **Requires sorted input,
+      and unsorted input silently produces wrong groups rather than an error** —
+      the most common DATA step bug, and the check must assert it is detected.
+- [ ] **14.9** `MERGE`, and then say which SQL join it actually equals. On a
+      many-to-many match its behaviour is a documented surprise; reproduce it.
+- [ ] **14.10** `OUTPUT`/`DELETE`, so one input row can produce zero rows or
+      ten. This is the real answer to why the model survived.
+- [ ] **14.11** The comparison table: five transformations, both ways, with
+      which is shorter and which is clearer as separate columns. The interesting
+      rows are the two SQL cannot express cleanly — a running total that resets
+      on a condition, and a variable number of output rows per input row.
+- [ ] **14.12** Cross-link to [`week-18/sas-lineage-tool/`](week-18/sas-lineage-tool/), which
+      *parses* these rather than running them, and reads much better once you
+      have built one.
+
+### 14c — `week-17/database-internals/` · ~45 h · SKELETON IN PLACE
+
+6 files, 36 stubs, 11 checks named and unwritten. Needs week 9 finished — every
+measurement here is *against* its Volcano executor and cost planner.
+
+- [ ] **14.13** `estimation.py` **first, and before anything else in the
+      directory.** *(Leis et al., VLDB 2015.)* Reproduce the result: estimation
+      error compounds multiplicatively with join count, so a 4-way join is off
+      by orders of magnitude and the planner then picks a bad plan **correctly**.
+      Assert the error factor **grows** with join count rather than staying flat,
+      on **correlated** data — independent columns prove nothing.
+- [ ] **14.14** `estimation.py` — feed the planner true cardinalities, then
+      estimated ones, and assert the chosen plan **differs** and is measurably
+      slower. Attribute the loss to the estimate, not the model. That
+      attribution is the whole point.
+- [ ] **14.15** `sketches.py` *(Flajolet et al. 2007; Cormode & Muthukrishnan
+      2005)* — HyperLogLog within its theoretical bound including the small
+      range where the naive formula is worst; and Count-Min's **one-sided**
+      guarantee: every estimate ≥ true frequency, never below.
+- [ ] **14.16** `columnar.py` *(Stonebraker et al. 2005; Abadi et al. 2006)* —
+      RLE, dictionary and frame-of-reference each winning on the shape they are
+      for, and the same data by row compressing measurably worse. Then late
+      materialization, and **find the selectivity where its advantage reverses**.
+- [ ] **14.17** `vectorized.py` *(Boncz et al., CIDR 2005)* — sweep batch size
+      1/8/64/1024/8192 against your own Volcano executor. Overhead per tuple must
+      fall sharply and then **flatten**; a monotonic curve means you are not
+      measuring what made X100 fast. Then read Neumann (VLDB 2011) for the other
+      answer — compile rather than interpret.
+- [ ] **14.18** `joins.py` — Grace hash join when the build side does not fit,
+      with I/O matching 3(|R|+|S|). Then **skew**, which breaks it, because one
+      partition is still too big.
+- [ ] **14.19** `concurrency.py` *(Kung & Robinson, TODS 1981; Cahill et al.,
+      SIGMOD 2008)* — sweep the conflict rate across 2PL, OCC and MVCC. Assert
+      OCC beats 2PL at low contention and **loses** at high, and name the
+      crossover. A check at one contention level proves nothing.
+- [ ] **14.20** `concurrency.py` — a genuine wait-for cycle detected, exactly
+      one victim aborted, and a non-cyclic wait chain **not** reported. A
+      detector that aborts on any wait has removed 2PL's only advantage.
+
+### 14d — the cut
+
+- [ ] **14.21** `system-design` (48 h) is already moved to
+      [`reference/`](reference/). Its patterns are covered from the mechanisms up
+      by `aws-from-scratch` (caching, queues, rate limiting, consistent hashing)
+      and `deploy-and-debug` (circuit breakers, bulkheads, backpressure), and
+      Kleppmann covers the rest better than 159 stubs will. Confirm you agree,
+      or move it back and take the 45 h out of week 17 some other way.
+
+**Every check in 14c is a crossover or a curve, not a single measurement.** At
+one contention level, one selectivity or one batch size, each of these looks
+either obviously right or obviously pointless. The content is entirely in where
+they change places.
 
 ---
 

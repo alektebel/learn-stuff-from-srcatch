@@ -7,22 +7,24 @@
 
 | Project | Hours | Track |
 |---|---|---|
-| [`system-design/`](system-design/) | 48 | full only |
+| [`database-internals/`](database-internals/) | 45 | core |
 | [`ray-tracer/`](ray-tracer/) | 35 | full only |
 | [`haskell-projects/`](haskell-projects/) | 61 | full only |
 
-**144 block hours**, plus the daily Lean slot (~8.4 h) = 152 h on the full track.
+**141 block hours**, plus the daily Lean slot (~8.4 h) = 152 h on the full track.
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
 ## What to do, in order
 
-1. `system-design` in groups: caching, then queues, then reliability, then distribution, then the applications. Do `consistent_hash.py` without looking at week 10's version, then diff.
+1. `database-internals` first, and `estimation.py` before anything else in it. Reproducing the Leis et al. result — that estimation error compounds multiplicatively with join count, so the planner picks a bad plan **correctly** from bad numbers — changes how you read every `EXPLAIN` for the rest of your life. It needs week 9 finished.
 2. `ray-tracer`: `vec.py` → `shapes.py` → `bvh.py` → `material.py` → `render.py`. **Predict what noise does from 16 to 64 samples before reading the table.**
 3. `haskell-projects` last: JSON parser first — parser combinators are the payoff — then the calculator, then the build tool. Delete each `-- TODO`.
 
 ## Done means
 
+- `week-17/database-internals/` prints 11/11.
+- You can say why your `EXPLAIN` lies, and it is not the cost model.
 - `week-17/ray-tracer/` prints 6/6 and `render.ppm` opens in an image viewer.
 - You can say why a BVH is 1.5x at four objects and 12x at a thousand.
 - Your JSON parser round-trips a nested document with escapes and unicode.

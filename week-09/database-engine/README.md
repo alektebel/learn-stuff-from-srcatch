@@ -326,7 +326,7 @@ No dependencies beyond the Python 3 standard library.
   capacity model, and what all of this costs
 - [`c-compiler/`](../../week-15/c-compiler/) — the same parsing problem, for a language
   with more of a type system
-- [`system-design/`](../../week-17/system-design/) — the patterns a database sits under
+- [`system-design/`](../../reference/system-design/) — the patterns a database sits under
 - [`PHILOSOPHY.md`](../../PHILOSOPHY.md) — why this repo is built the way it is
 
 ## Sources

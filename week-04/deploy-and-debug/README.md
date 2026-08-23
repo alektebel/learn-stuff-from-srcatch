@@ -189,7 +189,7 @@ Pure Python 3 standard library. Everything runs in about a second.
 
 - [`dynamo-paper/`](../../week-10/dynamo-paper/) — the store this one operates
 - [`context-caching/`](../../week-03/context-caching/) — the serving mechanisms this one sizes
-- [`system-design/`](../../week-17/system-design/) — circuit breakers, backpressure, rate limiting
+- [`system-design/`](../../reference/system-design/) — circuit breakers, backpressure, rate limiting
 
 ## Sources
 

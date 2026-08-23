@@ -263,7 +263,7 @@ No dependencies beyond the Python 3 standard library.
 
 ## Related directories
 
-- [`system-design/`](../../week-17/system-design/) — consistent hashing, caching and reliability
+- [`system-design/`](../../reference/system-design/) — consistent hashing, caching and reliability
   patterns in isolation
 - [`context-caching/`](../../week-03/context-caching/) — the same "make the expensive thing cheap"
   instinct applied to LLM inference

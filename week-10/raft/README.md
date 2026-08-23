@@ -242,7 +242,7 @@ seconds.
 - [`dynamo-paper/`](../dynamo-paper/) — the same partition, the opposite answer.
   Read them as a pair.
 - [`database-engine/`](../../week-09/database-engine/) — the log this would replicate
-- [`system-design/`](../../week-17/system-design/) — where consensus sits among the other
+- [`system-design/`](../../reference/system-design/) — where consensus sits among the other
   patterns
 - [`aws-from-scratch/`](../../week-01/aws-from-scratch/) — DynamoDB's quorums, and what
   they cost

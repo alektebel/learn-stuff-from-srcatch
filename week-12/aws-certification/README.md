@@ -77,7 +77,7 @@ and this file has a knowledge cutoff.
 ## Related
 
 - [`aws-from-scratch/`](../../week-01/aws-from-scratch/) — the eight mechanisms, and the bill
-- [`system-design/`](../../week-17/system-design/) — the patterns underneath most services
+- [`system-design/`](../../reference/system-design/) — the patterns underneath most services
 - [`deploy-and-debug/`](../../week-04/deploy-and-debug/) — operating what you chose
 - [`dynamo-paper/`](../../week-10/dynamo-paper/) — why DynamoDB is shaped that way
 

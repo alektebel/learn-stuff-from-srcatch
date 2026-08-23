@@ -10,8 +10,9 @@ compared against what you built, not implemented.
 | [`tensorrt-inference/`](tensorrt-inference/) | 109 h | Same — a design brief, and vendor-specific. |
 | [`world-models/`](world-models/) | 106 h | A genuine cut. Five papers deep, no checker, and one of the two remaining things needing a GPU you would have to pay for. |
 | [`diffusion-models/`](diffusion-models/) | 91 h | The same cut, for the same reasons. |
+| [`system-design/`](system-design/) | 48 h | Displaced by `week-17/database-internals/`. Its own README's patterns are mostly covered from the mechanisms up by `aws-from-scratch` (caching, queues, rate limiting, consistent hashing) and by `deploy-and-debug` (circuit breakers, backpressure). Kleppmann's *Designing Data-Intensive Applications* covers the rest better than 159 stubs will. |
 
-**599 hours.** Removing them is what takes the plan from 100 h/week to 73.
+**647 hours.** Removing them is what takes the plan from 100 h/week to 73.
 
 ## The argument for the first three
 
