@@ -6,6 +6,14 @@ build and how you will know it is right; the *why* for each is in
 
 Steps 1–2 block everything else. Do them before the plan starts.
 
+> **This file is a menu, not a plan.** Ninety-seven boxes across thirteen
+> sections, roughly 178 hours, against a schedule already reading 73 h/week.
+> Only §12 removes anything. Nothing here is committed to until you write it
+> into `ROADMAP.md` and take the hours out of somewhere — so pick a subset, put
+> it on the line below, and treat the rest as a backlog.
+>
+> **Doing now:** `________________`
+
 ---
 
 ## 1. Verify the 59 existing checks · ~1 day · BLOCKING

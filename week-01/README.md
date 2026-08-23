@@ -17,7 +17,8 @@
 2. Then `s3.py`, `sqs.py`, `dynamodb.py` — checks 1 to 9. Flat keys, the visibility-timeout limit case, and the partition key that decides everything.
 3. Then `lambda_svc.py`, `sns.py`, `kms.py`, `vpc.py`, `capstone.py`.
 4. Finish with the billing layer: `pricing.py`, `billing.py`, `optimize.py`. **Predict the provisioned-vs-on-demand DynamoDB crossover before running `optimize.py`.** Most people are off by an order of magnitude.
-5. Start `drill.py` in [`../week-12/aws-certification/`](../week-12/aws-certification/) **today**, and run it every day for the rest of the plan. It is the part that cannot be crammed.
+5. **Build `drill.py` on day one, then run it every day.** It is a skeleton — a scheduler and about twenty cards is an hour's work, and you write the cards from the quotas and defaults you meet this week. Spaced repetition started in August is the difference between passing an exam in December and not; started in November it is worth nothing. Lives in [`../week-12/aws-certification/`](../week-12/aws-certification/).
+6. **If your real AWS account is live, do Phase 0 of [`../week-12/aws-deploy/RUNBOOK.md`](../week-12/aws-deploy/RUNBOOK.md) before you touch it** — root MFA, a tested budget alarm, IAM Identity Center instead of IAM users, no long-lived access keys. Nothing this week needs an account, but you will be tempted to poke at one, and the alarm should predate the temptation.
 
 ## Done means
 
