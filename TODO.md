@@ -173,11 +173,111 @@ in the shipped version:
 
 ---
 
-## 7. The decision that is not a task
+## 8. Bitcoin / Ethereum · ~55 h · SKELETON IN PLACE
+
+[`week-05/blockchain-from-scratch/`](week-05/blockchain-from-scratch/) — 9 files,
+46 stubs, 11 checks named and unwritten. No `solutions/`.
+
+It sits beside `raft/` and `dynamo-paper/` on purpose. Those two cover
+**crash faults with known membership**; this is the third corner —
+**Byzantine faults with open membership**, where a participant profits by
+lying and you do not know who they are. Sybil resistance is the only genuinely
+new idea in the subject, and it is worth having next to the other two.
+
+- [ ] **8.1** Write the eleven checks first. Each docstring in `check.py` says
+      what to assert and names the weak version to avoid.
+- [ ] **8.2** `chain.py` — Merkle root and SPV proof. Assert proof length grows
+      as `log2(n)`, and that changing **any** transaction moves the root — per
+      transaction, not just the first.
+- [ ] **8.3** `pow.py` — assert hashes-to-block is **geometric**, not merely
+      that the mean is `2^d`. A constant would pass a mean-only check.
+- [ ] **8.4** `utxo.py` — the second spend must be refused **by the set**, not
+      by a history scan. That is the whole double-spend defence.
+- [ ] **8.5** `script.py` — P2PKH runs, and assert there is no jump opcode, so
+      validation cost is bounded by script length.
+- [ ] **8.6** `fork.py` — heaviest **work**, not most blocks. Build a case where
+      the longer chain has less work; equal difficulty tests nothing.
+- [ ] **8.7** `fork.py` — Nakamoto's `(q/p)^k`, simulated against the closed
+      form. Include `q > 0.5`, where the probability is 1 and the formula stops
+      applying.
+- [ ] **8.8** `fork.py` — selfish mining, sweeping **gamma** (the share of
+      honest miners that build on the attacker's released block). Assert the
+      profitability threshold moves with it; a single-gamma check hides the
+      result.
+- [ ] **8.9** `accounts.py` — replay the same signed transaction twice with
+      nonce checking off, then on. That is the exact price of dropping the UTXO
+      set.
+- [ ] **8.10** `evm.py` — an infinite loop must **terminate** out of gas, the
+      sender must still be charged, and state must revert.
+- [ ] **8.11** `trie.py` — inclusion proofs, and an **exclusion** proof for a
+      key that is absent. The exclusion proof is what a plain Merkle tree
+      cannot do and why the trie is a trie.
+- [ ] **8.12** `pos.py` — hand-build conflicting finality and assert `slashable`
+      names at least a third of the stake. Same shape as Raft's Figure 8: a
+      safety checker that has never caught anything is not evidence.
+- [ ] **8.13** Add to `progress.py`'s `PLAN`, cross-link from `raft/` and
+      `dynamo-paper/`, and verify with `tools/verify_checks.py`.
+
+---
+
+## 9. AWS: three services, not thirty · ~22 h
+
+**Mostly no — and the directory already argues why.** Its own "The rest of AWS"
+table maps roughly twenty services onto the eight mechanisms already built:
+Kinesis is `sqs.py` plus partitioning, Fargate is `lambda_svc.py` with a longer
+container, Cognito is `iam.py` with a user directory, Secrets Manager is
+`kms.py` with rotation. Adding a seventh variant of S3 would teach nothing and
+would dilute a directory that currently sits at a verified 24/24.
+
+Three mechanisms are genuinely absent. The README names the first two itself.
+
+- [ ] **9.1 `cloudformation.py` — declarative desired state · ~8 h.**
+      A dependency graph with **rollback**, which nothing in the eight has.
+      Topological ordering, partial failure, rollback to last-known-good, drift
+      detection, and cycle detection. This is the mechanism under Terraform and
+      Kubernetes too, so it pays out well beyond AWS.
+      *Checks:* a cycle is refused rather than deadlocking; a mid-way failure
+      leaves **no** partially-applied resources; drift is detected on a
+      resource changed out of band; and a rollback that itself fails is
+      reported rather than swallowed — that last one is where real deployments
+      get stuck.
+- [ ] **9.2 `kinesis.py` — an ordered log with replay · ~8 h.**
+      `sqs.py` deliberately has neither ordering nor replay, so this is a real
+      contrast rather than a variant: per-shard ordering, a retention window,
+      consumer checkpointing and iterators, and resharding. It is also Kafka.
+      *Checks:* order holds **within** a shard and explicitly does not across
+      shards; a consumer resuming from a checkpoint replays exactly the
+      un-processed suffix; records expire out of the retention window even
+      unread; and a reshard preserves per-key ordering across the split — the
+      one everybody gets wrong.
+- [ ] **9.3 `autoscaling.py` — a control loop · ~6 h.**
+      The one the README's table misses. None of the eight has feedback
+      control, and the failure modes are measurable and instructive:
+      oscillation, and scaling on a **lagging** metric.
+      *Checks:* the loop converges to the target under steady load; with too
+      short a cooldown it **oscillates** (assert the amplitude, do not just
+      assert it settles); scaling on queue depth beats scaling on CPU for a
+      queue-driven workload; and scale-in on a lagging metric overshoots. Pair
+      it with `optimize.py` so the cost of the overshoot is in dollars.
+
+Then update `billing.py` to meter all three, and the README's "rest of AWS"
+table to point the relevant rows at the new files.
+
+**Explicitly not worth adding:** RDS/Aurora failover (it is `raft/` plus
+replication lag), ElastiCache (`system-design/`), Route 53 (`dns-server/`),
+CloudTrail (already written by `capstone.py`), Step Functions (a state machine
+over `lambda_svc.py`), Organizations/SCPs (another deny layer in `iam.py`),
+Glue/Athena (`database-engine/`'s planner over `s3.py`). Each is a packaging
+difference, and the map in the README is the right place to say so.
+
+---
+
+## 10. The decision that is not a task
 
 The full track reads **41 directories, 1,799 h, 100 h/week**, up from 87 two
 commits ago, with weeks 14–18 holding 900 h between them. The twelve-week,
 ten-project cut discussed on 23 Aug was never applied.
 
-Steps 1–6 add roughly 40 hours and remove none. Nothing in this file fixes the
-number, and nothing should until you decide what the plan actually is.
+Steps 1–9 add roughly **117 hours** (≈40 for 1–6, 55 for the blockchain, 22 for
+the three AWS services) and remove none. Nothing in this file fixes the number,
+and nothing should until you decide what the plan actually is.
