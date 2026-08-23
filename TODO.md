@@ -427,15 +427,107 @@ forgotten hourly resource — are both cheap to prevent now.
 
 ---
 
+## 12. Defend it · ~6 h · PAID FOR BY A CUT
+
+The goal this serves is **"defend myself solidly, and know exactly what to look
+for"** — which is a better goal than expertise because it is achievable in
+eighteen weeks, and it needs **less** new content rather than more. Everything
+below is a rehearsal loop over knowledge the repo already produces.
+
+**This one comes with an offsetting cut**, unlike sections 1–11. Take the six
+hours out of `system-design` (48 h, week 17): `aws-from-scratch` covers much of
+the same ground from the mechanisms up, and week 17 is already the heaviest and
+most arbitrary week in the plan. Net change to the schedule: **−42 h.**
+
+### 12a — the defence drill · ~3 h
+
+`week-12/aws-certification/defend.py`, beside `drill.py` and **also not graded
+by `check.py`**. It is a third kind of practice, distinct from both:
+
+| | grades | format |
+|---|---|---|
+| `check.py` | mechanisms you implemented | assertions |
+| `drill.py` | arbitrary facts | spaced repetition |
+| `defend.py` | **whether you can hold a claim under challenge** | answer in four beats, self-marked |
+
+- [ ] **12.1** The card format is a claim plus a hostile challenge, answered in
+      **four beats**: mechanism → the alternative you rejected → the limit case
+      that complicates it → **the number that would change your mind**. The
+      fourth beat is the one that makes a defence solid rather than confident,
+      and it is the one nobody practises. A card answered in three beats counts
+      as dodged.
+- [ ] **12.2** Track dodges, not scores. The output is a list of claims you
+      could not defend, which is the only useful signal — a percentage is not.
+- [ ] **12.3** Seed it from the repo rather than inventing content: every
+      `DESIGN DECISION` block already has the shape (decision + rejected
+      alternative), so the work is writing the *challenge*, not the answer.
+      Start with `iam.py`, `dynamodb.py`, `optimize.py`, `raft/replication.py`
+      and `context-caching/kv_cache.py`.
+- [ ] **12.4** Worked example to build the format against:
+      *Claim:* put the tenant ID in the partition key.
+      *Challenge:* forty tenants and one is 60% of traffic.
+      *Four beats:* partition throughput is per-partition not per-table → a
+      random suffix would kill the query pattern → write-sharding on a composite
+      key, paid for with a scatter-gather read → **it changes when that tenant
+      exceeds a single partition's write capacity.**
+- [ ] **12.5** Run it weekly, on the directories finished so far. It belongs on
+      Sunday's regression day, which currently has no verbal component at all.
+
+### 12b — the discriminating command · ~2 h
+
+One `LOOKUP.md` per major directory, ~20 lines each. Not prose — a table of
+**symptom → the single command or page that tells you which branch you are in.**
+This is literally what "know what to look for" means.
+
+- [ ] **12.6** Write the AWS one first. Starting rows, each of which has cost
+      somebody a day:
+
+      | Symptom | The one thing to check |
+      |---|---|
+      | Access denied, cause unknown | `aws sts get-caller-identity` — half of all AWS mysteries are *you are not who you think you are* |
+      | Denied, and you **are** the right principal | policy simulator, then the SCP — an explicit Deny anywhere wins |
+      | Table throttling while metrics look idle | Contributor Insights on the partition key; table-level metrics average the hot partition away |
+      | Deploy green, site 403 | origin or distribution? `curl` the S3 object directly |
+      | Bill jumped, nothing changed | Cost Explorer grouped by **usage type**, not by service |
+      | Lambda slow only sometimes | cold starts vs downstream — check init duration separately from duration |
+      | It worked yesterday | CloudTrail, filtered to write events by a principal that is not you |
+
+- [ ] **12.7** Then one each for `inference-from-scratch`, `database-engine`,
+      `raft` and `context-caching`. Same format: symptom, the discriminating
+      check, and what each branch means.
+- [ ] **12.8** Rank the SOURCES too, because "read the docs" is not an answer
+      and the ranking is the skill: the service **FAQ** answers *"what happens
+      when…"* better than the user guide; the **API reference** carries the
+      error codes, which are stable when messages are not; **`describe-*`
+      against your own account** beats any documentation for ground truth;
+      **Service Quotas** answers *"is this a limit or a bug"*; the **price list
+      API** beats the pricing page.
+
+### 12c — the cut that pays for it · ~1 h
+
+- [ ] **12.9** Remove `system-design` from the schedule and move it to
+      [`reference/`](reference/) with a row in that README explaining the
+      overlap with `aws-from-scratch`. Update `PLAN`, week 17's README, the
+      ROADMAP table and the root index. Week 17 drops from 144 h to 96 h and
+      stops being the outlier.
+- [ ] **12.10** Re-run `python3 progress.py --rebaseline` and confirm the full
+      track lands near 70 h/week.
+
+---
+
 ## Last: the decision that is not a task
 
 The full track reads **41 directories, 1,799 h, 100 h/week**, up from 87 two
 commits ago, with weeks 14–18 holding 900 h between them. The twelve-week,
 ten-project cut discussed on 23 Aug was never applied.
 
-Every step above adds roughly **172 hours** (≈40 for 1–6, 55 for the blockchain,
+Every step above adds roughly **178 hours** (≈40 for 1–6, 55 for the blockchain,
 22 for the three AWS services, 35 for the certification layer, 20 for the deploy
-layer) plus a daily drill and a real AWS bill, and removes none.
+layer, 6 for the defence loop) plus a daily drill and a real AWS bill.
+
+**Section 12 is the only one that removes anything** — it cuts `system-design`,
+48 h, for a net −42. Every other section adds and removes nothing. That
+asymmetry is the whole problem with this file.
 
 The schedule itself now reads 39 directories, 1,320 h, 73 h/week after moving
 599 h to `reference/`. These steps put roughly a quarter of that back. Nothing in this file fixes the number,
