@@ -272,12 +272,77 @@ difference, and the map in the README is the right place to say so.
 
 ---
 
-## 10. The decision that is not a task
+## 10. AWS certification · ~35 h + daily drill · SKELETON IN PLACE
+
+[`week-06/aws-certification/`](week-06/aws-certification/) — 7 files, 40 stubs,
+10 checks named and unwritten.
+
+**Do not plan on `aws-from-scratch/` clearing an exam by itself.** This repo is
+deliberately anti-recall — its standard is re-deriving a decision and naming the
+rejected alternative — and the exams are substantially recall: service names,
+quotas, defaults, retrieval times. An arbitrary quota is not derivable.
+
+Having done `aws-from-scratch/` you hold the harder half, and it is the half
+that separates reasoning from cramming. It is not sufficient. The split is kept
+visible on purpose: `check.py` grades the derivable half, `drill.py` carries the
+arbitrary half and is **not** graded.
+
+- [ ] **10.1** Write the ten checks. Two matter most: `check_elimination`
+      (every distractor rejected by a **named** constraint) and
+      `check_decision_is_not_a_lookup` (change one requirement, the answer
+      changes at a boundary you can compute). A decision table that survives
+      the second has memorised scenarios rather than rules.
+- [ ] **10.2** `decide.py` — the elimination procedure. This is the shape of
+      nearly every scenario question, and it is derivable given the eight
+      mechanisms you already built.
+- [ ] **10.3** `storage.py` — reuse the minimum-object-size and
+      minimum-duration rules already checked in `pricing.py`. Include a
+      lifecycle transition that **loses** money for small objects and one that
+      loses it for short-lived ones — both are standard traps and both are
+      arithmetic.
+- [ ] **10.4** `storage.py` — EBS: assert IOPS binds for small blocks and
+      throughput for large ones. A check that only tests IOPS passes a wrong
+      answer on every sequential workload.
+- [ ] **10.5** `network.py` — reachability over real route tables, including
+      the **asymmetric-routing** case people answer from intuition. Then the
+      six connectivity options, with the N where Transit Gateway overtakes a
+      peering mesh computed rather than asserted.
+- [ ] **10.6** `resilience.py` — RTO and standing cost order **opposite** ways
+      across backup-restore / pilot light / warm standby / multi-site, and
+      `pattern_for` returns the **cheapest that clears** the stated RPO/RTO.
+      Returning the best pattern is the most common wrong answer.
+- [ ] **10.7** `mlstack.py` — real-time, serverless, async and batch inference
+      as four points on one curve, with the serverless-vs-provisioned crossover
+      derived the same way as DynamoDB's in `optimize.py`. Map Feature Store
+      onto `dynamodb.py`'s partition key and Pipelines onto the dependency
+      graph from §9.1 — build that first if you want this to land.
+- [ ] **10.8** `wellarchitected.py` — a review returning six green ticks is a
+      review that was not done. Grade on reporting a **trade-off** and naming
+      the pillar that fails first. This is the professional-level skill and the
+      one your preparation is unusually good for.
+- [ ] **10.9** `drill.py` — spaced repetition over quotas, defaults, names and
+      limits. Keep it out of `check.py`; `check_drill_is_separate` enforces
+      that as the directory grows. Run it **daily**, starting well before the
+      exam date — this is the part that cannot be crammed in the last week and
+      the part this repo's method does not help with.
+- [ ] **10.10** Before any of the above, pull the **current official exam
+      guides** and diff them against the check list here. Exam codes, blueprints
+      and service names change, and everything above was written against a
+      knowledge cutoff. Treat any conflict as the guide being right.
+- [ ] **10.11** Order to sit them in: Solutions Architect Associate first (it
+      shares the most with what you have built), then ML Engineer Associate,
+      then Solutions Architect Professional. AI Practitioner is cheapest to
+      clear and worth least — sit it only if someone is asking you for it.
+
+---
+
+## Last: the decision that is not a task
 
 The full track reads **41 directories, 1,799 h, 100 h/week**, up from 87 two
 commits ago, with weeks 14–18 holding 900 h between them. The twelve-week,
 ten-project cut discussed on 23 Aug was never applied.
 
-Steps 1–9 add roughly **117 hours** (≈40 for 1–6, 55 for the blockchain, 22 for
-the three AWS services) and remove none. Nothing in this file fixes the number,
+Every step above adds roughly **152 hours** (≈40 for 1–6, 55 for the blockchain,
+22 for the three AWS services, 35 for the certification layer) plus a daily
+drill, and removes none. Nothing in this file fixes the number,
 and nothing should until you decide what the plan actually is.
