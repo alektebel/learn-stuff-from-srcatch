@@ -10,8 +10,14 @@ MVP-then-complicate driven by limit cases, and verification you can run.
 every file you will open, in the order you will open it, with its stub count.
 
 **Working through it? Read [ROADMAP.md](ROADMAP.md)** — an 18-week schedule (24 Aug –
-27 Dec 2026) at three intensities, with the honest arithmetic up front: 35 directories,
-2,382 implementable units, ~1,570 hours. Track where you actually are with:
+27 Dec 2026) at three intensities. The daily notebook — expected work, expected
+publishable, one blog post per day — lives in [`journal/`](journal/):
+
+```bash
+python3 journal/serve.py        # http://127.0.0.1:8765  (starts today, 23 Aug 2026)
+```
+
+Track where you actually are with:
 
 ```bash
 python3 progress.py                 # per-directory bars, and how far behind the plan you are
@@ -21,36 +27,34 @@ python3 progress.py --track spine   # the 12-directory minimum, 27 h/week
 
 ## The repo, in weeks
 
-The directories are laid out as **`week-01/` … `week-18/`**, in the order
-[`ROADMAP.md`](ROADMAP.md) schedules them, starting **Monday 24 August 2026**.
-Each week folder has a `README.md` with that week's objective, the order to do
-things in, and a concrete *done means*. **Start at [`week-01/`](week-01/).**
+Each week folder has a `README.md` for **the current priority order** (AWS first,
+then LLM work, then provenance, then distributed training, then the database,
+then the rest). The code still lives where it was added; the README links to it.
+**Start at [`week-01/`](week-01/)** — that is AWS, not a shell.
 
-A directory lives in the week it gets the most hours. Several span more than one
-week, so a week folder can hold no new directory and still have a full plan —
-its README points at where the work actually lives. `lean-proofs/` stays at the
-root because it is not a week: it is a ~1.2 h daily slot across all eighteen.
+`lean-proofs/` stays at the root because it is not a week: it is a ~1.2 h daily
+slot across all eighteen.
 
 | Week | Dates | Objective | Projects |
 |---|---|---|---|
-| [**1**](week-01/) | Aug 24–Aug 30 | Sockets, or nothing else works | `bash-from-scratch`, `http-server` |
-| [**2**](week-02/) | Aug 31–Sep 6 | Finish the server, then the protocols underneath it | `http-server`, `dns-server`, `cryptographic-library`, `communication-protocols`, `toralizer` |
-| [**3**](week-03/) | Sep 7–Sep 13 | Compilers, and a machine that runs what they emit | `toralizer`, `firewall-from-scratch`, `c-compiler`, `compiler-and-vgpu`, `quantum-computing-lang` |
-| [**4**](week-04/) | Sep 14–Sep 20 | Haskell, then a database from the disk up | `haskell-projects`, `database-engine` |
-| [**5**](week-05/) | Sep 21–Sep 27 | Indexes, logs, and the paper that gave all three up | `database-engine`, `dynamo-paper`, `raft` |
-| [**6**](week-06/) | Sep 28–Oct 4 | Consensus, then the cloud built on top of it | `raft`, `system-design`, `aws-from-scratch` |
-| [**7**](week-07/) | Oct 5–Oct 11 | Finish AWS, then build gradients from nothing | `aws-from-scratch`, `autograd`, `llm-from-scratch` |
-| [**8**](week-08/) | Oct 12–Oct 18 | A transformer, then the cache in front of it | `llm-from-scratch`, `deploy-and-debug`, `context-caching`, `contextcite`, `ray-tracer` |
-| [**9**](week-09/) | Oct 19–Oct 25 | Rays, then the machine built to trace a billion of them | `ray-tracer`, `cuda-from-scratch` |
-| [**10**](week-10/) | Oct 26–Nov 1 | CUDA, most of the week | `cuda-from-scratch`, `ml-inference` |
-| [**11**](week-11/) | Nov 2–Nov 8 | Quantisation, batching, and what a server actually does | `ml-inference` |
-| [**12**](week-12/) | Nov 9–Nov 15 | Finish the inference stack, then meet the vendor's version | `ml-inference`, `tensorrt-inference` |
-| [**13**](week-13/) | Nov 16–Nov 22 | TensorRT, then open vLLM | `tensorrt-inference`, `vllm-engine` |
-| [**14**](week-14/) | Nov 23–Nov 29 | PagedAttention and continuous batching | `vllm-engine` |
-| [**15**](week-15/) | Nov 30–Dec 6 | Finish vLLM, then training at scale | `vllm-engine`, `distributed-training` |
-| [**16**](week-16/) | Dec 7–Dec 13 | World models | `world-models` |
-| [**17**](week-17/) | Dec 14–Dec 20 | Finish world models, start diffusion | `world-models`, `diffusion-models` |
-| [**18**](week-18/) | Dec 21–Dec 27 | Diffusion, then five small wins to finish on | `diffusion-models`, `spectral-graphs`, `sas-lineage-tool`, `web-scraping`, `ml-in-production`, `mlops` |
+| [**1**](week-01/) | Aug 24–Aug 30 | AWS, the eight mechanisms and the bill | `aws-from-scratch` |
+| [**2**](week-02/) | Aug 31–Sep 6 | Gradients from nothing, then BPE | `autograd`, `llm-from-scratch` |
+| [**3**](week-03/) | Sep 7–Sep 13 | A transformer, then distillation | `llm-from-scratch` |
+| [**4**](week-04/) | Sep 14–Sep 20 | The cache in front of attention | `context-caching`, `inference-from-scratch` |
+| [**5**](week-05/) | Sep 21–Sep 27 | A naive server, then watch it fall apart | `inference-from-scratch` |
+| [**6**](week-06/) | Sep 28–Oct 4 | Speculate, observe, then read the engines | `inference-from-scratch`, `deploy-and-debug` |
+| [**7**](week-07/) | Oct 5–Oct 11 | Evaluate once in ℕ[X] | `provenance-semirings` |
+| [**8**](week-08/) | Oct 12–Oct 18 | A query is a justification tree | `scasp` |
+| [**9**](week-09/) | Oct 19–Oct 25 | The LLM only parses; sweep the error rate | `linc` |
+| [**10**](week-10/) | Oct 26–Nov 1 | Tokens and columns, after derivations | `contextcite`, `spade`, `mars-sql` |
+| [**11**](week-11/) | Nov 2–Nov 8 | Training at scale, then a pager | `distributed-training`, `database-engine` |
+| [**12**](week-12/) | Nov 9–Nov 15 | WAL, MVCC, a query planner | `database-engine` |
+| [**13**](week-13/) | Nov 16–Nov 22 | Same partition, opposite answers | `dynamo-paper`, `raft` |
+| [**14**](week-14/) | Nov 23–Nov 29 | Sockets, finally | `bash-from-scratch`, `http-server` |
+| [**15**](week-15/) | Nov 30–Dec 6 | The server and the protocols under it | `http-server`, `dns-server`, `cryptographic-library`, `communication-protocols` |
+| [**16**](week-16/) | Dec 7–Dec 13 | Compilers, and a machine that runs what they emit | `c-compiler`, `compiler-and-vgpu`, `firewall-from-scratch`, `toralizer` |
+| [**17**](week-17/) | Dec 14–Dec 20 | Haskell, then CUDA | `haskell-projects`, `cuda-from-scratch`, `ml-inference` |
+| [**18**](week-18/) | Dec 21–Dec 27 | Vendor engines, world models, the tail | `vllm-engine`, `world-models`, `diffusion-models` |
 
 ---
 
@@ -89,14 +93,20 @@ The same directories, grouped by subject rather than by week.
 
 ### Generative AI & Deep Learning
 - **[autograd/](week-07/autograd/)** - A reverse-mode automatic differentiation engine over arrays, then a neural network library on top of it: topological sort and gradient accumulation, broadcast folding, fused softmax cross-entropy, He/Xavier initialisation, SGD/momentum/RMSProp/Adam/AdamW, dropout, gradient clipping, and a VAE with the reparameterisation trick - pure Python, no numpy (10 graded checks via `python3 check.py`)
-- **[llm-from-scratch/](week-07/llm-from-scratch/)** - A transformer language model built on that engine: BPE tokenisation in merge-rank order, scaled dot-product attention with a causal mask, multi-head attention, pre-norm blocks with the residual gradient highway, weight tying, training with gradient accumulation, and greedy/temperature/top-k/top-p sampling (8 graded checks via `python3 check.py`)
+- **[llm-from-scratch/](week-07/llm-from-scratch/)** - A transformer language model built on that engine: BPE tokenisation in merge-rank order, scaled dot-product attention with a causal mask, multi-head attention, pre-norm blocks with the residual gradient highway, weight tying, training with gradient accumulation, greedy/temperature/top-k/top-p sampling, then on-policy distillation (forward vs reverse KL vs JSD, OPD vs RL vs SFT, OPSD, Privilege Illusion) (15 graded checks via `python3 check.py`)
 - **[diffusion-models/](week-17/diffusion-models/)** - Diffusion models from scratch (DDPM, DDIM, U-Net, image generation like Stable Diffusion)
 
 ### ML Infrastructure & Serving
 - **[tensorrt-inference/](week-12/tensorrt-inference/)** - TensorRT-style inference engine - graph optimization, quantization, kernel auto-tuning
 - **[vllm-engine/](week-13/vllm-engine/)** - vLLM serving engine - PagedAttention, continuous batching, high-throughput LLM serving
 - **[context-caching/](week-08/context-caching/)** - LLM context caching from scratch on a tiny pure-Python transformer: KV cache, block-hash and radix-tree prefix caching, paged KV blocks with copy-on-write, semantic response caching, and cache-aware request routing (16 graded checks via `python3 check.py`)
+- **[provenance-semirings/](week-08/provenance-semirings/)** - Green et al. (PODS 2007): evaluate a query once in ℕ[X], then lineage, why-provenance, bag, trust, security and min-cost are homomorphisms. If `h(Q_How)=Q_K` fails, you built an annotation scheme (8 graded checks)
+- **[scasp/](week-08/scasp/)** - Goal-directed ASP: unification with occurs, SLD, Clark duals for constructive negation, coinductive success through even loops, justification trees. The result is a tree you can replay (8 graded checks)
+- **[linc/](week-08/linc/)** - LINC / Logic-LM / Faithful CoT without an LLM: a pluggable parser, a prover that emits a proof, a fault injector from LINC's error analysis, a sweep of the parse-error rate, and a how-polynomial on the proof (8 graded checks)
 - **[contextcite/](week-08/contextcite/)** - ContextCite (NeurIPS 2024) replicated from scratch: context attribution by ablating sources and fitting a sparse LASSO surrogate - source partitioning, logit-probability scoring, coordinate-descent LASSO, held-out LDS evaluation, and the paper's three applications (14 graded checks via `python3 check.py`)
+- **[spade/](week-08/spade/)** - SPADE (PVLDB 2024): synthesise data-quality assertions from prompt-version deltas, select a minimal cover under an FFR cap, then cite each kept assertion back to its delta with ContextCite (8 graded checks)
+- **[mars-sql/](week-08/mars-sql/)** - MARS-SQL (2025): grounding, ReAct generation, generative validation on a tiny company database, then cite the SQL to the schema columns that justified it (8 graded checks)
+- **[inference-from-scratch/](week-10/inference-from-scratch/)** - A serving stack on a simulated GPU, in the order you actually assemble one: the per-token path, a naive server that fails under overlap, continuous batching, KV bandwidth, a scheduler, paged KV, GPU-path opts, speculative decoding, observability, a load test, then — only then — a comparison with vLLM / SGLang / TensorRT-LLM (12 graded checks)
 
 ### System Design & Distributed Systems
 - **[system-design/](week-06/system-design/)** - Core distributed systems patterns: caching (LRU, cache-aside, stampede), async queues (retries, backoff, DLQ, idempotency), reliability (circuit breaker, bulkhead, backpressure), consistent hashing, leaderboards, URL shortener, rate limiter, and capacity math

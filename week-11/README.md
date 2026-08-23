@@ -1,43 +1,38 @@
 # Week 11 · Nov 2–Nov 8, 2026
 
-> **Quantisation, batching, and what a server actually does.**
-> The bridge week between a kernel and a service. No new directory: the project lives in week 10.
+> **Distributed training, then a pager.**
+> Gradient accumulation you already wrote; now there is a network in the middle. Then slotted pages, nothing further.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| `ml-inference/` | 79 of 137 | core | [`../week-10/ml-inference/`](../week-10/ml-inference/) |
-
-**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
+| `distributed-training/` | 10 | core | [`../week-15/distributed-training/`](../week-15/distributed-training/) |
+| `database-engine/` | pager + start of 50 | core · spine | [`../week-04/database-engine/`](../week-04/database-engine/) |
 
 On the narrower tracks this same week is:
 
-| Track | This week | Block h |
-|---|---|---|
-| **core** | `cuda-from-scratch` 45 h | 45 |
-| **spine** | `autograd` 11 h, `llm-from-scratch` 16 h | 27 |
+core: distributed-training, then pager.py. spine: pager.py only.
 
-The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
+The week folder may not contain these directories. That is fine —
+`progress.py` finds them, and the links above are where the files live.
 
 ## What to do, in order
 
-1. `../week-10/ml-inference/` is the whole week.
-2. Dynamic batching is the concept to spend real time on. It is the same throughput-versus-latency trade you will meet again in vLLM, and meeting it twice from different directions is why both directories are here.
-3. Re-read your own `../week-08/context-caching/kv_cache.py` when you reach the serving material. You have already built the core of it.
-4. Plot a latency-versus-throughput curve for your own server at several batch sizes and find the knee.
+1. `template_data_loader.py` → `template_trainer.py`.
+2. Then `pager.py` only. Slotted pages, free space, LRU. **Do not open btree.py this week.**
 
 ## Done means
 
-- A quantised model running, with a measured latency AND accuracy delta versus fp32.
-- A latency-versus-throughput curve for your own server, and you can point at the knee and explain what is saturating.
+- The data-parallel trainer runs.
+- A page that cannot find free space is a pager bug.
 
 ## Every day
 
 1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
 2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
 3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — one line in `LOG.md`: what you built, what surprised you.
+4. **Log, ten minutes** — the journal post for today. The expected title is already there.
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 

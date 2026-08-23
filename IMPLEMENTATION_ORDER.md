@@ -16,185 +16,140 @@ design briefs with no templates: you write the files yourself against their
 
 ---
 
-## Phase 1 · Systems in C — weeks 1–3
+## Phase 1 · AWS — week 1
 
-### Week 1 · Aug 24–30 — `bash-from-scratch` **CS** 8 h, `http-server` **CS** 71 h
-- `week-01/bash-from-scratch/shell.c` **[18]** — tokenising, `fork`/`exec`/`wait`, pipes, redirection, signal handling, exit statuses
-- `week-01/http-server/http_server.c` **[16]**, in this order and no other:
-  - the accept loop — `socket`, `bind`, `listen`, `accept`
-  - request line and header parsing
-  - static file serving with the right `Content-Type`
-  - a real 404 rather than a hang
-- **Not this week:** keep-alive, chunked encoding, concurrency. Week 2.
-
-### Week 2 · Aug 31–Sep 6 — `http-server` 15 h **CS**, `dns-server` 9 h, `cryptographic-library` 5 h, `communication-protocols` 34 h, `toralizer` 16 h
-- `week-01/http-server/http_server.c` — finish it: concurrency and keep-alive, then hold it under `ab -n 10000 -c 100`
-- `week-02/dns-server/dns_server.c` **[20]** — UDP sockets, the DNS wire format, A and CNAME records, TCP retry on a truncated response
-- `week-02/cryptographic-library/sha256.c` **[12]** — padding, the message schedule, the compression function
-- `week-02/communication-protocols/` — framing first, the buses that build on it after:
-  - `uart.c` **[22]**
-  - `spi.c` **[15]**
-  - `i2c.c` **[26]**
-  - `can.c` **[23]**
-  - `rs232_485.c` **[29]**
-- `week-02/toralizer/network.c` **[10]**, then `socks.c` **[19]** — the SOCKS5 handshake
-
-### Week 3 · Sep 7–13 — `toralizer` 5 h, `firewall-from-scratch` 25 h, `c-compiler` **CS** 27 h, `compiler-and-vgpu` **CS** 16 h, `quantum-computing-lang` 8 h
-- `week-02/toralizer/toralizer.c` **[17]** — finish Monday, then close it
-- `week-03/firewall-from-scratch/firewall.c` **[68]** — raw sockets, packet parsing, rule matching
-- `week-03/c-compiler/`, and get `int main(){return 2+3;}` running end to end on day one:
-  - `lexer.c` **[9]**
-  - `parser.c` **[41]**
-  - `semantic.c` **[42]**
-  - `codegen.c` **[33]** — linear-scan register allocation and spilling
-  - `optimizer.c` **[24]**
-- `week-03/compiler-and-vgpu/` — one 32-bit ISA, two execution models:
-  - `isa.py` **[3]** → `assembler.py` **[9]** → `cpu.py` **[6]** → `frontend.py` **[12]** → `codegen.py` **[12]** → `vgpu.py` **[8]** → `capstone.py` **[3]**
-  - stop condition: `python3 check.py` prints 12/12
-- `week-03/quantum-computing-lang/quantum.c` **[17]** — an interpreter over complex amplitudes
-
----
-
-## Phase 2 · Storage, consensus and the cloud — weeks 4–6
-
-### Week 4 · Sep 14–20 — `haskell-projects` 61 h, `database-engine` **CS** 16 h
-- `week-04/haskell-projects/`:
-  - `JSONParser.hs` **[15]** — parser combinators, and the payoff of the whole directory
-  - `Calculator.hs` **[14]**
-  - `BuildTool.hs` **[22]**
-  - `WebScraper.hs` **[16]**
-  - delete each `-- TODO` as you satisfy it, or the bars never move
-- `week-04/database-engine/pager.py` **[13]** — slotted pages, free-space arithmetic, the buffer pool and its LRU. **This week and no further.** A B+tree on a shaky pager is a week you lose.
-
-### Week 5 · Sep 21–27 — `database-engine` **CS** 34 h, `dynamo-paper` **CS** 21 h, `raft` **C** 24 h
-- `week-04/database-engine/`, and the checker's 18 steps are the order:
-  - `btree.py` **[12]**
-  - `wal.py` **[10]** — **before** `mvcc.py`. Durability is one writer and a disk; isolation is several writers and each other
-  - `mvcc.py` **[12]**
-  - `sql.py` **[15]** — recursive descent, precedence climbing
-  - `executor.py` **[19]** — the Volcano iterator model
-  - `planner.py` **[20]**
-  - `database.py` **[13]**
-- `week-05/dynamo-paper/`, with the SOSP 2007 paper open:
-  - `partitioning.py` **[13]** and `vector_clock.py` **[11]** first — everything else assumes them
-  - `quorum.py` **[8]** → `hinted_handoff.py` **[7]** → `merkle_sync.py` **[8]** → `gossip.py` **[10]** → `dynamo_cluster.py` **[13]**
-- `week-05/raft/`, and read Figure 8 before you write `replication.py`:
-  - `log.py` **[9]** → `election.py` **[7]** → `replication.py` **[8]**
-
-### Week 6 · Sep 28–Oct 4 — `raft` **C** 6 h, `system-design` 48 h, `aws-from-scratch` **CS** 25 h
-- `week-05/raft/cluster.py` **[6]** — safety asserted after every operation, against a network that partitions and crashes
-- **Then write the Raft-versus-Dynamo table in `LOG.md`** before moving on. Same partition, opposite answers.
-- `week-06/system-design/` — 18 small files, roughly a day per group:
-  - caching: `cache.py` **[12]**, `cdn_caching.py` **[7]**, `data_locality.py` **[12]**
-  - queues: `message_queue.py` **[8]**, `idempotency_keys.py` **[7]**, `request_batching.py` **[12]**
-  - reliability: `circuit_breaker.py` **[9]**, `throttling.py` **[7]**, `rate_limiter.py` **[4]**, `connection_pooling.py` **[6]**
-  - distribution: `consistent_hash.py` **[5]** (do it without looking at last week's, then diff), `hot_partition_mitigation.py` **[8]**, `eventual_consistency.py` **[13]**, `session_stickiness.py` **[11]**, `edge_computing.py` **[10]**
-  - applications: `url_shortener.py` **[9]**, `leaderboard.py` **[14]**, `capacity_planner.py` **[5]**
+### Week 1 · Aug 24–30 — `aws-from-scratch` **CS** 42 h
 - `week-06/aws-from-scratch/` — order is fixed and the checker enforces it:
   - `iam.py` **[10]** — **always first**, everything else is gated by it
-  - `s3.py` **[16]** → `sqs.py` **[8]** — checks 1 to 7
+  - `s3.py` **[16]** → `sqs.py` **[8]** → `dynamodb.py` **[13]** → `lambda_svc.py` **[8]** → `sns.py` **[9]** → `kms.py` **[12]** → `vpc.py` **[14]** → `capstone.py` **[5]**
+  - then the billing layer: `pricing.py` **[17]** → `billing.py` **[13]** → `optimize.py` **[15]**
+  - **predict the provisioned-vs-on-demand DynamoDB crossover before running `optimize.py`**
+  - stop condition: `python3 check.py` prints 24/24
+- **Not this week:** `autograd/`. 24/24 first.
 
 ---
 
-## Phase 3 · Gradients, transformers and light — weeks 7–9
+## Phase 2 · LLM work — weeks 2–6
 
-### Week 7 · Oct 5–11 — `aws-from-scratch` **CS** 17 h, `autograd` **CS** 30 h, `llm-from-scratch` **CS** 32 h
-- `week-06/aws-from-scratch/`, to 24/24 by Tuesday:
-  - `dynamodb.py` **[13]** → `lambda_svc.py` **[8]** → `sns.py` **[9]** → `kms.py` **[12]** → `vpc.py` **[14]** → `capstone.py` **[5]**
-  - then the billing layer: `pricing.py` **[17]** → `billing.py` **[13]** → `optimize.py` **[15]**
-  - **predict the provisioned-vs-on-demand DynamoDB crossover before running `optimize.py`**
+### Week 2 · Aug 31–Sep 6 — `autograd` **CS** 30 h, `llm-from-scratch` start **CS**
 - `week-07/autograd/` — the highest-leverage 30 hours in the repo:
   - `tensor.py` **[27]** — reverse mode over arrays, topological sort, gradient accumulation, `_unbroadcast`. Do not move on until every gradient matches central differences
   - `nn.py` **[13]** → `optim.py` **[7]** → `train.py` **[7]** → `generative.py` **[13]**
 - `week-07/llm-from-scratch/`:
   - `tokenizer.py` **[10]** — BPE, merges applied in **rank order**
-  - `engine.py` **[2]** → `attention.py` **[4]** → `transformer.py` **[8]**
+  - start `attention.py` if 10/10 on autograd is already green
 
-### Week 8 · Oct 12–18 — `llm-from-scratch` **CS** 13 h, `deploy-and-debug` **CS** 10 h, `context-caching` **CS** 28 h, `contextcite` 13 h, `ray-tracer` 15 h
-- `week-07/llm-from-scratch/train.py` **[4]** → `sample.py` **[9]**
-- `week-08/deploy-and-debug/`: `capacity.py` **[10]** → `metrics.py` **[11]** → `diagnose.py` **[4]** → `rollout.py` **[9]**
+### Week 3 · Sep 7–13 — `llm-from-scratch` **CS**
+- `attention.py` **[4]** → `transformer.py` **[8]** → `train.py` **[4]** → `sample.py` **[9]**
+- `distill.py` **[11]** — OPD, on vs off policy, forward/reverse KL/JSD, RL vs OPD vs SFT, OPSD, the papers, Privilege Illusion
+- stop condition: `python3 check.py` prints 15/15
+
+### Week 4 · Sep 14–20 — `context-caching` **CS** 28 h, start `inference-from-scratch` **C**
 - `week-08/context-caching/`:
   - `tiny_transformer.py` **[10]** → `kv_cache.py` **[17]** — **do not move past `kv_cache.py` until cached and uncached attention agree to zero**, not to small
   - `prefix_cache.py` **[11]** → `radix_cache.py` **[12]** → `paged_kv_cache.py` **[13]** → `semantic_cache.py` **[12]** → `cache_router.py` **[13]** → `serving_demo.py` **[6]**
-- `week-08/contextcite/`: `partition.py` **[5]** → `ablation.py` **[5]** → `logit_probs.py` **[7]** → `lasso.py` **[7]** → `contextcite.py` **[8]** → `evaluate.py` **[5]** → `applications.py` **[5]**
-- `week-08/ray-tracer/vec.py` **[13]** → `shapes.py` **[8]**
-- **Sunday:** install the CUDA toolkit. Do not spend a Monday fighting a driver.
+- `week-10/inference-from-scratch/inference_path.py` if 16/16 is green
 
-### Week 9 · Oct 19–25 — `ray-tracer` 20 h, `cuda-from-scratch` **CS** 59 h
-- `week-08/ray-tracer/bvh.py` **[5]** → `material.py` **[7]** → `render.py` **[8]**
-  - **predict what the noise does from 16 to 64 samples before you read the table**
-- `week-09/cuda-from-scratch/`, strictly in order, profiling every kernel:
-  - `01_vector_addition.cu` **[16]** → `02_matrix_addition.cu` **[15]** → `03_matrix_multiplication.cu` **[16]** → `04_reduction.cu` **[5]** → `05_convolution.cu` **[7]**
-  - start the table now: kernel, GB/s achieved, GB/s theoretical, occupancy
+### Week 5 · Sep 21–27 — `inference-from-scratch` steps 1–6 **C**
+- **do not open vllm-engine yet**
+  1. `inference_path.py` — what the GPU does for one prefill token and one decode token
+  2. `naive_server.py` — make it work, then watch two requests fail as `single_flight`
+  3. `batching.py` — continuous batching; measure TTFT, TPOT, throughput
+  4. `kv_runtime.py` — decode becomes memory-bandwidth bound
+  5. `scheduler.py` — queues, priorities, backpressure, cancellation, timeouts
+  6. `paged_kv.py` — blocks, fragmentation, prefix sharing, CoW fork
+
+### Week 6 · Sep 28–Oct 4 — `inference-from-scratch` steps 7–12 **C**, `deploy-and-debug` **CS**
+  7. `gpu_opt.py` — CUDA graphs, fusion, quant, one sync per step
+  8. `speculate.py` — when speculation is actually faster
+  9. `observe.py` — TTFT, ITL, throughput, GPU util, KV, queue time
+  10. `traffic.py` — find the concurrency where throughput stops scaling, and why
+  11. `compare.py` — **now** read vLLM, SGLang, TensorRT-LLM
+  12. `deeper.py` — multi-GPU, disagg, KV offload, cache-aware routing
+  - stop condition: 12/12
+- `week-08/deploy-and-debug/`: `capacity.py` **[10]** → `metrics.py` **[11]** → `diagnose.py` **[4]** → `rollout.py` **[9]**
 
 ---
 
-## Phase 4 · GPUs and inference — weeks 10–15
+## Phase 3 · Provenance-reasoning — weeks 7–10
 
-### Week 10 · Oct 26–Nov 1 — `cuda-from-scratch` **CS** 63 h, `ml-inference` **C** 16 h
-- `week-09/cuda-from-scratch/06_neural_network_forward.cu` **[9]** → `07_neural_network_backward.cu` **[8]** → `08_complete_neural_network.cu` **[29]**
-- `week-10/ml-inference/` — Phase 1, basic inference: a forward pass, a latency harness, a baseline you will beat for the next five weeks
-- `week-10/ml-inference/phase2_optimization/template_quantization.py` **[6]** — start here in Phase 2, because everything downstream depends on knowing what int8 costs
+An LLM answer is a proof, or it is not traceable. The parse is untrusted;
+the prover is not. ContextCite comes *after* this, and answers a different
+question (which tokens, not which derivation).
 
-### Week 11 · Nov 2–8 — `ml-inference` **C** 79 h
-- `week-10/ml-inference/` Phase 2 — pruning, distillation, operator fusion, the rest of quantisation
-- `week-10/ml-inference/` Phase 3 — advanced serving, and **dynamic batching is the thing to spend real time on**; it is the same throughput-versus-latency trade vLLM will hand you from the other direction
-- re-read your own `week-08/context-caching/kv_cache.py` when you reach the serving material
-- deliverable: a latency-versus-throughput curve at several batch sizes, with the knee identified
+### Week 7 · Oct 5–11 — `provenance-semirings` **C** 45 h
+- `week-08/provenance-semirings/` — `instance.py` is provided
+  - `semiring.py` — the eight instances, one interface
+  - `polynomial.py` — sparse ℕ[X]
+  - `homomorphism.py` — `specialize`
+  - `relation.py` → `ra.py` — σ, π, ⋈, ∪; the running query is ac + bd
+  - **check 5 is the payoff:** `h(Q_How) = Q_K` for every K
+  - `datalog.py` — absorptive K terminate; How on a cycle raises
+  - stop condition: 8/8
 
-### Week 12 · Nov 9–15 — `ml-inference` **C** 42 h, `tensorrt-inference` 37 h
-- `week-10/ml-inference/phase4_production/` — the full serving system, monitoring, and the production harness
-- `week-12/tensorrt-inference/` against its `IMPLEMENTATION_GUIDE.md`:
-  - Phase 1, core infrastructure — the engine, the builder, the runtime
-  - Phase 2, graph optimisations — layer fusion, constant folding, dead-layer elimination
-  - for each optimisation, one line on whether you could have done it by hand in week 10
+### Week 8 · Oct 12–18 — `scasp` **C** 45 h
+- `week-08/scasp/` — `program.py` is provided
+  - `term.py` → `unify.py` (occurs on) → `sld.py` (even loop returns None)
+  - `dual.py` — Clark duals, `neq`, De Morgan on conjuncts
+  - `coinductive.py` — even ancestor succeeds, odd fails
+  - `justify.py` — the tree; `atoms_used` is the lineage
+  - stop condition: 8/8. opus flies; tweety does not
 
-### Week 13 · Nov 16–22 — `tensorrt-inference` 72 h, `vllm-engine` **C** 7 h
-- `week-12/tensorrt-inference/`:
-  - Phase 3, mixed precision — fp16 and INT8 calibration
-  - Phase 4, advanced features, then benchmark against your own week-11 server on the same model and hardware
-  - the deliverable is a speedup **attributed to named optimisations**, not to the brand
-- `week-13/vllm-engine/` — read Phase 1 and sketch the block table on paper. Re-read `week-08/context-caching/paged_kv_cache.py` first; you have already built the core idea at small scale
+### Week 9 · Oct 19–25 — `linc` **C** 30 h
+- `week-08/linc/` — `fixtures.py` is provided. No LLM.
+  - `fol.py` → `parser.py` (`Parser` protocol + `GoldParser`)
+  - `faults.py` — scope invert, drop ¬, arity drift, hallucinated const
+  - `prover.py` — `{True, False, Uncertain, Error}` and a proof object
+  - `pipeline.py` → `sweep.py` — predict the table, then run it
+  - `trace.py` — how-polynomial of the proof; do week 7 first
+  - stop condition: 8/8. Gold is 3/3; the sweep is monotone
 
-### Week 14 · Nov 23–29 — `vllm-engine` **C** 79 h
-- `week-13/vllm-engine/` Phase 1 — PagedAttention: the block allocator and per-sequence block table. **Forking a sequence must cost zero additional blocks**
-- Phase 2 — continuous batching, prefill and decode interleaved across sequences in one forward pass
-- Phase 3 — model parallelism
-- assert on day one, and hold it all week: **a cache that changes the output is not a cache, it is a bug**
+### Week 10 · Oct 26–Nov 1 — citation layer **C**
+- `week-08/contextcite/` 14/14 first
+- `week-08/spade/` 8/8
+- `week-08/mars-sql/` 8/8. Tokens and columns, after derivations
 
-### Week 15 · Nov 30–Dec 6 — `vllm-engine` **C** 70 h, `distributed-training` 10 h
-- `week-13/vllm-engine/` Phase 4 (quantisation), Phase 5 (advanced optimisations), Phase 6 (production serving)
+---
+
+## Phase 4 · Distributed training, then a database — weeks 11–12
+
+### Week 11 · Nov 2–8 — `distributed-training` **C** 10 h, pager **CS**
 - `week-15/distributed-training/phase1_data_parallel/template_data_loader.py` **[4]** → `template_trainer.py` **[6]**
-  - you already wrote gradient accumulation in `week-07/autograd/`; this is the same idea with a network in the middle
-- **Sunday:** open `week-16/world-models/` and start the VAE
+- `week-04/database-engine/pager.py` **[13]**. **This week and no further.**
+
+### Week 12 · Nov 9–15 — `database-engine` **CS**
+- `btree.py` → `wal.py` → `mvcc.py` → `sql.py` → `executor.py` → `planner.py` → `database.py`
+- stop condition: 18/18
 
 ---
 
-## Phase 5 · Generative models and the long tail — weeks 16–18
+## Phase 5 · The rest — weeks 13–18
 
-### Week 16 · Dec 7–13 — `world-models` 78 h
-- `week-16/world-models/common/`: `env_wrapper.py` **[12]** → `replay_buffer.py` **[9]** → `metrics.py` **[9]** → `video.py` **[7]**
-- `week-16/world-models/paper1_world_models/`: `vae.py` **[8]** → `rnn.py` **[8]** → `controller.py` **[13]** → `train.py` **[7]** → `eval.py` **[10]**
-  - measure the distance from a random `N(0, I)` draw to the nearest latent the model has seen. You measured exactly this in `autograd/generative.py`
-- `week-16/world-models/paper2_dreamerv1/`: `rssm.py` **[14]** → `networks.py` **[13]** → `actor_critic.py` **[11]** → `buffer.py` **[11]** → `train.py` **[13]**
+Compressed. Cut from here if you slip, not from Phase 3.
 
-### Week 17 · Dec 14–20 — `world-models` 28 h, `diffusion-models` 51 h
-- `week-16/world-models/paper3_dreamerv2/`: `rssm.py` **[11]** → `networks.py` **[8]** → `actor_critic.py` **[7]** → `train.py` **[7]**
-- `week-16/world-models/paper4_dreamerv3/`: `symlog.py` **[2]** → `world_model.py` **[11]** → `actor_critic.py` **[8]** → `train.py` **[3]**
-- `week-16/world-models/paper5_iris/`: `tokenizer.py` **[10]** → `transformer.py` **[8]** → `actor_critic.py` **[6]** → `train.py` **[5]**
-- **three sentences before you move on:** what v2 fixed in v1, what v3 fixed in v2
-- `week-17/diffusion-models/diffusion.py` **[22]** — the forward process first, verified **analytically** against iterated single-step noising before you train anything
-- `week-17/diffusion-models/unet.py` **[19]**
+### Week 13 · Nov 16–22 — `dynamo-paper` **CS**, `raft` **C**
+- preference lists and vector clocks first → quorum → handoff → merkle → gossip
+- Raft: read Figure 8 before `replication.py`
+- **Write the Raft-versus-Dynamo table in the journal**
 
-### Week 18 · Dec 21–27 — `diffusion-models` 40 h, then five small directories
-- `week-17/diffusion-models/train.py` **[11]** → `sample.py` **[11]** — DDPM, then DDIM, then classifier-free guidance
-  - sweep the guidance scale and watch the diversity collapse. The noise you are fighting is the same 1/√N you measured in `ray-tracer`
-- `week-18/spectral-graphs/spectral_graphs.py` **[11]**
-- `week-18/sas-lineage-tool/template_lineage_parser.py` **[23]**
-- `week-18/web-scraping/` — against its `IMPLEMENTATION_GUIDE.md`: fetch, parse, queue, politeness, the distributed layer
-- `week-18/ml-in-production/phase1_basic_serving/template_model_server.py` **[7]**
-- `week-18/mlops/phase1_tracking/template_experiment_logger.py` **[13]**
-- **Reserve the last day.** Run every checker in the repo, re-read `LOG.md` from week 1, write the closing entry.
+### Week 14 · Nov 23–29 — `bash-from-scratch` **CS**, `http-server` start **CS**
+- `shell.c`; HTTP accept / parse / static files / a real 404
+
+### Week 15 · Nov 30–Dec 6 — finish HTTP, then the protocols
+- keep-alive, `ab -n 10000 -c 100`
+- DNS, SHA-256, UART → SPI → I2C → CAN
+
+### Week 16 · Dec 7–13 — compilers **CS**
+- `c-compiler`, `compiler-and-vgpu` 12/12
+- full: firewall, toralizer, quantum
+
+### Week 17 · Dec 14–20 — Haskell, CUDA **CS**, `ml-inference` **C**
+- Haskell TODOs deleted; `nvidia-smi`; profile every kernel
+- Quantisation: latency AND accuracy. Ray tracer if you have the Saturday
+
+### Week 18 · Dec 21–27 — vendor engines, world models, the tail
+- TensorRT, vLLM (re-read your `paged_kv.py`), world-models, diffusion
+- five small directories. **Reserve the last day.** Every checker. Re-read the journal from 23 August
 
 ---
 
@@ -233,11 +188,17 @@ And the analysis side track, if the algebra ladder stalls:
 | `week-05/raft/` | `python3 check.py` | 7/7 |
 | `week-06/aws-from-scratch/` | `python3 check.py` | 24/24 |
 | `week-07/autograd/` | `python3 check.py` | 10/10 |
-| `week-07/llm-from-scratch/` | `python3 check.py` | 8/8 |
+| `week-07/llm-from-scratch/` | `python3 check.py` | 15/15 |
 | `week-08/deploy-and-debug/` | `python3 check.py` | 12/12 |
 | `week-08/context-caching/` | `python3 check.py` | 16/16 |
+| `week-08/provenance-semirings/` | `python3 check.py` | 8/8 |
+| `week-08/scasp/` | `python3 check.py` | 8/8 |
+| `week-08/linc/` | `python3 check.py` | 8/8 |
 | `week-08/contextcite/` | `python3 check.py` | 14/14 |
+| `week-08/spade/` | `python3 check.py` | 8/8 |
+| `week-08/mars-sql/` | `python3 check.py` | 8/8 |
 | `week-08/ray-tracer/` | `python3 check.py` | 6/6 |
+| `week-10/inference-from-scratch/` | `python3 check.py` | 12/12 |
 
 Everywhere else the stop condition is the file's own demo printing a table you
 predicted first. All of it at once:

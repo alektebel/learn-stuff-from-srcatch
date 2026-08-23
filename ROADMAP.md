@@ -2,12 +2,23 @@
 
 Start **Monday 24 August 2026**. Finish **Sunday 27 December 2026**. Eighteen weeks.
 
-The repo is laid out to match: **`week-01/` … `week-18/`**, each with a README
-carrying that week's objective, the order to work in, and a concrete *done
-means*. This file is the whole plan and the arithmetic behind it; the week
-folders are what you actually open on a Monday, and
-[`IMPLEMENTATION_ORDER.md`](IMPLEMENTATION_ORDER.md) is the file-by-file list
-underneath both. **[Start at `week-01/`](week-01/).**
+The week folders still hold the original layout; **this file and the journal
+are the authority on order**. A directory is found wherever it lives
+(`progress.py` locates it). **[Start at `week-01/`](week-01/)** — that README
+now points at AWS, not at a shell.
+
+### The order, as of 23 August 2026
+
+1. **AWS from scratch** — the eight mechanisms and the bill
+2. **LLM work** — autograd, a transformer, distillation, the KV cache, then a
+   serving stack you build before reading vLLM
+3. **Provenance-reasoning** — the free semiring, then s(CASP), then LINC
+   (a proof you can replay; the LLM only parses). ContextCite / SPADE /
+   MARS-SQL after that, for tokens and columns
+4. **Distributed training**
+5. **Database engine**
+6. **The rest** — Dynamo/Raft, systems in C, CUDA, the vendor engines, world
+   models, the tail
 
 ## The arithmetic, before the calendar
 
@@ -15,11 +26,11 @@ Read this first, because it changes what you decide.
 
 | | |
 |---|---|
-| Directories | **35** |
-| Implementable units left (stubs, `sorry`s, TODO markers) | **2,382** |
-| Estimated effort | **~1,570 hours** |
+| Directories | **41** |
+| Implementable units left (stubs, `sorry`s, TODO markers) | **~2,590** |
+| Estimated effort | **~1,800 hours** |
 | Weeks available | **18** |
-| Therefore | **87 h/week — 12.5 hours a day, seven days a week, for 126 consecutive days** |
+| Therefore | **~93 h/week on `full` — still not a plan, see the tracks** |
 
 Where the hours come from: the directories that state their own estimate in
 their README (`ESTIMATED TIME: 6-8 hours`, and so on) are used directly. The
@@ -40,17 +51,19 @@ feels like failure, and switching down in August is just planning.
 
 | Track | Directories | Hours | Per week | Per day | Who it is for |
 |---|---|---|---|---|---|
-| **full** | 35 | 1,573 | 87 h | 12.5 h × 7 | This is your full-time job and you have no other commitments |
-| **core** | 15 | 808 | 45 h | 7.5 h × 6, one day off | You have a job, and you are serious |
-| **spine** | 12 | 485 | 27 h | 4.5 h × 6, one day off | You have a job and a life, and you would rather finish |
+| **full** | 41 | ~1,800 | 100 h | 14 h × 7 | This is your full-time job and you have no other commitments |
+| **core** | 23 | ~1,050 | 58 h | 9.5 h × 6, one day off | You have a job, and you are serious |
+| **spine** | 12 | ~495 | 28 h | 4.5 h × 6, one day off | You have a job and a life, and you would rather finish |
 
 All three finish on 27 December. They differ only in what they contain.
 
 **The recommendation is `core`.** It holds every directory that other
-directories reference, it is the largest of the three you can actually sustain
-next to employment, and finishing it means the remaining twenty directories are
-variations on mechanisms you already own — which is exactly the claim
-[`PHILOSOPHY.md`](PHILOSOPHY.md) makes about this repo.
+directories reference, including the 120 h provenance stack that makes an
+LLM answer a proof you can replay. Finishing it means the remaining
+directories are variations on mechanisms you already own — which is exactly
+the claim [`PHILOSOPHY.md`](PHILOSOPHY.md) makes about this repo. Core is
+heavier than it was before those three directories existed; that is the
+trade you made on 23 August.
 
 ### What changed, and why the narrow tracks got heavier
 
@@ -89,19 +102,21 @@ Do not start week 1 without this. Every hour here buys back three in November.
 - [ ] **Haskell** (if you are on `full`): `ghcup`, then `cabal install http-conduit tagsoup async`.
 - [ ] **Lean 4** (if you are on `full`): `elan`, then a Mathlib-enabled project. This
       alone can eat an afternoon. Do it now, not in week 4.
-- [ ] **A GPU you can actually reach.** Weeks 9–18 of the full track — CUDA,
-      TensorRT, vLLM, world-models, diffusion — are not doable on a laptop.
-      Colab Pro, Lambda, RunPod, or a local card. **Budget the money in
-      August**, because "I will sort the GPU out later" is the single most common
-      way this plan dies. The `core` track needs a GPU from week 9; `spine`
-      needs one only for `cuda-from-scratch`.
+- [ ] **A GPU you can actually reach.** CUDA, TensorRT, vLLM, world-models and
+      diffusion are now in weeks 14–18. Still budget the money in August.
+      `inference-from-scratch` (weeks 4–6) runs on a simulated GPU and does
+      **not** need a card. The `core` track needs a real GPU from week 17;
+      `spine` only for `cuda-from-scratch`.
 - [ ] **Baseline.** `python3 progress.py --track core --checks`. Every bar should
       read 0%. That is the point — you want the zero on the record.
+- [ ] **The journal.** `python3 journal/serve.py` and write today's post
+      (`journal/posts/2026-08-23.md`). From today on, the ten-minute log is a
+      blog post with an expected title, not a loose `LOG.md`.
 - [ ] **Pick your track and write it down** in this file, on the line below.
 
 > My track: `________`  · started: `________`
 
-Then open [`week-01/`](week-01/) and read its README before Monday.
+Then open [`week-01/`](week-01/) — AWS, not a shell — and read its README before Monday.
 
 ---
 
@@ -122,7 +137,8 @@ this order, and the order is the method:
 3. **Make it green.** Where a `check.py` exists, that is the stop condition —
    not "it looks right". Where one does not, the stop condition is the file's own
    demo printing a table you predicted.
-4. **Log, ten minutes.** One line per unit in `LOG.md`: what you built, what
+4. **Log, ten minutes.** Open the journal (`python3 journal/serve.py`) and write
+   the day's post. The expected title is already there. What you built, what
    surprised you, which design decision you would now defend differently. Ten
    minutes a day is four hours over the plan, and it is the only artifact that
    still exists in a year.
@@ -178,98 +194,79 @@ Proofs are the one thing here that goes better in ninety-minute pieces every day
 than in a marathon, and it keeps a hard, unrelated muscle warm while the rest of
 the plan is C and CUDA.
 
-### Phase 1 · Systems in C — weeks 1–3
+### Phase 1 · AWS — week 1
 
-You cannot reason about a serving stack, a NAT gateway bill, or a CUDA memory
-copy without sockets, buffers and the kernel boundary. This is why it is first.
-
-| Week | Dates | Work | block h |
-|---|---|---|---|
-| [**1**](week-01/) | Aug 24–Aug 30 | `bash-from-scratch` 8 **CS** · `http-server` 71 **CS** | 79 |
-| [**2**](week-02/) | Aug 31–Sep 6 | `http-server` 15 **CS** · `dns-server` 9 · `cryptographic-library` 5 · `communication-protocols` 34 · `toralizer` 16 | 79 |
-| [**3**](week-03/) | Sep 7–Sep 13 | `toralizer` 5 · `firewall-from-scratch` 25 · `c-compiler` 27 **CS** · `compiler-and-vgpu` 16 **CS** · `quantum-computing-lang` 8 | 81 |
-
-**Done means:** your HTTP server serves a real browser and survives `ab -c 100`;
-your compiler compiles a program with a loop and a function call; `check.py` in
-`compiler-and-vgpu` is 12/12.
-
-### Phase 2 · Storage, consensus and the cloud — weeks 4–6
-
-Three graded checkers and 60 checks, so this is the phase where the plan is most
-objectively scorable. Use that.
+The cloud as eight mechanisms and a bill. Do the whole directory before you
+open `autograd/`. `iam.py` is always first; everything else is gated by it.
 
 | Week | Dates | Work | block h |
 |---|---|---|---|
-| [**4**](week-04/) | Sep 14–Sep 20 | `haskell-projects` 61 · `database-engine` 16 **CS** | 77 |
-| [**5**](week-05/) | Sep 21–Sep 27 | `database-engine` 34 **CS** · `dynamo-paper` 21 **CS** · `raft` 24 **C** | 79 |
-| [**6**](week-06/) | Sep 28–Oct 4 | `raft` 6 **C** · `system-design` 48 · `aws-from-scratch` 25 **CS** | 79 |
+| [**1**](week-01/) | Aug 24–Aug 30 | `aws-from-scratch` 42 **CS** · start `autograd` if 24/24 lands early | 42+ |
 
-The three-way pairing is the point of putting these together. `database-engine`
-gives you ACID on one machine. `dynamo-paper` throws all of it away for
-availability, and its own README says so: a globally agreed membership view
-"needs consensus, which is the availability cost the paper refuses." `raft` is
-the thing it is refusing. Same partition, opposite answers — and having built
-both, you can say which one a given problem needs.
+**Done means:** 24/24 on `python3 check.py`, and you predicted the
+provisioned-vs-on-demand DynamoDB crossover *before* running `optimize.py`.
 
-**Done means:** 18/18, 17/17 and 7/7 on three checkers, plus at least 7/24 on
-AWS; and you can predict the Dynamo availability table *before* running the demo.
+### Phase 2 · LLM work — weeks 2–6
 
-### Phase 3 · Gradients, transformers and light — weeks 7–9
-
-The pivot. Everything before it is systems; everything after it is machine
-learning systems, and this phase is where you build the arithmetic underneath
-all of it — from `y = w @ x + b` and a topological sort to a working transformer,
-and then the KV cache that production puts in front of one.
+Gradients, a transformer, distillation, the cache in front of attention, then
+a serving stack on a simulated GPU. Do not open `vllm-engine/` until step 11
+of `inference-from-scratch`.
 
 | Week | Dates | Work | block h |
 |---|---|---|---|
-| [**7**](week-07/) | Oct 5–Oct 11 | `aws-from-scratch` 17 **CS** · `autograd` 30 **CS** · `llm-from-scratch` 32 **CS** | 79 |
-| [**8**](week-08/) | Oct 12–Oct 18 | `llm-from-scratch` 13 **CS** · `deploy-and-debug` 10 **CS** · `context-caching` 28 **CS** · `contextcite` 13 · `ray-tracer` 15 | 79 |
-| [**9**](week-09/) | Oct 19–Oct 25 | `ray-tracer` 20 · `cuda-from-scratch` 59 **CS** | 79 |
+| [**2**](week-02/) | Aug 31–Sep 6 | `autograd` 30 **CS** · `llm-from-scratch` tokenizer + attention **CS** | — |
+| [**3**](week-03/) | Sep 7–Sep 13 | `llm-from-scratch` transformer, train, sample, `distill.py` **CS** | — |
+| [**4**](week-04/) | Sep 14–Sep 20 | `context-caching` 28 **CS** · start `inference-from-scratch` **C** | — |
+| [**5**](week-05/) | Sep 21–Sep 27 | `inference-from-scratch` steps 1–6 **C** | — |
+| [**6**](week-06/) | Sep 28–Oct 4 | `inference-from-scratch` steps 7–12 **C** · `deploy-and-debug` 10 **CS** | — |
 
-`ray-tracer` is in this phase rather than on its own because of where it sits in
-the *order*: it is the purest embarrassingly-parallel workload in the repo, and
-you meet it in the week before the hardware designed for exactly that shape.
+**Done means:** 10/10 autograd, 15/15 llm (including distillation), 16/16
+context-caching with bit-identical cached/uncached output, 12/12 inference.
 
-**Done means:** 10/10 on `autograd`, 8/8 on `llm-from-scratch`, 16/16 on
-`context-caching` — and `serving_demo.py` reporting **bit-identical** output with
-the cache on and off, checked against the attention you wrote yourself the week
-before.
+### Phase 3 · Provenance-reasoning — weeks 7–10
 
-### Phase 4 · GPUs and inference — weeks 10–15
-
-The largest and most expensive phase, in both hours and dollars. It is also the
-one every ML-serving job description is actually asking about.
+An LLM answer is traceable when it is a proof object. It is replicable
+when the prover is deterministic given the parse. The LLM is only
+allowed to parse — and in this repo it is a fault-injected stand-in,
+because there is no model here that can emit FOL.
 
 | Week | Dates | Work | block h |
 |---|---|---|---|
-| [**10**](week-10/) | Oct 26–Nov 1 | `cuda-from-scratch` 63 **CS** · `ml-inference` 16 **C** | 79 |
-| [**11**](week-11/) | Nov 2–Nov 8 | `ml-inference` 79 **C** | 79 |
-| [**12**](week-12/) | Nov 9–Nov 15 | `ml-inference` 42 **C** · `tensorrt-inference` 37 | 79 |
-| [**13**](week-13/) | Nov 16–Nov 22 | `tensorrt-inference` 72 · `vllm-engine` 7 **C** | 79 |
-| [**14**](week-14/) | Nov 23–Nov 29 | `vllm-engine` 79 **C** | 79 |
-| [**15**](week-15/) | Nov 30–Dec 6 | `vllm-engine` 70 **C** · `distributed-training` 10 | 80 |
+| [**7**](week-07/) | Oct 5–Oct 11 | `provenance-semirings` 45 **C** — evaluate once in ℕ[X] | 45 |
+| [**8**](week-08/) | Oct 12–Oct 18 | `scasp` 45 **C** — unification, duals, even loops, the tree | 45 |
+| [**9**](week-09/) | Oct 19–Oct 25 | `linc` 30 **C** — pluggable parse, prover, sweep the error rate | 30 |
+| [**10**](week-10/) | Oct 26–Nov 1 | `contextcite` 13 **C** · `spade` 16 **C** · `mars-sql` 20 **C** | 49 |
 
-**Done means:** a hand-written kernel within a stated factor of cuBLAS and you
-can say *why* the factor is what it is; a paged-attention engine serving
-concurrent requests with **bit-identical output** to the unbatched path — the
-one invariant `context-caching` exists to teach.
+**Done means:** 8/8 on the semirings (the homomorphism holds), 8/8 on
+s(CASP) (opus flies; tweety does not; the even loop is a tree), 8/8 on
+LINC (gold is 3/3; the sweep is monotone; lineage of p1 is `{p0,p1,p2}`
+via `specialize`). Then 14/14, 8/8, 8/8 on the citation layer.
 
-### Phase 5 · Generative models and the long tail — weeks 16–18
+Spine skips this phase and jumps to the pager in week 11.
+
+### Phase 4 · Distributed training, then a database — weeks 11–12
 
 | Week | Dates | Work | block h |
 |---|---|---|---|
-| [**16**](week-16/) | Dec 7–Dec 13 | `world-models` 78 | 78 |
-| [**17**](week-17/) | Dec 14–Dec 20 | `world-models` 28 · `diffusion-models` 51 | 79 |
-| [**18**](week-18/) | Dec 21–Dec 27 | `diffusion-models` 40 · `spectral-graphs` 5 · `sas-lineage-tool` 8 · `web-scraping` 6 · `ml-in-production` 8 · `mlops` 12 | 79 |
+| [**11**](week-11/) | Nov 2–Nov 8 | `distributed-training` 10 **C** · `database-engine` pager only **CS** | — |
+| [**12**](week-12/) | Nov 9–Nov 15 | `database-engine` MVCC, SQL, planner, executor **CS** | — |
 
-Both of these are generative models you have already met a small version of:
-`autograd/generative.py` builds the VAE that `world-models` starts from, and the
-1/√N noise economics of diffusion sampling are the ones you measured in
-`ray-tracer` in week 9.
+**Done means:** the data-parallel trainer runs; `database-engine` is 18/18.
 
-Week 18 is deliberately a long tail of small directories. Finishing on five small
-wins in the last week is worth more than finishing on one heroic one.
+### Phase 5 · The rest — weeks 13–18
+
+Compressed: three weeks of provenance took three weeks from the tail.
+Dynamo and Raft still sit next to the database. The C / CUDA / vendor
+stack is now the first thing you cut if you slip — not the proof stack.
+
+| Week | Dates | Work | block h |
+|---|---|---|---|
+| [**13**](week-13/) | Nov 16–Nov 22 | `dynamo-paper` 21 **CS** · `raft` 30 **C** | 51 |
+| [**14**](week-14/) | Nov 23–Nov 29 | `bash-from-scratch` 8 **CS** · `http-server` start **CS** | — |
+| [**15**](week-15/) | Nov 30–Dec 6 | finish `http-server` · `dns-server` · crypto · protocols | — |
+| [**16**](week-16/) | Dec 7–Dec 13 | `c-compiler` **CS** · `compiler-and-vgpu` **CS** · firewall · toralizer | — |
+| [**17**](week-17/) | Dec 14–Dec 20 | Haskell · system-design · `cuda-from-scratch` **CS** · `ml-inference` **C** | — |
+| [**18**](week-18/) | Dec 21–Dec 27 | TensorRT · vLLM **C** · world-models · diffusion · the tail | — |
 
 ---
 
@@ -278,7 +275,7 @@ wins in the last week is worth more than finishing on one heroic one.
 ```bash
 python3 progress.py                      # core track, today's week
 python3 progress.py --week 3             # what week 3 expects of you
-python3 progress.py --track full         # all 35
+python3 progress.py --track full         # all 41
 python3 progress.py --track spine        # the 12-directory minimum
 python3 progress.py --checks             # also run every check.py — the exact number
 ```
@@ -327,7 +324,8 @@ someone tired.
 **Never cut these**, at any tier, because everything else in the repo is written
 against them: `http-server`, `c-compiler`, `database-engine`, `dynamo-paper`,
 `aws-from-scratch`, `autograd`, `llm-from-scratch`, `context-caching`,
-`cuda-from-scratch`.
+`cuda-from-scratch`, `inference-from-scratch`, `provenance-semirings`,
+`scasp`, `linc`.
 
 ---
 

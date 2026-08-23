@@ -32,11 +32,12 @@ standalone.
 | `transformer.py` | LayerNorm, feed-forward, pre-norm blocks, GPT | 8 |
 | `train.py` | Next-token prediction, gradient accumulation, perplexity | 4 |
 | `sample.py` | Greedy, temperature, top-k, top-p | 9 |
+| `distill.py` | On-policy distillation: KLs, OPD, OPSD, Privilege Illusion | 11 |
 | `engine.py` | **Provided** | — |
 
 ```bash
 cd llm-from-scratch
-python3 check.py          # 8 graded checks against YOUR code
+python3 check.py          # 15 graded checks against YOUR code
 ```
 
 ---
@@ -168,6 +169,9 @@ an open one it discards good ones.
    whole prefix. Removing exactly that waste is what
    [`context-caching/`](../../week-08/context-caching/) is about — the same model, from
    the serving side.
+4. **A falling distillation loss is not capability.** Privilege Illusion is the
+   student copying tokens that only exist because the teacher saw the answer.
+   `distill.py` separates that tell from the tokens that are the actual skill.
 
 ---
 
@@ -204,6 +208,9 @@ an open one it discards good ones.
 6. **Train on something real** — a book from Project Gutenberg — and watch
    perplexity against corpus size. Then work out how far you are from a model
    that says anything, and why that gap is mostly compute.
+7. **Distill this model into a shallower one** with reverse KL on student
+   rollouts, then again with forward KL, and compare the samples. Mode-seeking
+   versus mode-covering is not a slogan until you have heard both students.
 
 ---
 
@@ -219,6 +226,7 @@ llm-from-scratch/
 ├── transformer.py
 ├── train.py
 ├── sample.py
+├── distill.py            # OPD / OPSD / Privilege Illusion — after sampling
 └── solutions/
 ```
 

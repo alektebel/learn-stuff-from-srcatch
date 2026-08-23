@@ -1,43 +1,39 @@
 # Week 1 · Aug 24–Aug 30, 2026
 
-> **Sockets, or nothing else works.**
-> Everything later in this repo — a serving stack, a NAT gateway bill, a CUDA memory copy — is a thing on the other side of a file descriptor. Start there.
+> **AWS, the eight mechanisms and the bill.**
+> Do not open `autograd/` until `check.py` prints 24/24. `iam.py` is always first.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| [`bash-from-scratch/`](bash-from-scratch/) | 8 | core · spine | here |
-| [`http-server/`](http-server/) | 71 of 86 | core · spine | here |
-
-**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
+| `aws-from-scratch/` | 42 | core · spine | [`../week-06/aws-from-scratch/`](../week-06/aws-from-scratch/) |
 
 On the narrower tracks this same week is:
 
-| Track | This week | Block h |
-|---|---|---|
-| **core** | `bash-from-scratch` 8 h, `http-server` 37 h | 45 |
-| **spine** | `bash-from-scratch` 8 h, `http-server` 19 h | 27 |
+core: the whole AWS directory, 42 h. spine: IAM → S3 → SQS → as far as 24/24 will go.
 
-The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
+The week folder may not contain these directories. That is fine —
+`progress.py` finds them, and the links above are where the files live.
 
 ## What to do, in order
 
-1. Two days on `bash-from-scratch` first. It is the smallest thing here and it forces `fork`, `exec`, `wait`, pipes and signals into your hands before anything depends on them.
-2. Then `http-server` for the rest of the week. Get a socket accepting, then a request parsed, then a file served — in that order, and run a real browser against it after each one.
-3. Do NOT start on keep-alive, chunked encoding or concurrency this week. Week 2 is for those. A server that serves one file correctly beats a server that half-serves four things.
+1. `iam.py` first. Everything else is gated by it.
+2. Then `s3.py` → `sqs.py` → `dynamodb.py` → `lambda_svc.py` → `sns.py` → `kms.py` → `vpc.py` → `capstone.py`.
+3. Then the bill: `pricing.py` → `billing.py` → `optimize.py`.
+4. **Predict the provisioned-vs-on-demand DynamoDB crossover before running `optimize.py`.**
 
 ## Done means
 
-- `./shell` runs `ls | grep x > out.txt`, handles `Ctrl-C` without dying, and reports exit statuses.
-- A browser at `http://localhost:8080/` renders an HTML page with its CSS and images, each with the right `Content-Type`, and a missing path returns a real 404 rather than a hang.
+- `week-06/aws-from-scratch/` prints 24/24.
+- You can name the two rounding rules AWS bills by, and you wrote the crossover down before the demo.
 
 ## Every day
 
 1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
 2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
 3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — one line in `LOG.md`: what you built, what surprised you.
+4. **Log, ten minutes** — the journal post for today. The expected title is already there.
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 

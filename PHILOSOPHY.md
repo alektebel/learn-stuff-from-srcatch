@@ -70,6 +70,9 @@ The same ladder runs through every directory:
 | `deploy-and-debug` | alert on the error rate | a 30-second blip pages you at 3am |
 | `compiler-and-vgpu` | all lanes execute in lockstep | a branch makes them disagree |
 | `aws-from-scratch` | one policy, one bucket, one queue | the failures compose, and then arrive on the bill |
+| `provenance-semirings` | annotate tuples with a set of ids | two derivations of one row — the set cannot say how many, or what it cost |
+| `scasp` | SLD (Prolog) | `p :- q. q :- p.` diverges; an even loop is a *success* |
+| `linc` | a gold FOL parse, then a prover | the parse is wrong, and the label is still right |
 
 ### 3. Verification you can run, that explains itself
 

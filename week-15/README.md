@@ -1,44 +1,41 @@
 # Week 15 · Nov 30–Dec 6, 2026
 
-> **Finish vLLM, then training at scale.**
-> The pivot from serving to training. Ten weeks of making inference fast, and now the other half of the problem.
+> **The server and the protocols under it.**
+> Hold HTTP under load. Then DNS, SHA-256, the buses.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| `vllm-engine/` | 70 of 156 | core | [`../week-13/vllm-engine/`](../week-13/vllm-engine/) |
-| [`distributed-training/`](distributed-training/) | 10 | full only | here |
-
-**80 block hours**, plus the daily Lean slot (~8.4 h) = 88 h on the full track.
+| `http-server/` | rest of 86 | core · spine | [`../week-01/http-server/`](../week-01/http-server/) |
+| `dns-server/` | 9 | full | [`../week-02/dns-server/`](../week-02/dns-server/) |
+| `cryptographic-library/` | 5 | full | [`../week-02/cryptographic-library/`](../week-02/cryptographic-library/) |
+| `communication-protocols/` | 34 | full | [`../week-02/communication-protocols/`](../week-02/communication-protocols/) |
 
 On the narrower tracks this same week is:
 
-| Track | This week | Block h |
-|---|---|---|
-| **core** | `ml-inference` 24 h, `vllm-engine` 21 h | 45 |
-| **spine** | `cuda-from-scratch` 27 h | 27 |
+core · spine: HTTP concurrency and keep-alive. full: the rest.
 
-The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
+The week folder may not contain these directories. That is fine —
+`progress.py` finds them, and the links above are where the files live.
 
 ## What to do, in order
 
-1. Close out `../week-13/vllm-engine/`.
-2. `distributed-training` is short: data parallel, gradient accumulation, and the communication pattern underneath. You already wrote gradient accumulation in `../week-07/autograd/` — this is the same idea with a network in the middle.
-3. Start `../week-16/world-models/` on Sunday with the VAE. You built one in `autograd/generative.py`; this is the same reparameterisation trick against real observations.
+1. Keep-alive. `ab -n 10000 -c 100`.
+2. DNS A record. SHA-256 padding.
+3. UART → SPI → I2C → CAN.
 
 ## Done means
 
-- vLLM complete, with its throughput numbers written up.
-- A data-parallel training loop whose loss curve matches single-GPU training.
-- You can explain why `all_reduce` of gradients and averaging of weights give the same answer for SGD and different answers for Adam.
+- What broke at 100 concurrent connections, written down.
+- A start bit is a contract.
 
 ## Every day
 
 1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
 2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
 3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — one line in `LOG.md`: what you built, what surprised you.
+4. **Log, ten minutes** — the journal post for today. The expected title is already there.
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 

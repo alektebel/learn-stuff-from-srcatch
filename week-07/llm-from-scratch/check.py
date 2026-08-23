@@ -7,6 +7,7 @@ Progress checker for the llm-from-scratch templates.
 
 Nothing here imports solutions/. It tests YOUR code.
 `engine.py` is provided — it is `../autograd/` with four extra operations.
+Steps 9–15 are knowledge distillation (`distill.py`). Do 1–8 first.
 """
 
 import math
@@ -378,6 +379,261 @@ def check_sampling() -> None:
     assert repetition_rate([1, 2, 3, 4, 5, 6, 7, 8, 9]) == 0.0
 
 
+def _softmax(logits, temperature=1.0):
+    if temperature == 0.0:
+        m = max(range(len(logits)), key=lambda i: logits[i])
+        return [1.0 if i == m else 0.0 for i in range(len(logits))]
+    m = max(logits)
+    exps = [math.exp((v - m) / temperature) for v in logits]
+    z = sum(exps)
+    return [e / z for e in exps]
+
+
+def check_divergences() -> None:
+    from distill import jsd, kl_forward, kl_reverse
+
+    peaked = [0.97, 0.01, 0.01, 0.01]
+    flat = [0.25, 0.25, 0.25, 0.25]
+    other = [0.01, 0.01, 0.01, 0.97]
+
+    assert kl_forward(peaked, peaked) < 1e-12
+    assert kl_reverse(peaked, peaked) < 1e-12
+    assert jsd(peaked, peaked) < 1e-12
+
+    # Forward KL (teacher || student) is large when the student misses a
+    # teacher mode. Reverse KL can stay small if the student just picks one.
+    fwd_miss = kl_forward(peaked, other)
+    rev_locked = kl_reverse(peaked, other)
+    assert fwd_miss > 2.0, (
+        f"forward KL(peaked || other) is {fwd_miss:.3f}; the student put "
+        "almost no mass on the teacher's mode, so this must be large. "
+        "That is mode-COVERING: miss a teacher mode, pay.")
+    assert rev_locked > 2.0, (
+        f"reverse KL(other || peaked) should also be large here because "
+        f"the student is other and the teacher is peaked — got {rev_locked}")
+
+    # The classic picture: teacher is bimodal, student locks onto one mode.
+    teacher = [0.5, 0.0, 0.5, 0.0]
+    locked = [1.0, 0.0, 0.0, 0.0]
+    covered = [0.5, 0.0, 0.5, 0.0]
+    assert kl_reverse(teacher, locked) < 0.05, (
+        f"reverse KL of a student locked on ONE teacher mode is "
+        f"{kl_reverse(teacher, locked):.3f}; mode-SEEKING allows this. "
+        "If this is large, you swapped the arguments.")
+    assert kl_forward(teacher, locked) > 0.5, (
+        f"forward KL of the same pair is {kl_forward(teacher, locked):.3f}; "
+        "the student missed half the teacher's mass and must pay. If this "
+        "is small, you implemented reverse KL under the forward name.")
+    assert kl_forward(teacher, covered) < 1e-12
+
+    # JSD is symmetric and bounded.
+    assert abs(jsd(peaked, flat) - jsd(flat, peaked)) < 1e-12, (
+        "JSD must be symmetric — if it is not, you used a one-sided KL")
+    assert 0 <= jsd(peaked, other) <= math.log(2) + 1e-9, (
+        f"JSD is at most log 2 nats, got {jsd(peaked, other)}")
+    assert kl_forward(peaked, [0.0, 0.0, 0.0, 1.0]) == float("inf"), (
+        "forward KL is +inf when the student is zero where the teacher is not")
+
+
+def check_on_vs_off_policy() -> None:
+    from distill import (exposure_gap, sample_off_policy, sample_on_policy,
+                         softmax)
+
+    table = {
+        (0,): [2.0, 0.0, 0.0],
+        (0, 0): [0.0, 2.0, 0.0],
+        (0, 1): [0.0, 0.0, 2.0],
+    }
+    off = sample_off_policy(table, [(0,), (0, 0)])
+    assert len(off) == 2
+    assert off[0][0] == (0,)
+    assert abs(sum(off[0][1]) - 1.0) < 1e-9
+    assert off[0][1][0] > 0.8, (
+        "off-policy must softmax the stored LOGITS, not return them raw")
+
+    try:
+        sample_off_policy(table, [(1,)])
+        raise AssertionError(
+            "a missing prefix must raise KeyError — falling back to uniform "
+            "is how exposure bias hides inside a passing test")
+    except KeyError:
+        pass
+
+    # Student always picks token 0 from (0,) given a draw of 0.0 against a
+    # one-hot-ish first logit.
+    student = {
+        (0,): [10.0, 0.0, 0.0],
+        (0, 0): [10.0, 0.0, 0.0],
+        (0, 0, 0): [0.0, 10.0, 0.0],
+    }
+    walked = sample_on_policy(student, (0,), length=2, rng_draws=[0.0, 0.0])
+    assert walked[0] == (0,), "the start prefix must be included"
+    assert walked[1] == (0, 0), f"first step should append 0, got {walked[1]}"
+    assert walked[2] == (0, 0, 0), f"second step should append 0, got {walked[2]}"
+    assert len(walked) == 3
+
+    # Off-policy dataset never saw (0, 0, 0).
+    gap = exposure_gap(walked, [(0,), (0, 0), (0, 1)])
+    assert abs(gap - 1 / 3) < 1e-12, (
+        f"exposure gap should be 1/3 (one of three on-policy prefixes is "
+        f"unseen off-policy), got {gap}. That unseen prefix is the whole "
+        "reason OPD exists.")
+    assert exposure_gap(walked, walked) == 0.0
+    assert exposure_gap([], [(0,)]) == 0.0
+
+    # Your softmax is also used by later checks; pin the contract.
+    assert abs(sum(softmax([1.0, 2.0, 3.0])) - 1.0) < 1e-9
+    assert softmax([1.0, 3.0, 2.0], 0.0) == [0.0, 1.0, 0.0]
+
+
+def check_opd_loss() -> None:
+    from distill import kl_forward, kl_reverse, opd_loss
+
+    teacher = [4.0, 0.0, 0.0]
+    student_good = [4.0, 0.0, 0.0]
+    student_bad = [0.0, 0.0, 4.0]
+    assert opd_loss(teacher, student_good, "reverse") < 1e-6
+    assert opd_loss(teacher, student_bad, "reverse") > 1.0
+    assert abs(opd_loss(teacher, student_bad, "forward")
+               - kl_forward(_softmax(teacher), _softmax(student_bad))) < 1e-8
+    assert opd_loss(teacher, student_bad, "forward") > (
+        opd_loss(teacher, student_good, "forward"))
+    # The function takes LOGITS and softmaxes internally.
+    # Pin that it does not expect pre-softmaxed inputs by feeding large logits.
+    assert opd_loss([20.0, 0.0], [20.0, 0.0], "jsd") < 1e-9
+    try:
+        opd_loss(teacher, student_good, "kullback")
+        raise AssertionError("unknown divergence must raise ValueError")
+    except ValueError:
+        pass
+
+
+def check_supervision_density() -> None:
+    from distill import supervision_density
+
+    sft = supervision_density("sft", 16)
+    opd = supervision_density("opd", 16)
+    rl = supervision_density("rl", 16)
+    for name, row in (("sft", sft), ("opd", opd), ("rl", rl)):
+        for key in ("tokens_supervised", "signal", "states", "density"):
+            assert key in row, f"{name} is missing {key}"
+
+    assert sft["tokens_supervised"] == 16 and sft["density"] == 1.0
+    assert sft["signal"] == "one-hot" and sft["states"] == "off-policy"
+    assert opd["tokens_supervised"] == 16 and opd["density"] == 1.0
+    assert opd["signal"] == "distribution" and opd["states"] == "on-policy"
+    assert rl["tokens_supervised"] == 1
+    assert abs(rl["density"] - 1 / 16) < 1e-12
+    assert rl["signal"] == "scalar" and rl["states"] == "on-policy", (
+        "RL is on-policy AND sparse. If you marked it off-policy you have "
+        "confused 'dataset' with 'rollout'; if you marked the signal as "
+        "distribution you have described OPD.")
+
+    # The two pairwise confusions the docstring warns about.
+    assert sft["density"] == opd["density"] and sft["states"] != opd["states"]
+    assert opd["states"] == rl["states"] and opd["density"] != rl["density"]
+    try:
+        supervision_density("ppo", 8)
+        raise AssertionError("unknown method must raise ValueError")
+    except ValueError:
+        pass
+
+
+def check_opsd() -> None:
+    from distill import opsd_pair
+
+    calls = []
+
+    def student_fn(tokens):
+        calls.append(("student", tuple(tokens)))
+        # one logit row per position
+        return [[0.0, 1.0] for _ in tokens]
+
+    def teacher_fn(tokens):
+        calls.append(("teacher", tuple(tokens)))
+        return [[4.0, 0.0] for _ in tokens]
+
+    teacher_p, student_p = opsd_pair([1, 2], [9], student_fn, teacher_fn)
+    assert abs(sum(teacher_p) - 1.0) < 1e-9
+    assert abs(sum(student_p) - 1.0) < 1e-9
+    assert teacher_p[0] > 0.9, (
+        "teacher logits are [4, 0] at the last position; after softmax "
+        f"token 0 should dominate, got {teacher_p}")
+    roles = [c[0] for c in calls]
+    assert "teacher" in roles and "student" in roles
+    teacher_ctx = [c[1] for c in calls if c[0] == "teacher"][0]
+    student_ctx = [c[1] for c in calls if c[0] == "student"][0]
+    assert teacher_ctx == (1, 2, 9), (
+        f"teacher must see question + privileged, got {teacher_ctx}. "
+        "That extra token is the privilege.")
+    assert student_ctx == (1, 2), (
+        f"student must see ONLY the question, got {student_ctx}. "
+        "If it also sees the answer you have leaked the privilege and "
+        "OPSD collapses to ordinary teacher-forcing.")
+
+
+def check_paper_choices() -> None:
+    from distill import paper_choices
+
+    papers = paper_choices()
+    required = ("minilm", "gkd", "sdpo", "opsd")
+    keys = ("teacher", "states", "divergence", "privilege")
+    for name in required:
+        assert name in papers, f"missing paper {name!r}"
+        for key in keys:
+            assert key in papers[name], f"{name} is missing {key}"
+
+    assert papers["minilm"]["teacher"] == "external"
+    assert papers["minilm"]["states"] in ("on-policy", "mixed")
+    assert papers["minilm"]["divergence"] == "reverse"
+    assert papers["minilm"]["privilege"] == "none"
+
+    assert papers["gkd"]["teacher"] == "external"
+    assert papers["gkd"]["states"] == "on-policy"
+    assert papers["gkd"]["divergence"] == "configurable"
+    assert papers["gkd"]["privilege"] == "none"
+
+    assert papers["sdpo"]["teacher"] == "self"
+    assert papers["sdpo"]["states"] == "on-policy"
+    assert papers["sdpo"]["divergence"] == "preference"
+    assert papers["sdpo"]["privilege"] == "feedback"
+
+    assert papers["opsd"]["teacher"] == "self"
+    assert papers["opsd"]["states"] == "on-policy"
+    assert papers["opsd"]["privilege"] in ("answer", "trace")
+    assert papers["opsd"]["divergence"] in ("reverse", "configurable")
+
+
+def check_privilege_illusion() -> None:
+    from distill import privilege_tokens
+
+    # Teacher: mostly a capability token (id 1) plus a small privilege tell (id 3).
+    teacher = [0.05, 0.80, 0.05, 0.10]
+    # Illusion: student copies the tell (id 3) and dumps mass on id 0.
+    student = [0.80, 0.05, 0.05, 0.10]
+    result = privilege_tokens(teacher, student,
+                              privileged_token_ids=[3],
+                              capability_token_ids=[1])
+    assert abs(result["privilege_mass_gap"] - 0.0) < 1e-12, (
+        f"privilege mass gap should be 0 (both put 0.10 on token 3), "
+        f"got {result['privilege_mass_gap']}")
+    assert result["capability_mass_gap"] > 0.7, (
+        f"capability gap should be |0.80-0.05|=0.75, got "
+        f"{result['capability_mass_gap']}")
+    assert result["illusion"] is True, (
+        "this is the illusion: the privilege tell matches, the skill does "
+        "not. Loss can still look fine if the tell is frequent.")
+
+    matched = privilege_tokens(teacher, teacher,
+                               privileged_token_ids=[3],
+                               capability_token_ids=[1])
+    assert matched["illusion"] is False
+    assert matched["capability_mass_gap"] == 0.0
+    empty = privilege_tokens(teacher, student, [], [])
+    assert empty["privilege_mass_gap"] == 0.0
+    assert empty["capability_mass_gap"] == 0.0
+
+
 CHECKS: List[Tuple[str, str, Callable[[], None]]] = [
     ("tokenizer.py", "learning merges, most frequent first", check_bpe_training),
     ("tokenizer.py", "encoding in RANK order, and round trips", check_encoding),
@@ -390,6 +646,16 @@ CHECKS: List[Tuple[str, str, Callable[[], None]]] = [
     ("train.py", "next-token prediction, and the loss falling",
      check_training),
     ("sample.py", "temperature, top-k, top-p, generation", check_sampling),
+    ("distill.py", "forward KL vs reverse KL vs JSD", check_divergences),
+    ("distill.py", "on-policy vs off-policy prefixes", check_on_vs_off_policy),
+    ("distill.py", "OPD loss on student states", check_opd_loss),
+    ("distill.py", "RL vs OPD vs SFT supervision density",
+     check_supervision_density),
+    ("distill.py", "OPSD: one model, two contexts", check_opsd),
+    ("distill.py", "MiniLM, GKD, SDPO, OPSD — the decisions",
+     check_paper_choices),
+    ("distill.py", "Privilege Illusion vs actual capability",
+     check_privilege_illusion),
 ]
 
 
@@ -462,8 +728,8 @@ def main(argv: List[str]) -> int:
     print()
 
     if passed == len(CHECKS):
-        print(f"\n  {GREEN}{BOLD}All checks pass — you built a language model."
-              f"{RESET}")
+        print(f"\n  {GREEN}{BOLD}All checks pass — you built a language model,"
+              f" then taught a smaller one.{RESET}")
         print(f"  {GREY}Now run each file's own demo, then compare with "
               f"solutions/.{RESET}\n")
     elif first_gap:

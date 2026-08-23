@@ -1,45 +1,40 @@
 # Week 17 · Dec 14–Dec 20, 2026
 
-> **Finish world models, start diffusion.**
-> Two ways of learning a generative model, back to back — one that compresses into a latent and one that learns to reverse noise.
+> **Haskell, then a real GPU.**
+> Sunday is for nvidia-smi, so start the driver before Monday.
 
 ## Finish this week
 
 | Project | Hours | Track | Where it lives |
 |---|---|---|---|
-| `world-models/` | 28 of 106 | full only | [`../week-16/world-models/`](../week-16/world-models/) |
-| [`diffusion-models/`](diffusion-models/) | 51 of 91 | full only | here |
-
-**79 block hours**, plus the daily Lean slot (~8.4 h) = 87 h on the full track.
+| `haskell-projects/` | 61 | full | [`../week-04/haskell-projects/`](../week-04/haskell-projects/) |
+| `cuda-from-scratch/` | 122 | core · spine | [`../week-09/cuda-from-scratch/`](../week-09/cuda-from-scratch/) |
+| `ml-inference/` | 137 | core | [`../week-10/ml-inference/`](../week-10/ml-inference/) |
 
 On the narrower tracks this same week is:
 
-| Track | This week | Block h |
-|---|---|---|
-| **core** | `vllm-engine` 45 h | 45 |
-| **spine** | `cuda-from-scratch` 27 h | 27 |
+core · spine: CUDA. core: ml-inference too. full: Haskell first.
 
-The narrower tracks move through the same order more slowly and skip the directories not marked for them, so week folders and track weeks drift apart after week 2. `python3 ../progress.py --track <yours>` is the authority on where you should be; this folder is the authority on what order to do things in.
+The week folder may not contain these directories. That is fine —
+`progress.py` finds them, and the links above are where the files live.
 
 ## What to do, in order
 
-1. Finish `../week-16/world-models/`: Dreamer v1 through v3, in order.
-2. Three sentences before you move on: what v2 fixed in v1, what v3 fixed in v2.
-3. `diffusion-models` from Thursday. The forward noising process first, and verify it analytically before you train anything — it is arithmetic and it needs no training run.
-4. Then the reverse process and DDPM sampling.
+1. Full: JSONParser, Calculator, BuildTool, WebScraper. Delete each `-- TODO`.
+2. Vector add, then tiled matmul. Profile every kernel.
+3. A latency harness. fp32 vs fp16 vs int8, latency AND accuracy.
 
 ## Done means
 
-- `world-models` complete.
-- The closed-form `q(x_t | x_0)` verified against iterated single-step noising, to floating-point agreement.
-- A first sample out of your own trained model, however bad it looks.
+- `nvidia-smi` works. A kernel ran.
+- The accuracy you paid for the bytes you saved.
 
 ## Every day
 
 1. **Implement** — longest block, first thing, hardest unfinished stub. `solutions/` stays closed.
 2. **Predict, then run** — write the number you expect before you run the demo. A surprise is a gap in your model that a passing test did not reveal.
 3. **Make it green** — `python3 check.py` where one exists; the file's own demo where one does not.
-4. **Log, ten minutes** — one line in `LOG.md`: what you built, what surprised you.
+4. **Log, ten minutes** — the journal post for today. The expected title is already there.
 
 **Sunday is regression day. No new code.** Re-run every checker built so far and write two sentences on what you can now re-derive that you could not last Sunday.
 
