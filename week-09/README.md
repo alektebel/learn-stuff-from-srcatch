@@ -9,7 +9,7 @@
 |---|---|---|
 | [`database-engine/`](database-engine/) | 77 | core · spine |
 
-**77 block hours**, plus the daily Lean slot (~8.4 h) = 58 h on the full track.
+**77 block hours**, plus the daily Lean slot (~8.4 h) = 85 h on the full track.
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 

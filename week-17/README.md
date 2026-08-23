@@ -11,7 +11,7 @@
 | [`ray-tracer/`](ray-tracer/) | 35 | full only |
 | [`haskell-projects/`](haskell-projects/) | 61 | full only |
 
-**141 block hours**, plus the daily Lean slot (~8.4 h) = 152 h on the full track.
+**141 block hours**, plus the daily Lean slot (~8.4 h) = 149 h on the full track.
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
