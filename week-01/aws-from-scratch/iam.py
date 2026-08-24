@@ -52,7 +52,9 @@ class Statement:
 
 
 def _as_list(value) -> List[str]:
-    raise NotImplementedError
+    if value is None:
+        return []
+    return [value] if isinstance(value,str) else list(value)
 
 
 class Policy:
@@ -70,7 +72,7 @@ class Policy:
 
 def matches_action(pattern: str, action: str) -> bool:
     """`s3:*` matches `s3:GetObject`. Case-insensitive, like the real thing."""
-    raise NotImplementedError
+    return fnmatch.fnmatch(action.lower(), pattern.lower())
 
 
 def matches_resource(pattern: str, resource: str) -> bool:
@@ -80,7 +82,7 @@ def matches_resource(pattern: str, resource: str) -> bool:
     surprise, since `arn:aws:s3:::bucket/*` matches every key including ones
     with slashes in them.
     """
-    raise NotImplementedError
+    return fnmatch.fnmatch(resource.lower(), pattern.lower())
 
 
 def evaluate_condition(condition: Dict[str, Dict[str, Any]],
@@ -91,11 +93,37 @@ def evaluate_condition(condition: Dict[str, Dict[str, Any]],
     a key's value list. Two separate StringEquals keys must BOTH hold; two
     values under one key means either will do.
     """
-    raise NotImplementedError
+    for operator, tests in condition.items():
+        for key, expected in tests.items():
+            actual = context.get(key)
+            options = _as_list(expected) if not isinstance(expected, bool) else [expected]
+            if not _condition_holds(operator, actual, options):
+                return False
+    return True
 
 
 def _condition_holds(operator: str, actual: Any, options: List[Any]) -> bool:
-    raise NotImplementedError
+    if actual is None:
+        return False
+
+    if operator == "StringEquals":
+        return any(str(actual) == str(option) for options in options)
+    if operator == "StringNotEquals":
+        return all(str(actual) != str(option) for options in options)
+    if operator == "StringLike":
+        return any(fnmatch.fnmatch(str(actual), str(option)) for option in options)
+    if operator in ("ArnLike", "ArnEquals"):
+        return any(fnmatch.fnmatch(str(actual), str(option)) for option in options)
+    if operator == "Bool":
+        return any(bool(actual) == bool(option) for option in options)
+    if operator == "NumericLessThan":
+        return any(float(actual) < float(option) for option in options)
+    if operator == "NumericGreaterThanEquals":
+        return any(float(actual) >= float(option) for option in options)
+    if operator == "IpAddress":
+        address = ipaddress.ip_address(str(actual))
+        return any(address in ipaddresss.ip_network(str(option), strict=False) for option in options)
+    raise ValueError(f"unsupported operator {operator!r}")
 # ---------------------------------------------------------------------------
 # The evaluation rule
 # ---------------------------------------------------------------------------
@@ -115,7 +143,14 @@ class Decision:
 
 def statement_matches(statement: Statement, action: str, resource: str,
                       context: Dict[str, Any]) -> bool:
-    raise NotImplementedError
+    if statement.not_action is not None:
+        if any(matches_action(pattern, action) for pattern in statement.not_action):
+            return False
+    elif not any(matches_action(pattern, action) for pattern in statement.action):
+        return False
+    if not any(matches_resource(pattern, resource) for patter in statement.resource):
+        return False
+    return evaluate_condition(statement.condition, context)
 
 
 def evaluate(policies: Sequence[Policy], action: str, resource: str,
@@ -139,8 +174,18 @@ def evaluate(policies: Sequence[Policy], action: str, resource: str,
     SET: reordering them must never change the answer, and the checker tests
     exactly that by evaluating the same two policies in both orders.
     """
-    raise NotImplementedError
-
+    context = context or {}
+    matching_allows : List[Statement] = []
+    for policy in policies:
+        for statement in policy:
+            if not statement_matches(statement, action, resource, context):
+                continue
+            if statement.effect == DENY:
+                return Decision(False, f"Explicit deny in policy")
+            matching_allows.append(statement)
+    if matching_allows:
+        return Decision(True, "explicit Allow", matching_allows[0])
+    return Decision(False, "Implicit Deny")
 
 def evaluate_with_boundary(identity: Sequence[Policy], boundary: Optional[Policy],
                            action: str, resource: str,
@@ -151,7 +196,15 @@ def evaluate_with_boundary(identity: Sequence[Policy], boundary: Optional[Policy
     by BOTH the identity policies and the boundary. This is how you delegate
     "you may create roles" without also delegating "you may create admin roles".
     """
-    raise NotImplementedError
+    identity_decision = evaluate(identity, action, resource, context)
+    if not identity_decision.allowed:
+        return identity_decision
+    if boundary is None:
+        return identity_decision
+    boundary_decision = evaluate([boundary], action, resource, context)
+    if not boundary_decision.allowed:
+        return Decision(False, "Blocked by permissions boundary")
+    return Decision(True, "Allowed by identity policy and permissions boundary")
 # ---------------------------------------------------------------------------
 # STS: assuming a role
 # ---------------------------------------------------------------------------
@@ -187,17 +240,99 @@ def assume_role(caller: Credentials, role: Role, session_name: str,
     Both directions matter: the role decides who may wear it, and the caller's
     administrator decides which roles their people may wear.
     """
-    raise NotImplementedError
+    context = dict(context or {})
+    context.setdefault("aws:PrincipalArn", caller.principal)
+
+    trusted = evaluate([role.trust], "sts:AssumeRole", role.arn, context)
+    if not trusted.allowed:
+        raise PermissionError(f"{caller.principal} is not trusted by {role.arn}")
+    permitted = evaluate(caller.policies, "sts:AssumeRole", role.arn, context)
+    if not permitted.allowed:
+        raise PermissionError(f"{caller.principal} lacks sts:AssumeRole on")
+    return Credentials(role.arn, role.permissions, session_name)
 
 
 def _demo() -> None:
-    """Once the checks pass, write a demo that PRINTS the behaviour.
+    read_only = Policy([
+        Statement(ALLOW, "s3:Get*", "arn:aws:s3:::reports/*"),
+        Statement(ALLOW, "s3:ListBucket", "arn:aws:s3:::reports"),
+    ], name="ReadReports")
 
-    The solution's demo is the reference — but write yours first and predict
-    the numbers before running it. A result that surprises you is a gap in your
-    model that passing tests did not reveal.
-    """
-    raise NotImplementedError
+    print("=== The three-line rule ===")
+    for action, resource in [("s3:GetObject", "arn:aws:s3:::reports/q1.csv"),
+                             ("s3:PutObject", "arn:aws:s3:::reports/q1.csv"),
+                             ("s3:GetObject", "arn:aws:s3:::secrets/key.pem")]:
+        print(f"  {action:<16}{resource:<34}{evaluate([read_only], action, resource)}")
+
+    print("\n=== Explicit Deny beats everything ===")
+    admin = Policy([Statement(ALLOW, "*", "*")], name="Admin")
+    protect = Policy([Statement(DENY, "s3:DeleteObject",
+                                "arn:aws:s3:::reports/*", sid="NoDeletes")],
+                     name="Guardrail")
+    for policies, label in [([admin], "admin alone"),
+                            ([admin, protect], "admin + guardrail"),
+                            ([protect, admin], "guardrail + admin (order swapped)")]:
+        decision = evaluate(policies, "s3:DeleteObject", "arn:aws:s3:::reports/q1.csv")
+        print(f"  {label:<36}{decision}")
+    print("Order does not matter. Policies are a SET, not a rule list — which is")
+    print("what makes a large policy set tractable to reason about at all.")
+
+    print("\n=== Conditions AND across keys, OR within one ===")
+    conditional = Policy([Statement(
+        ALLOW, "s3:GetObject", "arn:aws:s3:::reports/*",
+        condition={"IpAddress": {"aws:SourceIp": "10.0.0.0/8"},
+                   "Bool": {"aws:SecureTransport": "true"}})], name="Conditional")
+    for context, label in [
+            ({"aws:SourceIp": "10.1.2.3", "aws:SecureTransport": True}, "in VPC, TLS"),
+            ({"aws:SourceIp": "10.1.2.3", "aws:SecureTransport": False}, "in VPC, no TLS"),
+            ({"aws:SourceIp": "203.0.113.9", "aws:SecureTransport": True}, "outside, TLS"),
+            ({"aws:SecureTransport": True}, "TLS, source IP missing")]:
+        decision = evaluate([conditional], "s3:GetObject",
+                            "arn:aws:s3:::reports/q1.csv", context)
+        print(f"  {label:<26}{decision}")
+    print("A MISSING context key never matches. Conditions fail closed, which is")
+    print("the right default and occasionally a surprising one.")
+
+    print("\n=== NotAction is wider than it looks ===")
+    wide = Policy([Statement(ALLOW, None, "*", not_action=["iam:*", "sts:*"])],
+                  name="EverythingExceptIAM")
+    for action in ("s3:DeleteBucket", "ec2:TerminateInstances", "iam:CreateUser"):
+        print(f"  {action:<26}{evaluate([wide], action, 'arn:aws:*')}")
+    print("'Allow NotAction iam:*' grants every service that will ever exist.")
+
+    print("\n=== Permissions boundaries cap a grant ===")
+    grant = [Policy([Statement(ALLOW, "*", "*")], name="Broad")]
+    boundary = Policy([Statement(ALLOW, ["s3:*", "logs:*"], "*")], name="Boundary")
+    for action in ("s3:GetObject", "iam:CreateUser"):
+        print(f"  {action:<26}"
+              f"{evaluate_with_boundary(grant, boundary, action, 'arn:aws:*')}")
+    print("The boundary grants nothing by itself — it only subtracts.")
+
+    print("\n=== STS: both directions must agree ===")
+    developer = Credentials("arn:aws:iam::111:user/dev", [
+        Policy([Statement(ALLOW, "sts:AssumeRole", "arn:aws:iam::111:role/Deploy")],
+               name="MayAssumeDeploy")])
+    deploy = Role("arn:aws:iam::111:role/Deploy",
+                  trust=Policy([Statement(
+                      ALLOW, "sts:AssumeRole", "arn:aws:iam::111:role/Deploy",
+                      condition={"ArnLike": {
+                          "aws:PrincipalArn": "arn:aws:iam::111:user/*"}})]),
+                  permissions=[Policy([Statement(ALLOW, "s3:*", "*")],
+                                      name="DeployPerms")])
+    session = assume_role(developer, deploy, "release-42")
+    print(f"  assumed: {session}")
+    print(f"  can now: {evaluate(session.policies, 's3:PutObject', 'arn:aws:s3:::x/y')}")
+
+    outsider = Credentials("arn:aws:iam::999:user/mallory", [
+        Policy([Statement(ALLOW, "sts:AssumeRole", "*")], name="Optimistic")])
+    try:
+        assume_role(outsider, deploy, "nope")
+        print("  outsider assumed the role — that is a bug")
+    except PermissionError as exc:
+        print(f"  outsider blocked: {exc}")
+    print("The outsider's OWN policy said yes. The role's trust policy said no,")
+    print("and that is the one that protects you from another account.")
+
 
 
 if __name__ == "__main__":
