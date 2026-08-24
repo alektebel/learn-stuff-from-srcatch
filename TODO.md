@@ -579,7 +579,7 @@ thing they existed to test** — see the note under the table.
 
 | | Directory | Checks | Existing | Write | Blocked on |
 |---|---|---|---|---|---|
-| ~~13.7~~ | `week-01/aws-from-scratch` | 24 | **52** | 0 | **DONE** — 52/52 caught, all 24 checks proven |
+| ~~13.7~~ | `week-01/aws-from-scratch` | 24 | **54** | 0 | **DONE** — 54/54 caught, all 24 checks proven |
 | 13.8 | `week-02/llm-from-scratch` | 15 | 14 | 1 | nothing |
 | 13.9 | `week-03/context-caching` | 16 | 0 | 16 | nothing |
 | 13.10 | `week-04/deploy-and-debug` | 12 | 0 | 12 | nothing |
@@ -613,6 +613,10 @@ deliberately broken implementation and had to be strengthened:
 - **check 12** asserted `matches_filter` worked in isolation but every
   subscriber in the delivery test had no filter policy, so a topic that ignored
   filter policies entirely passed.
+- **check 2** exercised conditions and boundaries without ever testing that
+  resource matching is case-SENSITIVE, or that a `Bool` condition parses the
+  policy string rather than coercing it. Both bugs fail **open**, and both were
+  found by a real attempt at the exercise rather than by the checker.
 - **check 18** ran the capstone end to end without ever checking that the stored
   object was *encrypted*, or that a failed message *survived* to be redelivered.
 

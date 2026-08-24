@@ -4,6 +4,13 @@ import pathlib, shutil, subprocess, sys, tempfile
 ROOT = pathlib.Path(__file__).resolve().parents[2] / "week-01" / "aws-from-scratch"
 
 BUGS = [
+ (2, "iam.py", "resource matching folds case, so a policy grants more than it says",
+  '    return fnmatch.fnmatch(resource, pattern)',
+  '    return fnmatch.fnmatch(resource.lower(), pattern.lower())'),
+ (2, "iam.py", "Bool coerces the policy value, inverting the condition",
+  '        return any(bool(actual) == (str(option).lower() == "true")\n                   for option in options)',
+  '        return any(bool(actual) == bool(option) for option in options)'),
+
  # ---- capstone.py ------------------------------------------------------
  (18, "capstone.py", "authorisation happens after the side effects, not before",
   '''    cloud.authorize(credentials, "s3:PutObject", f"arn:aws:s3:::uploads/{key}")

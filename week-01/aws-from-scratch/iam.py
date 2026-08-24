@@ -82,7 +82,10 @@ def matches_resource(pattern: str, resource: str) -> bool:
     surprise, since `arn:aws:s3:::bucket/*` matches every key including ones
     with slashes in them.
     """
-    return fnmatch.fnmatch(resource.lower(), pattern.lower())
+    # NOT lowercased, unlike matches_action. S3 keys are case-sensitive, so
+    # folding case here would let a pattern for `Public/` match `public/` --
+    # an authorisation function that fails OPEN.
+    return fnmatch.fnmatch(resource, pattern)
 
 
 def evaluate_condition(condition: Dict[str, Dict[str, Any]],
@@ -107,22 +110,25 @@ def _condition_holds(operator: str, actual: Any, options: List[Any]) -> bool:
         return False
 
     if operator == "StringEquals":
-        return any(str(actual) == str(option) for options in options)
+        return any(str(actual) == str(option) for option in options)
     if operator == "StringNotEquals":
-        return all(str(actual) != str(option) for options in options)
+        return all(str(actual) != str(option) for option in options)
     if operator == "StringLike":
         return any(fnmatch.fnmatch(str(actual), str(option)) for option in options)
     if operator in ("ArnLike", "ArnEquals"):
         return any(fnmatch.fnmatch(str(actual), str(option)) for option in options)
     if operator == "Bool":
-        return any(bool(actual) == bool(option) for option in options)
+        # `bool("false")` is True -- every non-empty string is truthy -- so
+        # coercing the POLICY value inverts the condition. Parse the string.
+        return any(bool(actual) == (str(option).lower() == "true")
+                   for option in options)
     if operator == "NumericLessThan":
         return any(float(actual) < float(option) for option in options)
     if operator == "NumericGreaterThanEquals":
         return any(float(actual) >= float(option) for option in options)
     if operator == "IpAddress":
         address = ipaddress.ip_address(str(actual))
-        return any(address in ipaddresss.ip_network(str(option), strict=False) for option in options)
+        return any(address in ipaddress.ip_network(str(option), strict=False) for option in options)
     raise ValueError(f"unsupported operator {operator!r}")
 # ---------------------------------------------------------------------------
 # The evaluation rule
@@ -148,7 +154,7 @@ def statement_matches(statement: Statement, action: str, resource: str,
             return False
     elif not any(matches_action(pattern, action) for pattern in statement.action):
         return False
-    if not any(matches_resource(pattern, resource) for patter in statement.resource):
+    if not any(matches_resource(pattern, resource) for pattern in statement.resource):
         return False
     return evaluate_condition(statement.condition, context)
 
@@ -177,11 +183,14 @@ def evaluate(policies: Sequence[Policy], action: str, resource: str,
     context = context or {}
     matching_allows : List[Statement] = []
     for policy in policies:
-        for statement in policy:
+        for statement in policy.statements:
             if not statement_matches(statement, action, resource, context):
                 continue
             if statement.effect == DENY:
-                return Decision(False, f"Explicit deny in policy")
+                return Decision(False,
+                                f"explicit Deny in {policy.name or 'policy'}"
+                                f"{' (' + statement.sid + ')' if statement.sid else ''}",
+                                statement)
             matching_allows.append(statement)
     if matching_allows:
         return Decision(True, "explicit Allow", matching_allows[0])

@@ -55,7 +55,7 @@ def check_iam_basics() -> None:
 
 
 def check_iam_conditions() -> None:
-    from iam import ALLOW, Policy, Statement, evaluate, evaluate_with_boundary
+    from iam import _condition_holds, ALLOW, Policy, Statement, evaluate, evaluate_with_boundary
 
     policy = Policy([Statement(
         ALLOW, "s3:GetObject", "arn:aws:s3:::b/*",
@@ -89,6 +89,24 @@ def check_iam_conditions() -> None:
     assert not evaluate_with_boundary([Policy([])], boundary, "s3:GetObject", "x").allowed, \
         "a boundary must never GRANT on its own — it only subtracts"
 
+    # Two bugs that pass every assertion above, both of which fail OPEN.
+    from iam import matches_resource
+    assert not matches_resource("arn:aws:s3:::b/Public/*", "arn:aws:s3:::b/public/k"), (
+        "resource matching must be CASE-SENSITIVE. S3 keys are, so folding case "
+        "here lets a policy written for `Public/` grant `public/` as well — an "
+        "authorisation function that grants more than it says. `matches_action` "
+        "IS case-insensitive; copying that `.lower()` down here is the mistake.")
+    assert matches_resource("arn:aws:s3:::b/*", "arn:aws:s3:::b/Any/Key"), \
+        "a wildcard still crosses slashes"
+
+    for actual, want in ((True, False), (False, True)):
+        assert _condition_holds("Bool", actual, ["false"]) is want, (
+            f"Bool condition with actual={actual} against a policy value of "
+            f'"false" returned {not want}. `bool("false")` is True — every '
+            "non-empty string is truthy — so coercing the POLICY value inverts "
+            "the condition. Parse the string instead. This is the deny-"
+            "unencrypted-traffic policy, and inverted it allows the plaintext "
+            "request and denies the TLS one.")
 
 def check_sts() -> None:
     from iam import (ALLOW, Credentials, Policy, Role, Statement, assume_role,
