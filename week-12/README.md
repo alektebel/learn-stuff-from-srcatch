@@ -8,8 +8,9 @@
 | Project | Hours | Track |
 |---|---|---|
 | [`aws-certification/`](aws-certification/) | 35 | core |
+| [`aws-deploy/`](aws-deploy/) | 20 | core |
 
-**35 block hours**, plus the daily Lean slot (~8.4 h) = 43 h on the full track.
+**55 block hours**, plus the daily Lean slot (~8.4 h) = 63 h on the full track.
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
@@ -20,6 +21,8 @@ Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill
 3. `storage.py`, `network.py`, `resilience.py` — the arithmetic. Reuse the minimum-object-size and minimum-duration rules from week 1's `pricing.py`.
 4. `mlstack.py` — the SageMaker and Bedrock surface mapped onto mechanisms you already built. The serverless-vs-provisioned crossover is the same shape as DynamoDB's.
 5. `wellarchitected.py` last. A review returning six green ticks is a review that was not done.
+6. `aws-deploy` alongside it — `check.py` lints policy documents, IaC graphs and idle cost **offline**, with no account and no spend.
+7. **`RUNBOOK.md` is the other half and it is not graded.** Phase 0 should already be done from week 1; phases 1–6 are a real account, a real domain and a real failed build. It ends on the only claim here that cannot be faked: rebuild the whole stack from empty, from code, in under an hour, and tear it down to a zero bill. Twice.
 
 ## Done means
 

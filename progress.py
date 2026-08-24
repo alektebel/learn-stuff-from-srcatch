@@ -69,6 +69,7 @@ PLAN = [
     ("raft",                       30, 10, "FC"),
     ("blockchain-from-scratch",    55, 11, "FC"),
     ("aws-certification",          35, 12, "FC"),
+    ("aws-deploy",                 20, 12, "FC"),
     ("bash-from-scratch",           8, 13, "FC"),
     ("http-server",                86, 13, "FCS"),
     ("dns-server",                  9, 14, "F"),
@@ -99,8 +100,9 @@ TRACKS = {"full": "F", "core": "C", "spine": "S"}
 # templates; a baseline computed by any other rule than the one above invents
 # progress you did not make.
 BASELINE = {
-    "autograd": 67, "aws-certification": 40, "aws-from-scratch": 140,
-    "bash-from-scratch": 18, "blockchain-from-scratch": 46, "c-compiler": 149,
+    "autograd": 67, "aws-certification": 40, "aws-deploy": 32,
+    "aws-from-scratch": 140, "bash-from-scratch": 18,
+    "blockchain-from-scratch": 46, "c-compiler": 149,
     "communication-protocols": 115, "compiler-and-vgpu": 53,
     "context-caching": 94, "contextcite": 42, "cryptographic-library": 12,
     "cuda-from-scratch": 37, "database-engine": 124, "database-internals": 36,

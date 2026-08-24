@@ -51,7 +51,7 @@ slot across all eighteen.
 | [**9**](week-09/) | Oct 19–Oct 25 | A database from the disk up | `database-engine` |
 | [**10**](week-10/) | Oct 26–Nov 1 | Consensus, and its refusal | `dynamo-paper`, `raft` |
 | [**11**](week-11/) | Nov 2–Nov 8 | Byzantine, and open membership | `blockchain-from-scratch` |
-| [**12**](week-12/) | Nov 9–Nov 15 | AWS certification block | `aws-certification` |
+| [**12**](week-12/) | Nov 9–Nov 15 | AWS certification block | `aws-certification`, `aws-deploy` |
 | [**13**](week-13/) | Nov 16–Nov 22 | Sockets | `bash-from-scratch`, `http-server` |
 | [**14**](week-14/) | Nov 23–Nov 29 | What a byte stream carries | `dns-server`, `cryptographic-library`, `communication-protocols`, `toralizer` |
 | [**15**](week-15/) | Nov 30–Dec 6 | Compilers, and a machine for them | `firewall-from-scratch`, `c-compiler`, `compiler-and-vgpu`, `quantum-computing-lang` |

@@ -26,11 +26,11 @@ Read this first, because it changes what you decide.
 
 | | |
 |---|---|
-| Directories | **39** scheduled, 5 in `reference/` |
+| Directories | **40** scheduled, 5 in `reference/` |
 | Implementable units left (stubs, `sorry`s, TODO markers) | **2,407** |
-| Estimated effort | **~1,382 hours** |
+| Estimated effort | **~1,402 hours** |
 | Weeks available | **18** |
-| Therefore | **77 h/week on `full` — 10.5 hours a day, seven days a week, for 126 days** |
+| Therefore | **78 h/week on `full` — 10.5 hours a day, seven days a week, for 126 days** |
 
 Where the hours come from: the directories that state their own estimate in
 their README (`ESTIMATED TIME: 6-8 hours`, and so on) are used directly. The
@@ -51,8 +51,8 @@ feels like failure, and switching down in August is just planning.
 
 | Track | Directories | Hours | Per week | Per day | Who it is for |
 |---|---|---|---|---|---|
-| **full** | 39 | 1,382 | 77 h | 11.0 h × 7 | This is your full-time job and you have no other commitments |
-| **core** | 22 | 901 | 50 h | 8.5 h × 6, one day off | You have a job, and you are serious |
+| **full** | 40 | 1,402 | 78 h | 11.1 h × 7 | This is your full-time job and you have no other commitments |
+| **core** | 23 | 921 | 51 h | 8.5 h × 6, one day off | You have a job, and you are serious |
 | **spine** | 10 | 566 | 31 h | 5.2 h × 6, one day off | You have a job and a life, and you would rather finish |
 
 All three finish on 27 December. They differ only in what they contain.
@@ -203,7 +203,7 @@ daily slot. The AWS drill sits outside it too — see the note below the table.
 | [**9**](week-09/) | Oct 19–Oct 25 | A database from the disk up | `database-engine` 77 **C** **S** | 77 |
 | [**10**](week-10/) | Oct 26–Nov 1 | Consensus, and its refusal | `dynamo-paper` 21 **C** **S** · `raft` 30 **C** | 51 |
 | [**11**](week-11/) | Nov 2–Nov 8 | Byzantine, and open membership | `blockchain-from-scratch` 55 **C** | 55 |
-| [**12**](week-12/) | Nov 9–Nov 15 | AWS certification block | `aws-certification` 35 **C** | 35 |
+| [**12**](week-12/) | Nov 9–Nov 15 | AWS certification block | `aws-certification` 35 **C** · `aws-deploy` 20 **C** | 55 |
 | [**13**](week-13/) | Nov 16–Nov 22 | Sockets | `bash-from-scratch` 8 **C** · `http-server` 86 **C** **S** | 94 |
 | [**14**](week-14/) | Nov 23–Nov 29 | What a byte stream carries | `dns-server` 9 · `cryptographic-library` 5 · `communication-protocols` 34 · `toralizer` 21 | 69 |
 | [**15**](week-15/) | Nov 30–Dec 6 | Compilers, and a machine for them | `firewall-from-scratch` 25 · `c-compiler` 27 **C** **S** · `compiler-and-vgpu` 16 **C** **S** · `quantum-computing-lang` 8 | 76 |
@@ -211,7 +211,7 @@ daily slot. The AWS drill sits outside it too — see the note below the table.
 | [**17**](week-17/) | Dec 14–Dec 20 | Databases deeper, light, and Haskell | `database-internals` 45 **C** · `ray-tracer` 35 · `haskell-projects` 61 | 141 |
 | [**18**](week-18/) | Dec 21–Dec 27 | The long tail | `spectral-graphs` 5 · `sas-lineage-tool` 8 · `web-scraping` 6 · `ml-in-production` 8 · `mlops` 12 | 39 |
 
-**1,231 block hours.** Plus Lean, 1,382.
+**1,251 block hours.** Plus Lean, 1,402.
 
 ### Two things run daily, outside the table
 
