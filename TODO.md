@@ -6,8 +6,8 @@ build and how you will know it is right; the *why* for each is in
 
 Steps 1–2 block everything else. Do them before the plan starts.
 
-> **This file is a menu, not a plan.** A hundred and thirty-five boxes across fifteen
-> sections, roughly 288 hours, against a schedule already reading 73 h/week.
+> **This file is a menu, not a plan.** A hundred and forty-nine boxes across sixteen
+> sections, roughly 438 hours, against a schedule already reading 73 h/week.
 > Only §12 removes anything. Nothing here is committed to until you write it
 > into `ROADMAP.md` and take the hours out of somewhere — so pick a subset, put
 > it on the line below, and treat the rest as a backlog.
@@ -828,6 +828,104 @@ want a GPU in front of you and `REFERENCES.md` says so.
       all-reduces while layer *n−1* still computes. The **largest single win in
       data-parallel training, and it is a scheduling change: the bytes are
       identical.** Find the bucket size where the overlap saturates.
+
+---
+
+## 16. Ready for an AI-ops role · the `ops` track + ~150 h of evidence
+
+**The uncomfortable premise: you cannot get there by building more
+from-scratch directories.** Past a point, more mechanism has diminishing
+returns and the binding constraint becomes **evidence** — something a hiring
+manager can look at, and something you have actually operated.
+
+This repo is the *understanding* half, and it is the half most candidates lack.
+The other half is integration work: tools, a running system, and artifacts. It
+is smaller than it looks (~150 h) and it is a different kind of work — nothing
+in it can be graded by a `check.py`, which is exactly why it gets skipped.
+
+### 16a — the track · 694 h · ALREADY IN `progress.py`
+
+`python3 progress.py --track ops` — 15 directories, **39 h/week over 18, 27
+over 26.** It is `full` minus everything that does not serve the goal.
+
+| Kept | Why |
+|---|---|
+| `aws-from-scratch`, `aws-certification`, `aws-deploy` | the platform, the exam, and the real account |
+| `autograd`, `llm-from-scratch`, `rl-posttraining` | you cannot operate a model you cannot describe |
+| `context-caching`, `inference-from-scratch`, `deploy-and-debug` | **the centre of the job** |
+| `cuda-from-scratch` | the only way to read a profiler and mean it |
+| `database-engine`, `dynamo-paper`, `raft` | every platform is a distributed system with state |
+| `http-server`, `distributed-training` | the substrate, and multi-node |
+
+**Dropped for this goal:** `blockchain-from-scratch`, `provenance-semirings`,
+`scasp`, `linc`, `spade`, `mars-sql`, `contextcite`, `database-internals`,
+`ray-tracer`, `haskell-projects`, `c-compiler`, `compiler-and-vgpu`,
+`lean-proofs` and the week-14/18 tails. **708 hours.** Several are excellent and
+none of them will come up in the interview.
+
+### 16b — tool fluency · ~40 h · phases 6–8 of the runbook
+
+Already added to [`RUNBOOK.md`](week-12/aws-deploy/RUNBOOK.md). Not new
+mechanisms — packaging things you already understand, which is the right order.
+
+- [ ] **16.1** Phase 6 — containerise `inference-from-scratch`. Multi-stage,
+      non-root, pinned digest, and **measure the cost of the container** by
+      running your own week-4 benchmark inside and outside it.
+- [ ] **16.2** Phase 7 — local Kubernetes. Get **liveness vs readiness** wrong
+      on purpose and watch a healthy app crash-loop; OOMKill a pod by setting a
+      limit too low; kill a pod under load and measure what the client lost.
+- [ ] **16.3** Phase 8 — deploy **vLLM** for real. Predict what
+      `gpu_memory_utilization`, `max_num_seqs` and `max_model_len` do before
+      changing them; you have the model for all three.
+- [ ] **16.4** Terraform, not just CDK. It is what the job postings say, and
+      `template.py`'s dependency-graph checks apply to it unchanged.
+- [ ] **16.5** GitHub Actions: test → build image → push → deploy → smoke test,
+      with the health gate from `deploy.py` as the promotion condition.
+- [ ] **16.6** Prometheus + Grafana, scraping **your** `observe.py` metrics and
+      vLLM's. Build the dashboard rather than importing one.
+
+### 16c — the evidence · ~110 h · THE PART THAT ACTUALLY DECIDES IT
+
+None of this is gradeable. All of it is what gets read.
+
+- [ ] **16.7 One system that stays up.** A public URL, a real model behind it,
+      for **at least 90 days**. Not a demo — a thing with uptime. Cheapest
+      honest version: a small model on one always-on instance, or serverless
+      with a cold-start budget you have measured and stated.
+- [ ] **16.8 A load test with a number attached.** Requests/sec at a stated p99,
+      the knee, and *what saturated first*. From `traffic.py`, against your own
+      stack and against vLLM. **The comparison is the artifact.**
+- [ ] **16.9 A real incident, and a written postmortem.** Something broke, you
+      found it, here is the timeline and the fix and what you changed so it
+      cannot recur. If nothing breaks in 90 days, **break it deliberately** —
+      OOM it, exhaust the KV cache, saturate the queue — and write that up.
+- [ ] **16.10 A cost record.** What it costs per month, per request, and the one
+      change that halved it. You will have the only rigorous cost model of any
+      candidate; `optimize.py`'s crossovers are the thing to point at.
+- [ ] **16.11 The scheduler comparison**, owed since week 4: your design
+      decisions against vLLM's, with numbers and with the places you were wrong.
+      Being able to say "I chose X, they chose Y, and here is why theirs is
+      better" is worth more than either implementation.
+- [ ] **16.12 The journal, edited.** 26 weeks of daily entries is not an
+      artifact; **ten posts pulled out of it are.** Pick the ten where you were
+      surprised — the fail-open IAM bugs, the estimation-error compounding, the
+      1/√N bill, the checks that could not catch what they existed to catch.
+- [ ] **16.13 `defend.py`, run against yourself weekly** (§12). The interview is
+      a hostile-challenge format and you will have practised it. Most candidates
+      have not.
+
+### 16d — the honest scoreboard
+
+- [ ] **16.14** Take three real AI-ops job postings and mark every requirement
+      **have / partial / none** against what you actually hold. Redo it monthly.
+      Where "none" appears twice in a row, that is the next 20 hours — not the
+      next directory.
+
+**What you will be unusually good at:** cost, capacity arithmetic, reasoning
+about a serving stack you built, and defending a decision under challenge.
+**What you will still be behind on:** years of on-call, other people's
+codebases, and the ten tools nobody puts in a curriculum. The first set is
+harder to acquire and rarer. Lead with it.
 
 ---
 

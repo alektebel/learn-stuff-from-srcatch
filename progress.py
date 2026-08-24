@@ -5,6 +5,7 @@ progress.py — where you actually are against the 18-week plan in ROADMAP.md.
     python3 progress.py                 # the core track, this week
     python3 progress.py --track full    # all 41 directories
     python3 progress.py --track spine   # the 12-directory minimum
+    python3 progress.py --track ops     # aimed at an AI-ops role, not at coverage
     python3 progress.py --week 7        # pretend it is week 7
     python3 progress.py --checks        # also run every check.py (slower, exact)
 
@@ -50,28 +51,28 @@ GREEN, RED, YELLOW, GREY, BOLD, RESET = (
 # Hours come from each directory's own README estimate where it states one, and
 # otherwise from unit count x a rate calibrated against the ones that do.
 PLAN = [
-    ("aws-from-scratch",           42,  1, "FCS"),
-    ("autograd",                   30,  2, "FCS"),
-    ("llm-from-scratch",           55,  2, "FCS"),
-    ("rl-posttraining",            30,  3, "FC"),
-    ("context-caching",            28,  3, "FC"),
-    ("inference-from-scratch",    70,  4, "FCS"),
-    ("deploy-and-debug",           10,  4, "FC"),
+    ("aws-from-scratch",           42,  1, "FCSO"),
+    ("autograd",                   30,  2, "FCSO"),
+    ("llm-from-scratch",           55,  2, "FCSO"),
+    ("rl-posttraining",            30,  3, "FCO"),
+    ("context-caching",            28,  3, "FCO"),
+    ("inference-from-scratch",    70,  4, "FCSO"),
+    ("deploy-and-debug",           10,  4, "FCO"),
     ("contextcite",                13,  5, "FC"),
     ("spade",                      16,  5, "FC"),
     ("mars-sql",                   20,  5, "FC"),
     ("provenance-semirings",       45,  6, "FC"),
     ("scasp",                      45,  7, "F"),
     ("linc",                       30,  8, "F"),
-    ("distributed-training",      18,  8, "F"),
-    ("database-engine",           77,  9, "FCS"),
-    ("dynamo-paper",               21, 10, "FCS"),
-    ("raft",                       30, 10, "FC"),
+    ("distributed-training",      18,  8, "FO"),
+    ("database-engine",           77,  9, "FCSO"),
+    ("dynamo-paper",               21, 10, "FCSO"),
+    ("raft",                       30, 10, "FCO"),
     ("blockchain-from-scratch",    55, 11, "FC"),
-    ("aws-certification",          35, 12, "FC"),
-    ("aws-deploy",                 20, 12, "FC"),
+    ("aws-certification",          35, 12, "FCO"),
+    ("aws-deploy",                 20, 12, "FCO"),
     ("bash-from-scratch",           8, 13, "FC"),
-    ("http-server",                86, 13, "FCS"),
+    ("http-server",                86, 13, "FCSO"),
     ("dns-server",                  9, 14, "F"),
     ("cryptographic-library",       5, 14, "F"),
     ("communication-protocols",    34, 14, "F"),
@@ -80,7 +81,7 @@ PLAN = [
     ("c-compiler",                 27, 15, "FCS"),
     ("compiler-and-vgpu",          16, 15, "FCS"),
     ("quantum-computing-lang",      8, 15, "F"),
-    ("cuda-from-scratch",        142, 16, "FCS"),
+    ("cuda-from-scratch",        142, 16, "FCSO"),
     ("database-internals",       45, 17, "FC"),
     ("ray-tracer",                 35, 17, "F"),
     ("haskell-projects",           61, 17, "F"),
@@ -92,7 +93,7 @@ PLAN = [
     ("lean-proofs",             151,  0, "F"),      # week 0 = every week, daily
 ]
 
-TRACKS = {"full": "F", "core": "C", "spine": "S"}
+TRACKS = {"full": "F", "core": "C", "spine": "S", "ops": "O"}
 
 # Unit counts measured when the plan was written, by remaining_units() itself.
 # "Done" is baseline minus what is left, so a directory you have not touched

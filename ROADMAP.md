@@ -54,6 +54,15 @@ feels like failure, and switching down in August is just planning.
 | **full** | 40 | 1,402 | 78 h | 11.1 h × 7 | This is your full-time job and you have no other commitments |
 | **core** | 23 | 921 | 51 h | 8.5 h × 6, one day off | You have a job, and you are serious |
 | **spine** | 10 | 566 | 31 h | 5.2 h × 6, one day off | You have a job and a life, and you would rather finish |
+| **ops** | 15 | 694 | 39 h | 6.5 h × 6, one day off | You want an AI-ops role, and coverage is not the goal |
+
+`ops` is not a width, it is a **direction**. It is `full` minus everything that
+does not serve that job — 708 hours dropped, several of them excellent and none
+of them likely to come up in an interview. It also assumes you do the parts of
+[`TODO.md`](TODO.md) §16 that no checker can grade: one system that stays up for
+90 days, a load test with a number attached, a written postmortem, a cost
+record, and the vLLM comparison. Those are ~110 hours and they are the half that
+decides it.
 
 All three finish on 27 December. They differ only in what they contain.
 

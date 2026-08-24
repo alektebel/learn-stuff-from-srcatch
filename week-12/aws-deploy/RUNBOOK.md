@@ -146,9 +146,90 @@ surprises you.
 
 ---
 
-## Phase 6 — the test · ~2 h
+## Phase 6 — containerise what you built · ~5 h
 
-- [ ] `terraform destroy` / `cdk destroy` / delete the stacks. Everything.
+Not a from-scratch exercise. You are packaging something you already
+understand, which is the right order and the opposite of how most people meet
+Docker — they learn the tool before they have anything worth putting in it.
+
+The subject is `week-04/inference-from-scratch/`. It is pure Python, it has a
+scheduler, a paged KV cache and an `observe.py`, and you wrote all of it.
+
+- [ ] A `Dockerfile` for the serving stack. **Multi-stage**, non-root user,
+      pinned base image digest rather than a tag.
+- [ ] Make the image small on purpose, and record the before and after. The
+      difference between a 1.2 GB image and a 180 MB one is pull time on every
+      node, every deploy.
+- [ ] `.dockerignore`, and confirm no credential, no `.git`, no `__pycache__`
+      landed in the image. `docker history` and `docker run --rm -it <img> sh`
+      to actually look.
+- [ ] A healthcheck that fails when the app is **unhealthy**, not merely when
+      the process is dead. This is the same gate as `deploy.py`'s: a 200 on the
+      wrong content is not healthy.
+- [ ] `docker compose` with the app and a metrics scrape target, so a single
+      `up` gives you the thing plus its observability.
+- [ ] **Measure the cost of the container.** Run your week-4 benchmark inside
+      and outside it. Whatever the difference is, know the number — "containers
+      are basically free" is a claim, and you can now check it.
+
+**Done means:** one command starts it, the healthcheck goes red when you break
+the response body rather than the process, and you can say what the image
+contains and what it cost.
+
+---
+
+## Phase 7 — orchestrate it · ~7 h
+
+Local Kubernetes — kind, k3d or minikube. No cloud bill, no GPU.
+
+- [ ] Deployment, Service, ConfigMap, Secret. Write the YAML by hand once
+      before you let anything generate it.
+- [ ] **Liveness vs readiness, and get the distinction right**, because it is
+      the one that causes real outages: liveness restarts the pod, readiness
+      removes it from the load balancer. Wire liveness to a *failing* probe and
+      watch it crash-loop a healthy app — you built the same confusion in
+      `deploy-and-debug/rollout.py`.
+- [ ] Resource requests and limits. Set the limit too low and watch the OOMKill;
+      set the request too high and watch it fail to schedule. **Both on purpose.**
+- [ ] Rolling update with `maxSurge`/`maxUnavailable`, then roll back. Time both.
+- [ ] An HPA against a custom metric — queue depth, not CPU. That is the same
+      argument as `autoscaling.py` in TODO §9.3: scaling a queue-driven workload
+      on CPU is scaling on a lagging indicator.
+- [ ] Kill a pod during a load test and watch what the client sees. That number
+      — requests lost during a rescheduling event — is the one people never
+      measure.
+
+**Done means:** you can explain why a pod is `Pending`, why it is
+`CrashLoopBackOff`, and why it is `Running` but not `Ready`, from the events
+rather than from a guess.
+
+---
+
+## Phase 8 — operate the real thing · ~6 h
+
+Now, and only now, the engines in [`../../reference/`](../../reference/).
+
+- [ ] Deploy **vLLM** with a small model. You have read the paper three times
+      and built your own block allocator; this is the hour where that pays.
+- [ ] Set `gpu_memory_utilization`, `max_num_seqs` and `max_model_len`
+      deliberately, and **predict what each does before you change it.** You
+      have the model for all three.
+- [ ] Load-test it with the harness from `traffic.py` and compare against your
+      own server's curve. Where does theirs bend and where does yours?
+- [ ] Read its scheduler source beside yours. **Write the comparison up** —
+      this is the artifact from week 4 you have been owed since September.
+- [ ] Scrape its Prometheus metrics into Grafana. Learn what `time_to_first_token`
+      and `num_requests_waiting` look like under a burst you caused.
+
+**Done means:** a written comparison of your design decisions against vLLM's,
+with numbers, and a dashboard you built rather than imported.
+
+---
+
+## Phase 9 — the test · ~2 h
+
+- [ ] `terraform destroy` / `cdk destroy` / delete the stacks. Everything,
+      including the cluster and any image registry.
 - [ ] Wait 24 h and check Cost Explorer reads zero for new spend.
 - [ ] **Rebuild the whole thing from code, timed.** Target: under an hour, no
       console clicks, no manual steps.
