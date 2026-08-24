@@ -7,10 +7,10 @@
 
 | Project | Hours | Track |
 |---|---|---|
-| [`inference-from-scratch/`](inference-from-scratch/) | 60 | core · spine |
+| [`inference-from-scratch/`](inference-from-scratch/) | 70 | core · spine |
 | [`deploy-and-debug/`](deploy-and-debug/) | 10 | core |
 
-**70 block hours**, plus the daily Lean slot (~8.4 h) = 78 h on the full track.
+**80 block hours**, plus the daily Lean slot (~8.4 h) = 88 h on the full track.
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 

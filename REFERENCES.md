@@ -263,7 +263,22 @@ Algorithms"**, 2017 for the clip.
   kernel, each faster than the last, with the reason stated. The single best
   worked example of the profile-then-fix loop this week is about.
 - Volkov & Demmel, **"Benchmarking GPUs to Tune Dense Linear Algebra"**, SC 2008
-  — why occupancy is not the goal.
+  — why occupancy is not the goal, and the case `occupancy.py` must reproduce.
+- Williams, Waterman & Patterson, **"Roofline: An Insightful Visual Performance
+  Model"**, CACM 2009 — `roofline.py`, and the one plot that says which
+  optimisation can possibly help.
+- Fregly, **AI Systems Performance Engineering** (O'Reilly) —
+  [repo](https://github.com/cfregly/ai-performance-engineering). Chapters 6–12
+  are `roofline.py`, `occupancy.py`, `coalescing.py` and `pipelining.py`.
+  **Chapters 2–5 and 13–19 need a GPU in front of you** — Nsight counters,
+  tensor cores, NVLink topology, power and thermal, PyTorch/Triton/XLA. None of
+  that is fakeable in pure Python and this repo does not pretend otherwise.
+- Zhong et al., **"DistServe"**, OSDI 2024; Patel et al., **"Splitwise"**, ISCA
+  2024 — prefill/decode disaggregation, for
+  `week-04/inference-from-scratch/disaggregate.py` (Fregly ch. 17–18).
+- Thakur, Rabenseifner & Gropp, **"Optimization of Collective Communication
+  Operations in MPICH"**, IJHPCA 2005; Patarasuk & Yuan on bandwidth-optimal
+  all-reduce — `week-08/distributed-training/collectives.py` (Fregly ch. 4).
 
 ## Week 17 · patterns, light, Haskell
 

@@ -634,6 +634,39 @@ Inspired by:
 - "Programming Massively Parallel Processors" book
 - PyTorch and TensorFlow CUDA kernels
 
+## The analytical half — no GPU required
+
+Four files and a separate checker, lifted from Chris Fregly's
+[AI Systems Performance Engineering](https://github.com/cfregly/ai-performance-engineering)
+(O'Reilly), chapters 6–12.
+
+```bash
+python3 check_perf.py --all    # 8 checks — NOT YET WRITTEN
+```
+
+| File | What it computes | Chapter |
+|---|---|---|
+| `roofline.py` | FLOPs, bytes, arithmetic intensity, the ridge point | 9 |
+| `occupancy.py` | Warps per SM, the binding resource, and when lower occupancy wins | 6, 8 |
+| `coalescing.py` | Transactions per warp instruction; AoS vs SoA; bank conflicts | 7 |
+| `pipelining.py` | Streams, overlap, and where more chunks stop helping | 10, 11 |
+
+**Why these four and not the rest of the book.** Everything here is arithmetic
+you can do *before* writing a kernel and check the profiler against *after*.
+That is the transferable part, and it is the part that stops you spending a week
+optimising the wrong side of the roofline.
+
+**What did not come across, and why.** The rest of that book is hardware
+measurement — Nsight Compute counters, tensor-core utilisation, NVLink
+topology, power and thermal behaviour, PyTorch/Triton/XLA backends. None of it
+can be faked in pure Python, and a simulated Nsight counter would teach you a
+number rather than a skill. Read those chapters with a GPU in front of you.
+
+> **Use these against your own kernels.** For every kernel in this directory,
+> compute the intensity, the occupancy and the transaction count first, write
+> the prediction down, then profile. Where the profiler disagrees, one of the
+> two is wrong and finding out which is the whole exercise.
+
 ## Sources
 
 - The **NVIDIA CUDA C++ Programming Guide** and the **Best Practices Guide** — the primary sources, and genuinely good. Read the memory-hierarchy chapter before writing kernel 1.

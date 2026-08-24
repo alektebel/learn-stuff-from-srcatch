@@ -8,9 +8,9 @@
 | Project | Hours | Track |
 |---|---|---|
 | [`linc/`](linc/) | 30 | full only |
-| [`distributed-training/`](distributed-training/) | 10 | full only |
+| [`distributed-training/`](distributed-training/) | 18 | full only |
 
-**40 block hours**, plus the daily Lean slot (~8.4 h) = 48 h on the full track.
+**48 block hours**, plus the daily Lean slot (~8.4 h) = 56 h on the full track.
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 

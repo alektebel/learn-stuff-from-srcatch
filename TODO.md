@@ -6,8 +6,8 @@ build and how you will know it is right; the *why* for each is in
 
 Steps 1–2 block everything else. Do them before the plan starts.
 
-> **This file is a menu, not a plan.** A hundred and eighteen boxes across fourteen
-> sections, roughly 250 hours, against a schedule already reading 73 h/week.
+> **This file is a menu, not a plan.** A hundred and thirty-five boxes across fifteen
+> sections, roughly 288 hours, against a schedule already reading 73 h/week.
 > Only §12 removes anything. Nothing here is committed to until you write it
 > into `ROADMAP.md` and take the hours out of somewhere — so pick a subset, put
 > it on the line below, and treat the rest as a backlog.
@@ -737,6 +737,93 @@ measurement here is *against* its Volcano executor and cost planner.
 one contention level, one selectivity or one batch size, each of these looks
 either obviously right or obviously pointless. The content is entirely in where
 they change places.
+
+---
+
+## 15. Performance engineering, the analytical half · ~38 h
+
+From Chris Fregly's [AI Systems Performance Engineering](https://github.com/cfregly/ai-performance-engineering)
+(O'Reilly, 20 chapters). Six new files across three existing directories.
+
+**What was taken and what was not.** The book is GPU-hardware-specific: Nsight
+counters, tensor cores, NVLink topology, power and thermal, PyTorch/Triton/XLA
+backends. None of that can be faked in pure Python, and a simulated profiler
+counter teaches a number rather than a skill. What lifts cleanly is the
+**arithmetic** — the models you compute *before* writing a kernel and check the
+profiler against *afterwards*. That is six files; the other fourteen chapters
+want a GPU in front of you and `REFERENCES.md` says so.
+
+### 15a — `week-16/cuda-from-scratch/`, 4 files + `check_perf.py` · ~20 h
+
+- [ ] **15.1** Write the eight checks in `check_perf.py`. Four of them
+      deliberately test the **reversal**, not the rule — see below.
+- [ ] **15.2** `roofline.py` *(ch. 9; Williams, Waterman & Patterson, CACM
+      2009)* — FLOPs, bytes moved, intensity, ridge point. Assert SAXPY is
+      memory-bound and a large matmul compute-bound on the **same** hardware
+      parameters, and that intensity **grows with tile size** — that growth is
+      the whole reason tiling works and a single-size check cannot see it.
+- [ ] **15.3** `roofline.py` — `speedup_ceiling` must return 1.0 for a kernel
+      already at the roof. Optimising one that is already there is the week of
+      work that produces nothing, and this is the check that prevents it.
+- [ ] **15.4** `occupancy.py` *(ch. 6, 8)* — registers, shared memory and block
+      size each capping warps per SM. Build three cases each limited by a
+      **different** resource; a calculator that only checks registers is right
+      two thirds of the time and useless.
+- [ ] **15.5** `occupancy.py` — **the reversal.** Construct a case where using
+      MORE registers per thread lowers occupancy and raises throughput, because
+      ILP hides the latency with fewer warps *(Volkov & Demmel, SC 2008)*. A
+      check that only rewards occupancy has taught the wrong lesson.
+- [ ] **15.6** `coalescing.py` *(ch. 7)* — transactions per warp instruction.
+      Contiguous aligned = minimum; stride 32 = one per lane; **misaligned but
+      contiguous costs one extra, not double** — the case people over-estimate.
+- [ ] **15.7** `coalescing.py` — AoS vs SoA, and assert the advantage
+      **reverses** when the kernel reads every field rather than one. Both
+      directions, or the check is an opinion.
+- [ ] **15.8** `coalescing.py` — 32 banks: stride 1 conflict-free, stride 32 a
+      32-way conflict, padding by one element fixes it, and **broadcast (every
+      lane, same address) is NOT a conflict** — the exception people get wrong.
+- [ ] **15.9** `pipelining.py` *(ch. 10, 11)* — overlap turns a sum into a max,
+      then stops. `optimal_chunks` must return the point past which nothing
+      improves, not "more is better".
+- [ ] **15.10** **Then use them.** For every kernel you write in week 16,
+      compute intensity, occupancy and transaction count first, write the
+      prediction down, then profile. Where they disagree, one of the two is
+      wrong and finding out which is the exercise.
+
+### 15b — `week-04/inference-from-scratch/disaggregate.py` · ~10 h
+
+*(ch. 17–18; Zhong et al., DistServe, OSDI 2024; Patel et al., Splitwise, ISCA 2024)*
+
+- [ ] **15.11** Prefill is compute-bound and decode is memory-bandwidth-bound.
+      Model both, and the interference when they share a replica — a long
+      prefill stalls every streaming user, which is why TTFT and inter-token
+      latency move in opposite directions under batch tuning.
+- [ ] **15.12** `kv_transfer_cost` — compute the bytes **exactly**:
+      `2 x layers x heads x head_dim x tokens x dtype_size`. Guessing this is
+      how people conclude disaggregation is free.
+- [ ] **15.13** The check is a **crossover**: at what prompt length, batch size
+      and interconnect bandwidth does the KV hop cost less than the
+      interference it removes? Compare against a colocated baseline that is
+      genuinely **under mixed load** — comparing against an idle one is the
+      standard way this result gets overstated.
+- [ ] **15.14** `pool_ratio` — prefill replicas per decode replica. That these
+      two numbers should differ, and cannot be tuned separately while the phases
+      share a machine, is the actual argument for disaggregating.
+
+### 15c — `week-08/distributed-training/collectives.py` · ~8 h
+
+*(ch. 4; Thakur, Rabenseifner & Gropp, IJHPCA 2005; Patarasuk & Yuan)*
+
+- [ ] **15.15** `alpha x hops + beta x bytes` for ring and tree all-reduce.
+      Ring is bandwidth-optimal with latency linear in `p`; tree is
+      latency-optimal and moves more bytes.
+- [ ] **15.16** Compute `crossover_message_size`, then compare against what
+      NCCL actually picks. The gap is either hardware you have not modelled or
+      a bug in your model — both worth finding.
+- [ ] **15.17** `overlap_with_backward` — bucketing gradients so layer *n*
+      all-reduces while layer *n−1* still computes. The **largest single win in
+      data-parallel training, and it is a scheduling change: the bytes are
+      identical.** Find the bucket size where the overlap saturates.
 
 ---
 

@@ -7,9 +7,9 @@
 
 | Project | Hours | Track |
 |---|---|---|
-| [`cuda-from-scratch/`](cuda-from-scratch/) | 122 | core · spine |
+| [`cuda-from-scratch/`](cuda-from-scratch/) | 142 | core · spine |
 
-**122 block hours**, plus the daily Lean slot (~8.4 h) = 130 h on the full track.
+**142 block hours**, plus the daily Lean slot (~8.4 h) = 150 h on the full track.
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
