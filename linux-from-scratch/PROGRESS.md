@@ -1,11 +1,16 @@
 # Progress
 
-147 exercises. Tick as you go. The last line of each phase is for the graded
+176 exercises. Tick as you go. The last line of each phase is for the graded
 checker you write once that phase is complete — see
 [README.md](README.md#verification).
 
-Track K is the kernel (phases 00–10, 12). Track D is the distribution (phase 11),
-and is best done early, in parallel with phase 02.
+Track K is the kernel (phases 00–10, 12–14). Track D is the distribution
+(phase 11), and is best done early, in parallel with phase 02.
+
+Phases 13 and 14 are the ones that turn a kernel that boots into a machine you
+use: every driver your actual hardware needs, then thirty days of real service.
+Read [phase-14-daily-driver/README.md](phase-14-daily-driver/README.md)'s scope
+discussion before starting phase 13 — it decides what you are aiming at.
 
 ## Phase 00 — Toolchain and Ground Truth
 
@@ -232,9 +237,9 @@ and is best done early, in parallel with phase 02.
 
 - [ ] `check.py` for this phase
 
-## Phase 12 — Capstone: Real Hardware, Real Software, Real Numbers
+## Phase 12 — Integration: Real Hardware, Real Software, Real Numbers
 
-[phase-12-capstone/README.md](phase-12-capstone/README.md) — 6 exercises
+[phase-12-integration/README.md](phase-12-integration/README.md) — 6 exercises
 
 - [ ] 12.1 — Boot on real hardware
 - [ ] 12.2 — Run software you did not write
@@ -242,6 +247,49 @@ and is best done early, in parallel with phase 02.
 - [ ] 12.4 — Benchmark against Linux, honestly
 - [ ] 12.5 — Close the biggest gap
 - [ ] 12.6 — Write it down
+
+- [ ] `check.py` for this phase
+
+## Phase 13 — Drivers for Real Hardware
+
+[phase-13-real-hardware/README.md](phase-13-real-hardware/README.md) — 15 exercises
+
+- [ ] 13.1 — Inventory the machine, then plan the work
+- [ ] 13.2 — AHCI: the SATA disk
+- [ ] 13.3 — NVMe: the SSD
+- [ ] 13.4 — xHCI: the USB host controller
+- [ ] 13.5 — USB enumeration
+- [ ] 13.6 — USB HID: a keyboard you can type on
+- [ ] 13.7 — USB mass storage
+- [ ] 13.8 — An input subsystem
+- [ ] 13.9 — The display: a framebuffer worth looking at
+- [ ] 13.10 — The real network interface
+- [ ] 13.11 — Firmware loading, and what you are trusting
+- [ ] 13.12 — ACPI beyond the tables: AML, battery, lid, thermal
+- [ ] 13.13 — Power management: idle, frequency, and suspend
+- [ ] 13.14 — The IOMMU
+- [ ] 13.15 — Audio
+
+- [ ] `check.py` for this phase
+
+## Phase 14 — Daily Driver: Actually Using It
+
+[phase-14-daily-driver/README.md](phase-14-daily-driver/README.md) — 14 exercises
+
+- [ ] 14.1 — Choose the job, and set the bar
+- [ ] 14.2 — Crash-only: recovery as the normal path
+- [ ] 14.3 — Data you cannot lose
+- [ ] 14.4 — Time that is actually correct
+- [ ] 14.5 — A terminal you can work in
+- [ ] 14.6 — The tools to do work
+- [ ] 14.7 — The network as it actually is
+- [ ] 14.8 — TLS, and reaching the modern internet
+- [ ] 14.9 — Remote access
+- [ ] 14.10 — Know what it is doing
+- [ ] 14.11 — Upgrade without reinstalling
+- [ ] 14.12 — Security posture for a machine on a real network
+- [ ] 14.13 — The thirty-day run
+- [ ] 14.14 — The verdict
 
 - [ ] `check.py` for this phase
 

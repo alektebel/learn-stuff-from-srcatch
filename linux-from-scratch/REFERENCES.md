@@ -31,6 +31,9 @@ Freely available items are marked **(free)**.
 | `[UTLK]` | Bovet, D. & Cesati, M., *Understanding the Linux Kernel*, 3rd ed. (2005). Dated (2.6) but unmatched on the data structures. |
 | `[MAUERER]` | Mauerer, W., *Professional Linux Kernel Architecture* (2008). |
 | `[LDD3]` | Corbet, Rubini, Kroah-Hartman, *Linux Device Drivers*, 3rd ed. (2005). **(free)** |
+| `[ELDD]` | Venkateswaran, S., *Essential Linux Device Drivers* (2008). The subsystem-by-subsystem companion to `[LDD3]` — input, USB, storage, audio. |
+| `[USBCIN]` | Axelson, J., *USB Complete*, 5th ed. (2015). The readable path into `[USB]`. |
+| `[PCIESA]` | Budruk, Anderson, Shanley, *PCI Express System Architecture* (2003). |
 | `[GORMAN]` | Gorman, M., *Understanding the Linux Virtual Memory Manager* (2004). **(free)** |
 | `[KNUTSHELL]` | Kroah-Hartman, G., *Linux Kernel in a Nutshell* (2006). **(free)** Kernel configuration and build. |
 | `[LINSIDES]` | *Linux Inside* (0xAX). **(free)** A walk through modern boot and init code. |
@@ -82,7 +85,17 @@ Freely available items are marked **(free)**.
 | `[UEFI]` | *UEFI Specification*, current. **(free)** |
 | `[ACPI]` | *ACPI Specification*, current. **(free)** Tables, MADT, power states. |
 | `[VIRTIO]` | *Virtual I/O Device (VIRTIO) Specification*, OASIS, v1.2. **(free)** |
-| `[ATA]` | *AT Attachment with Packet Interface* (ATA/ATAPI-8) and the SATA/AHCI spec. |
+| `[ATA]` | *AT Attachment with Packet Interface* (ATA/ATAPI-8). |
+| `[AHCI]` | Intel, *Serial ATA Advanced Host Controller Interface (AHCI) Specification*, 1.3.1. **(free)** |
+| `[NVME]` | *NVM Express Base Specification*, current. **(free)** |
+| `[SCSI]` | INCITS, *SCSI Primary Commands* (SPC-4) and *SCSI Block Commands* (SBC-3). |
+| `[USB]` | *Universal Serial Bus Specification* 2.0 (ch. 9, 11) and *USB 3.2*. **(free)** |
+| `[XHCI]` | Intel, *eXtensible Host Controller Interface for USB xHCI*, 1.2. **(free)** |
+| `[HID]` | USB-IF, *Device Class Definition for Human Interface Devices*, 1.11. **(free)** |
+| `[HIDUT]` | USB-IF, *HID Usage Tables*, current. **(free)** |
+| `[USBMSC]` | USB-IF, *Mass Storage Class — Bulk-Only Transport*, 1.0. **(free)** |
+| `[HDA]` | Intel, *High Definition Audio Specification*, 1.0a. **(free)** |
+| `[VTD]` | Intel, *Virtualization Technology for Directed I/O Architecture Specification*. **(free)** |
 | `[PCI]` | *PCI Local Bus Specification* 3.0 and *PCI Express Base Specification*. |
 | `[POSIX]` | IEEE Std 1003.1, *POSIX.1-2017*. **(free)** |
 | `[RFC]` | IETF RFCs, cited individually (e.g. `[RFC 793]`). **(free)** |
@@ -160,6 +173,8 @@ exercise says to read it *after* your first attempt.
 | `[P-BTRFS13]` | Rodeh, Bacik, Mason, "BTRFS: The Linux B-Tree Filesystem", *TOS* 9(3), 2013. |
 | `[P-IRONFS05]` | Prabhakaran et al., "IRON File Systems", *SOSP* 2005. What filesystems do when the disk lies. |
 | `[P-PILLAI14]` | Pillai et al., "All File Systems Are Not Created Equal: On the Complexity of Crafting Crash-Consistent Applications", *OSDI* 2014. |
+| `[P-CORRUPT08]` | Bairavasundaram et al., "An Analysis of Data Corruption in the Storage Stack", *FAST* 2008. Silent corruption, measured in the field. |
+| `[P-DISKFAIL07]` | Pinheiro, Weber, Barroso, "Failure Trends in a Large Disk Drive Population", *FAST* 2007. |
 | `[P-STREAMS84]` | Ritchie, D., "A Stream Input-Output System", *AT&T Bell Labs Tech. J.*, 1984. |
 
 ### Devices, drivers, I/O
@@ -170,6 +185,7 @@ exercise says to read it *after* your first attempt.
 | `[P-DRIVERS12]` | Kadav, A. & Swift, M., "Understanding Modern Device Drivers", *ASPLOS* 2012. |
 | `[P-NOOKS03]` | Swift, Bershad, Levy, "Improving the Reliability of Commodity Operating Systems", *SOSP* 2003. |
 | `[P-VIRTIO08]` | Russell, R., "virtio: towards a de-facto standard for virtual I/O devices", *OSR* 42(5), 2008. |
+| `[P-ENERGY07]` | Barroso, L. & Hölzle, U., "The Case for Energy-Proportional Computing", *IEEE Computer* 40(12), 2007. Why idle power is the number that matters. |
 
 ### Networking
 
@@ -199,6 +215,16 @@ exercise says to read it *after* your first attempt.
 | `[P-SPECTRE19]` | Kocher et al., "Spectre Attacks: Exploiting Speculative Execution", *IEEE S&P* 2019. |
 | `[P-SMASH96]` | Aleph One, "Smashing the Stack for Fun and Profit", *Phrack* 49, 1996. |
 | `[P-TRUST84]` | Thompson, K., "Reflections on Trusting Trust", *CACM* 27(8), 1984. Read before phase 11. |
+
+### Reliability and operating a system you depend on
+
+| Tag | Paper |
+|---|---|
+| `[P-GRAY85]` | Gray, J., "Why Do Computers Stop and What Can Be Done About It?", Tandem TR 85.7, 1985. The framing for phase 14. |
+| `[P-CRASHONLY03]` | Candea, G. & Fox, A., "Crash-Only Software", *HotOS* 2003. |
+| `[P-ROC02]` | Patterson et al., "Recovery-Oriented Computing (ROC): Motivation, Definition, Techniques, and Case Studies", UC Berkeley TR, 2002. |
+| `[P-E2E84]` | Saltzer, J., Reed, D., Clark, D., "End-to-End Arguments in System Design", *TOCS* 2(4), 1984. Why the checksum belongs at the top. |
+| `[P-SSLCCS12]` | Georgiev et al., "The Most Dangerous Code in the World: Validating SSL Certificates in Non-Browser Software", *CCS* 2012. |
 
 ### Build, reproducibility, distribution
 

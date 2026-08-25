@@ -205,16 +205,26 @@ every path.
 
 ## Where this phase stops
 
-- **No USB.** It is a full protocol stack — host controller, hubs, enumeration,
-  endpoints, classes — and a phase of its own. `[LDD3]` ch. 13 is the entry point.
+Everything below is deferred to **[phase-13-real-hardware/](../phase-13-real-hardware/)**,
+where the target is the machine on your desk rather than QEMU. Listed here so you
+know what your phase-08 kernel cannot yet talk to:
+
+- **No USB.** A full stack — host controller, hubs, enumeration, endpoints,
+  classes. On a machine with no PS/2 emulation this means no keyboard at all.
+  Phase 13.4–13.7. `[LDD3]` ch. 13 is the entry point.
+- **No AHCI/NVMe.** virtio-blk covers the emulated case; real storage is
+  phase 13.2–13.3.
 - **No GPU beyond a framebuffer.** No mode setting, no command submission, no
-  acceleration. DRM/KMS is a separate world.
-- **No sound, no USB-HID, no Bluetooth, no Wi-Fi.** Each is a stack.
-- **No firmware loading, no request_firmware.** Many real devices need it.
-- **No IOMMU.** Which means any device with DMA can read all of memory, and your
-  08.4 driver is trusting the hardware completely. Phase 10 returns to this.
-- **No AHCI/NVMe.** virtio-blk covers the emulated case; real hardware in phase 12
-  will want at least AHCI.
+  acceleration. Phase 13.9 improves the framebuffer; DRM/KMS stays out of scope.
+- **No sound, no Bluetooth, no Wi-Fi.** Audio is phase 13.15; the other two stay
+  out of scope entirely.
+- **No firmware loading.** Many real devices need a vendor blob — phase 13.11,
+  which is also where the trust question gets answered.
+- **No IOMMU.** Any device with DMA can read all of memory, and your 08.4 driver
+  trusts the hardware completely. Phase 10 discusses it; phase 13.14 builds it.
+- **No power management.** No C-states, no frequency scaling, no suspend.
+  Phase 13.13.
+
 
 ---
 

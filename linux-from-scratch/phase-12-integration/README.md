@@ -1,4 +1,4 @@
-# Phase 12 — Capstone: Real Hardware, Real Software, Real Numbers
+# Phase 12 — Integration: Real Hardware, Real Software, Real Numbers
 
 **6 exercises.** The two tracks meet. Your kernel runs the userland you built,
 on a machine you can touch, and you find out what QEMU was forgiving.
@@ -113,26 +113,39 @@ tradition; `[PHILOSOPHY.md](../../PHILOSOPHY.md)` in this repo.
 
 ---
 
-## Where this stops — and where it goes next
+## Where this phase stops
 
-You have a Unix-like operating system. It is not Linux, it is slower than Linux,
-and you know precisely where and why. That last clause is the whole return on the
-project.
+You have a Unix-like operating system that boots on metal, runs software you did
+not write, and compiles itself. It is not Linux, it is slower than Linux, and you
+know precisely where and why. That last clause is the whole return so far.
 
-Reasonable next directions, in rough order of value per hour:
+What it is *not* yet is a machine you would use. On the hardware from 12.1 you
+are almost certainly running with: no USB (so no keyboard on most machines built
+after ~2010), no NVMe (so no disk on most machines built after ~2016), a
+framebuffer at whatever mode the firmware happened to pick, no power management
+(the fans are at full speed and the battery is draining at idle), and no
+protection against a malicious device. Those are phase 13.
 
-- **Port to a second architecture** (ARM64 or RISC-V). Nothing exposes an
-  accidental x86 assumption like a machine with a weak memory model and no I/O
-  ports. `[PMCCC]` ch. 5 first.
-- **Virtualization.** Implement a hypervisor with VT-x, or run your kernel *as* a
-  guest under KVM. `[P-POPEK74]`, `[P-XEN03]`, `[P-KVM07]`.
-- **A different kernel structure.** Rebuild it as a microkernel and measure the
-  IPC cost you were told about. `[P-UKERNEL95]`, `[P-EXOKERNEL95]`, `[OSDI]`.
-- **Contribute to Linux.** You now have the background to read a subsystem and
-  the humility to start small. `[KDOC]`
-  `Documentation/process/submitting-patches.rst`.
+And even with every driver written, "it boots" and "I use it" are different
+claims — separated by uptime, crash recovery, backups, upgrades, and a real job
+the machine does. That is phase 14.
+
+- **Next: [phase-13-real-hardware/](../phase-13-real-hardware/)** — the drivers
+  your actual machine needs.
+- **Then: [phase-14-daily-driver/](../phase-14-daily-driver/)** — running it for
+  real, and the honest verdict on what it can and cannot do.
+
+Deliberately still out of scope after this phase:
+
+- **Another architecture** (ARM64, RISC-V). Nothing exposes an accidental x86
+  assumption like a weak memory model and no I/O ports. `[PMCCC]` ch. 5 first.
+- **Virtualization.** A hypervisor with VT-x, or your kernel as a KVM guest.
+  `[P-POPEK74]`, `[P-XEN03]`, `[P-KVM07]`.
+- **A different kernel structure.** Rebuild as a microkernel and measure the IPC
+  cost you were told about. `[P-UKERNEL95]`, `[P-EXOKERNEL95]`, `[OSDI]`.
 - **Formal methods.** `[P-SEL4]`, and [lean-proofs/](../../lean-proofs/) in this
   repo for the tooling.
+
 
 ---
 

@@ -5,7 +5,7 @@ Unix-like system — and, in parallel, build a real Linux distribution from sour
 so that nothing running on your machine is there without you having put it there.
 
 **This directory is scaffolding only.** It contains no solutions and no exercise
-code: it is the *frame* — the division of the work into 147 exercises across 13
+code: it is the *frame* — the division of the work into 176 exercises across 15
 phases, the limit case that motivates each one, and the book or paper you should
 be reading while you do it. You write the code. That is the entire point.
 
@@ -21,14 +21,17 @@ is the most common way people waste a year:
 | What you build | An OS kernel, from a boot sector to processes, filesystems and TCP | A working Linux system, from a cross-toolchain to a booting userland |
 | What you learn | *Why* an OS is shaped the way it is — you invent each mechanism after hitting the failure that requires it | *What is actually on a Linux box* — every binary, why it exists, who put it there |
 | The source | OSDev tradition, xv6, MINIX, the Intel SDM | The [Linux From Scratch](https://www.linuxfromscratch.org/) book, Beyond LFS |
-| Phases | 00 – 10, 12 | 11 (and it is large) |
-| Time, realistically | 6 – 18 months, part time | 2 – 6 weekends for a first pass |
+| Phases | 00 – 10, 12 – 14 | 11 (and it is large) |
+| Time, realistically | 1 – 3 years, part time | 2 – 6 weekends for a first pass |
 
 You asked for both, and both are here. **Do Track D once, early, in parallel with
 phase 02** — it is short, and it gives you a real system to compare yours against
 for the rest of the project. Then spend the year on Track K.
 
-They meet in phase 12, where your kernel boots the userland you built in phase 11.
+They meet in phase 12, where your kernel boots the userland you built in phase 11,
+and again in phase 14, where you decide which of the two you are actually going to
+use — a decision that [phase-14-daily-driver/](phase-14-daily-driver/) opens with,
+because the honest answers differ a great deal.
 
 ---
 
@@ -50,7 +53,9 @@ Every phase exists because the previous one broke. This is principle 2 of
  09  a NIC driver and a TCP stack                       ...an ack arrives for data you already freed
  10  users, namespaces, seccomp                         ...any process can read any file
  11  a real toolchain, a real kernel, a real userland   ...it is 400 packages and you trust none of them
- 12  your kernel runs that userland                     ...you are now maintaining an OS
+ 12  your kernel runs that userland, on metal           ...the metal has no PS/2 port, no ATA disk
+ 13  USB, NVMe, the display, the battery, the IOMMU     ...it works, and you still do not rely on it
+ 14  a machine that does a real job, for thirty days    ...you are now maintaining an OS
 ```
 
 Read that column of failures. Each one is an exercise you are told to *construct
@@ -65,7 +70,7 @@ understand.
 linux-from-scratch/
 ├── README.md            # this file — the frame and the two tracks
 ├── REFERENCES.md        # the bibliography every phase cites by [TAG]
-├── PROGRESS.md          # all 147 exercises as checkboxes
+├── PROGRESS.md          # all 176 exercises as checkboxes
 ├── phase-00-toolchain/          README.md   —  6 exercises
 ├── phase-01-boot/               README.md   — 10 exercises
 ├── phase-02-kernel-core/        README.md   — 12 exercises
@@ -78,7 +83,9 @@ linux-from-scratch/
 ├── phase-09-networking/         README.md   — 14 exercises
 ├── phase-10-security-isolation/ README.md   — 12 exercises
 ├── phase-11-real-linux-lfs/     README.md   — 10 exercises
-└── phase-12-capstone/           README.md   —  6 exercises
+├── phase-12-integration/        README.md   —  6 exercises
+├── phase-13-real-hardware/      README.md   — 15 exercises
+└── phase-14-daily-driver/       README.md   — 14 exercises
 ```
 
 Each phase README has the same shape:
@@ -99,7 +106,8 @@ Every `read` entry cites [REFERENCES.md](REFERENCES.md) by tag, e.g. `[OSTEP §1
 ## Ground rules
 
 **Everything runs in an emulator first.** QEMU with `-s -S` and GDB attached, so
-a triple fault is a debugging session and not a reboot. Real hardware is phase 12.
+a triple fault is a debugging session and not a reboot. Real hardware starts at
+phase 12 and is the whole subject of phase 13.
 
 **Write it in C and assembly.** Not because C is good, but because every document
 you will read for the next year — the SDM, the ELF ABI, `Documentation/` in the
@@ -146,6 +154,39 @@ there saves three months here.
 
 ---
 
+## What "using your own OS" actually means
+
+You asked for two things that sound like one: writing every driver, and running
+the result. Both are in scope, and the honest shape of the second is worth saying
+here rather than burying in phase 14.
+
+**Drivers for real hardware are phase 13** — xHCI/USB, NVMe, AHCI, HID, the
+input layer, the framebuffer, the real NIC, ACPI's AML, power management, the
+IOMMU, audio. Fifteen exercises, written against published specifications rather
+than against QEMU. Note the dependency that surprises everyone: a modern machine
+has no PS/2 port, so **the USB stack is what lets you type into your own OS at
+all**.
+
+**Running it is phase 14**, and there are two defensible targets:
+
+- **Daily-drive your LFS system** from phase 11. Completely achievable — it is a
+  real Linux distribution, browser included, and every binary on it is one you
+  compiled. This is the fastest route to the thing you originally described.
+- **Put your own kernel into real service.** Achievable for a *job*, not as a
+  general desktop. The wall is the web browser: porting one needs threads,
+  futexes under contention, GPU or a fast rasteriser, fonts, TLS, JIT-friendly
+  `mmap`, sandboxing and codecs — a multi-year team project. Everything else is
+  negotiable, so phase 14 has you pick a job that does not need one: a router, a
+  file server, a build machine, a DNS box, a monitoring host, or a terminal
+  workstation you SSH into. Then run it for thirty days and keep a defect log.
+
+That last part is not a consolation prize. A machine doing one real thing
+continuously will find more bugs in your kernel in a month than every test you
+have written, because it runs paths you never thought to test, for longer than
+you ever ran them, on data you did not choose.
+
+---
+
 ## Where the whole project stops
 
 Deliberately out of scope, so you know the edge:
@@ -154,10 +195,18 @@ Deliberately out of scope, so you know the edge:
   teaches something. Porting is a fine second year.
 - **Formal verification.** seL4 proves its kernel correct `[P-SEL4]`; you are not
   going to, and the exercises do not pretend otherwise.
-- **A GUI.** Framebuffer and a windowing protocol are sketched in phase 08 and
-  left there. Wayland is another project.
+- **A GPU driver.** Phase 13 gets a good framebuffer — damage tracking, write
+  combining, a real font renderer — and stops there. Mode setting, acceleration
+  and display hotplug need per-vendor documentation and a multi-year effort.
+- **A graphical desktop, and a web browser.** A compositor is reachable on top of
+  phase 13's framebuffer if you want one. The browser is not, and phase 14 is
+  built around that fact rather than around wishing it away.
+- **Wi-Fi and Bluetooth.** Each is a protocol stack plus a per-chip driver plus a
+  firmware blob. Phase 14 assumes Ethernet or a USB Ethernet adapter.
 - **Being fast.** Correct first, measured second, optimised only where the
   measurement demanded it. Your scheduler will lose to CFS. That is fine — the
   exercise is to find out *where* it loses, and why.
-- **Being safe to run on hardware you care about.** Phase 12 uses a spare machine
-  or a USB stick, never your laptop's only disk.
+- **Being your only machine.** Phase 12 uses a spare box or a USB stick, never
+  your laptop's only disk. Phase 14 puts real data on it — and pairs that with
+  off-machine backups and a restore you have actually performed, because the
+  point is to depend on it safely, not recklessly.
