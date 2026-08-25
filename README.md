@@ -8,6 +8,9 @@ MVP-then-complicate driven by limit cases, and verification you can run.
 
 ## Directory Structure
 
+### Operating Systems
+- **[linux-from-scratch/](linux-from-scratch/)** - Build an OS from the first byte the CPU executes to a self-hosting Unix, plus a real Linux distribution compiled from source: a scaffold of 147 exercises across 13 phases (toolchain, boot, interrupts, paging, processes, SMP, filesystems, userspace, drivers, TCP/IP, isolation, LFS, capstone), each with the limit case that motivates it and the book or paper to read alongside it. Curriculum only - no solutions
+
 ### Low-Level Systems (C/C++)
 - **[c-compiler/](c-compiler/)** - C compiler implementation in C
 - **[quantum-computing-lang/](quantum-computing-lang/)** - Quantum computing language and simulator (like Qiskit) in C
