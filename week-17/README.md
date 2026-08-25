@@ -15,6 +15,8 @@
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
+Plus **~2 h on the live system** — see [`../LIVE.md`](../LIVE.md). It runs from week 1 because ninety days of uptime takes ninety days, and that is the one requirement here that effort cannot compress.
+
 ## What to do, in order
 
 1. `database-internals` first, and `estimation.py` before anything else in it. Reproducing the Leis et al. result — that estimation error compounds multiplicatively with join count, so the planner picks a bad plan **correctly** from bad numbers — changes how you read every `EXPLAIN` for the rest of your life. It needs week 9 finished.

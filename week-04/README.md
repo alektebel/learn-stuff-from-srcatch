@@ -14,6 +14,8 @@
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
+Plus **~2 h on the live system** — see [`../LIVE.md`](../LIVE.md). It runs from week 1 because ninety days of uptime takes ninety days, and that is the one requirement here that effort cannot compress.
+
 ## What to do, in order
 
 1. Work the directory's own order: `inference_path.py` → `naive_server.py` → `batching.py` → `kv_runtime.py` → `scheduler.py` → `paged_kv.py` → `gpu_opt.py` → `speculate.py` → `observe.py` → `traffic.py`.

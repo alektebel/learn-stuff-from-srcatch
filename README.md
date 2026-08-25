@@ -12,6 +12,10 @@ every file you will open, in the order you will open it, with its stub count.
 **Want the papers? Read [REFERENCES.md](REFERENCES.md)** — one canonical source
 per mechanism, by week, with what to read each for.
 
+**Starting? Read [LIVE.md](LIVE.md) first** — a system you deploy in week 1 and keep
+running, in parallel. Ninety days of uptime takes ninety days; it is the only thing
+here that effort cannot compress.
+
 **Working through it? Read [ROADMAP.md](ROADMAP.md)** — an 18-week schedule (24 Aug –
 27 Dec 2026) at three intensities. The daily notebook — expected work, expected
 publishable, one blog post per day — lives in [`journal/`](journal/):

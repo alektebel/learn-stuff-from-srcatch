@@ -222,7 +222,14 @@ daily slot. The AWS drill sits outside it too — see the note below the table.
 
 **1,251 block hours.** Plus Lean, 1,402.
 
-### Two things run daily, outside the table
+### Three things run outside the table
+
+- **[`LIVE.md`](LIVE.md)** — a deployed system, from **week 1**, ~2 h/week.
+  Not a phase at the end. Ninety days of uptime takes ninety days, you cannot
+  schedule an incident, and evidence that accrues by the calendar survives a
+  schedule that slips.
+
+### Two of them daily
 
 - **`lean-proofs/`** — ~8.4 h/week, every week. Proofs go better in
   ninety-minute pieces than in a marathon, and it keeps an unrelated muscle warm

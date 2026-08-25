@@ -17,6 +17,8 @@
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
+Plus **~2 h on the live system** — see [`../LIVE.md`](../LIVE.md). It runs from week 1 because ninety days of uptime takes ninety days, and that is the one requirement here that effort cannot compress.
+
 ## What to do, in order
 
 1. `spectral-graphs`, then `sas-lineage-tool`, then `web-scraping`, then `ml-in-production`, then `mlops` — a day or less each.

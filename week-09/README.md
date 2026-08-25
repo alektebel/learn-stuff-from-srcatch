@@ -13,6 +13,8 @@
 
 Plus the AWS drill, daily, since week 1 — [`../week-12/aws-certification/drill.py`](../week-12/aws-certification/drill.py). It is not graded and it cannot be crammed.
 
+Plus **~2 h on the live system** — see [`../LIVE.md`](../LIVE.md). It runs from week 1 because ninety days of uptime takes ninety days, and that is the one requirement here that effort cannot compress.
+
 ## What to do, in order
 
 1. `pager.py` first: slotted pages, free-space arithmetic, the buffer pool and its LRU. **Predict how many rows fit in a 4096-byte page before running the demo.**

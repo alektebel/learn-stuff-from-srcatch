@@ -884,12 +884,19 @@ mechanisms — packaging things you already understand, which is the right order
 - [ ] **16.6** Prometheus + Grafana, scraping **your** `observe.py` metrics and
       vLLM's. Build the dashboard rather than importing one.
 
-### 16c — the evidence · ~110 h · THE PART THAT ACTUALLY DECIDES IT
+### 16c — the evidence · ~110 h · **STARTS WEEK 1**, see [`LIVE.md`](LIVE.md)
 
 None of this is gradeable. All of it is what gets read.
 
-- [ ] **16.7 One system that stays up.** A public URL, a real model behind it,
-      for **at least 90 days**. Not a demo — a thing with uptime. Cheapest
+**This was originally scheduled at week 12 and that was wrong.** Starting the
+live system at week 12 puts ninety days of uptime at 7 Feb 2027 — after the
+18-week plan ends and at the wire for 26. Starting week 1 puts it at 22 Nov,
+with a month spare and room for a second incident. Nothing else in this file
+has a deadline set by the calendar rather than by effort.
+
+- [ ] **16.7 One system that stays up — deploy it in WEEK 1.** A public URL and
+      a health endpoint before you have a model at all; your own week-2
+      transformer replaces the placeholder in week 3. For **at least 90 days**. Not a demo — a thing with uptime. Cheapest
       honest version: a small model on one always-on instance, or serverless
       with a cold-start budget you have measured and stated.
 - [ ] **16.8 A load test with a number attached.** Requests/sec at a stated p99,
