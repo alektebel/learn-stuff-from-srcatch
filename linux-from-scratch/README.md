@@ -9,6 +9,11 @@ code: it is the *frame* — the division of the work into 176 exercises across 1
 phases, the limit case that motivates each one, and the book or paper you should
 be reading while you do it. You write the code. That is the entire point.
 
+Budget roughly **2,100 hours** for all of it — about four years at ten hours a
+week, with working milestones long before the end. The per-phase breakdown, the
+fifteen exercises that dominate the total, and ~450 hours of legitimate cuts are
+in [ESTIMATES.md](ESTIMATES.md).
+
 ---
 
 ## The honest scope
@@ -22,7 +27,7 @@ is the most common way people waste a year:
 | What you learn | *Why* an OS is shaped the way it is — you invent each mechanism after hitting the failure that requires it | *What is actually on a Linux box* — every binary, why it exists, who put it there |
 | The source | OSDev tradition, xv6, MINIX, the Intel SDM | The [Linux From Scratch](https://www.linuxfromscratch.org/) book, Beyond LFS |
 | Phases | 00 – 10, 12 – 14 | 11 (and it is large) |
-| Time, realistically | 1 – 3 years, part time | 2 – 6 weekends for a first pass |
+| Time, realistically | ~2,000 h — 4 years at 10 h/wk | ~60 h — six weeks of evenings |
 
 You asked for both, and both are here. **Do Track D once, early, in parallel with
 phase 02** — it is short, and it gives you a real system to compare yours against
@@ -71,6 +76,7 @@ linux-from-scratch/
 ├── README.md            # this file — the frame and the two tracks
 ├── REFERENCES.md        # the bibliography every phase cites by [TAG]
 ├── PROGRESS.md          # all 176 exercises as checkboxes
+├── ESTIMATES.md         # how long this takes, per phase, and what to cut
 ├── phase-00-toolchain/          README.md   —  6 exercises
 ├── phase-01-boot/               README.md   — 10 exercises
 ├── phase-02-kernel-core/        README.md   — 12 exercises

@@ -1,6 +1,6 @@
 # Progress
 
-176 exercises. Tick as you go. The last line of each phase is for the graded
+176 exercises, ~2,100 hours ([ESTIMATES.md](ESTIMATES.md)). Tick as you go. The last line of each phase is for the graded
 checker you write once that phase is complete — see
 [README.md](README.md#verification).
 
