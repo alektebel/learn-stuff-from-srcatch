@@ -70,3 +70,6 @@ reference/diffusion-models/*.pth
 
 # Ray tracer output
 week-17/ray-tracer/**/*.ppm
+
+# DRILL fixture, regenerated on demand
+week-09/database-engine/drill.db

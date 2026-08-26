@@ -455,6 +455,15 @@ most arbitrary week in the plan. Net change to the schedule: **−42 h.**
 
 ### 12a — the defence drill · ~3 h
 
+**A worked instance already exists:**
+[`week-09/database-engine/DRILL.md`](week-09/database-engine/DRILL.md), with
+`drill_fixtures.py` generating a real SQLite file so the byte-level questions
+have ground truth. Read it before writing `defend.py` — it is a better
+specification of the format than the description below, and it adds two things
+worth stealing: a **confidence level per answer** so the examiner can calibrate
+you, and a fixed difficulty mix (60% mechanics, 30% failure modes, 10% "why did
+the real engine do it this way and what did it cost them").
+
 `week-12/aws-certification/defend.py`, beside `drill.py` and **also not graded
 by `check.py`**. It is a third kind of practice, distinct from both:
 

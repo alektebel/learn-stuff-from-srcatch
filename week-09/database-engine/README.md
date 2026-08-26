@@ -329,6 +329,25 @@ No dependencies beyond the Python 3 standard library.
 - [`system-design/`](../../reference/system-design/) — the patterns a database sits under
 - [`PHILOSOPHY.md`](../../PHILOSOPHY.md) — why this repo is built the way it is
 
+## When you want to be examined rather than taught
+
+[`DRILL.md`](DRILL.md) is a prompt for a fresh session that gives you one
+exercise at a time, refuses to answer unless you write `SOLUCIÓN`, attacks
+whatever you say, and makes you state a confidence level so it can tell you when
+you were overconfident.
+
+`check.py` grades the code you wrote. That grades whether you can defend it.
+Use it *after* a file, never before — it is worthless as an introduction and
+sharp as an audit.
+
+```bash
+python3 drill_fixtures.py    # a real SQLite file, annotated, ready to paste
+```
+
+The fixtures matter: a model asked for a hexdump from memory produces something
+plausible and wrong. The SQLite format is byte-exact and documented, so an
+exercise built on a real file has an answer neither of you can drift away from.
+
 ## Sources
 
 - Hellerstein, Stonebraker & Hamilton, **"Architecture of a Database System"**, FnTDB 2007 — read this first; it is the map for the whole directory.
