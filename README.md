@@ -33,6 +33,7 @@ MVP-then-complicate driven by limit cases, and verification you can run.
 - **[ml-inference/](ml-inference/)** - High-performance inference (optimization, quantization, edge deployment)
 
 ### Generative AI & Deep Learning
+- **[efficient-attention/](efficient-attention/)** - The three main answers to "attention is quadratic", implemented in numpy and measured rather than quoted: clustered attention (LSH + Hamming K-means, the error bound, top-k improvement), linear attention (the associativity trick, causal prefix sums, the RNN form, linear-memory gradients), and FlashAttention 1 & 2 (online softmax, tiled forward, backward by recomputation, loop swap, split-K merge) - on a simulated HBM/SRAM hierarchy that charges for every byte moved (19 graded checks via `python3 check.py`)
 - **[diffusion-models/](diffusion-models/)** - Diffusion models from scratch (DDPM, DDIM, U-Net, image generation like Stable Diffusion)
 - **[deepfake-creation/](deepfake-creation/)** - Deepfake generation techniques (face swapping, reenactment, First Order Motion Model, Wav2Lip)
 - **[deepfake-detection/](deepfake-detection/)** - Deepfake detection methods (CNN-based, temporal analysis, frequency domain, biological signals)
@@ -141,7 +142,7 @@ To complement the hands-on projects in this repository, we've curated relevant v
 - [Parallel Computing and GPU Programming courses](https://github.com/Developer-Y/cs-video-courses#computer-organization-and-architecture)
 
 ### Machine Learning & Deep Learning
-*Relevant for: distributed-training, ml-in-production, mlops, ml-inference, diffusion-models, deepfake-creation, deepfake-detection, world-models*
+*Relevant for: distributed-training, ml-in-production, mlops, ml-inference, diffusion-models, deepfake-creation, deepfake-detection, world-models, efficient-attention*
 - [CS229 - Machine Learning - Stanford](http://cs229.stanford.edu/)
 - [6.S191 - Introduction to Deep Learning - MIT](http://introtodeeplearning.com/)
 - [Deep Learning Specialization - Various Universities](https://github.com/Developer-Y/cs-video-courses#deep-learning)
