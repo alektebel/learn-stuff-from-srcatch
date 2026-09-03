@@ -2,9 +2,20 @@
 
 A collection of from-scratch implementations of various systems and projects for learning purposes.
 
-**New here? Read [PHILOSOPHY.md](PHILOSOPHY.md)** — what this repo is for, and the three
-principles every directory follows: design choices named as problem-solving decisions,
-MVP-then-complicate driven by limit cases, and verification you can run.
+## Start here
+
+| | |
+|---|---|
+| **[PHILOSOPHY.md](PHILOSOPHY.md)** | What this repo is for, and the three principles every directory follows: design choices named as problem-solving decisions, MVP-then-complicate driven by limit cases, and verification you can run. **Read this first.** |
+| **[curriculum/](curriculum/)** | Six course-and-book blocks (CS229, CS224N, CS230, CS336, CME295, CS329A), with an honest assessment of each pairing and the order to actually use — which is not 1 → 6. |
+| **[curriculum/REPO-MAP.md](curriculum/REPO-MAP.md)** | All 34 project directories mapped onto those six blocks: what to build after what, and which half of this repository no block covers. |
+| **[docs/archive/](docs/archive/)** | Session reports from earlier work, moved out of the root. Not documentation. |
+
+**If you want somewhere concrete to start:** pick a directory that ships `check.py`. Those
+give graded feedback that names the invariant you broke, which is worth more than three
+directories that do not. Currently: `aws-from-scratch/` (18 checks), `dynamo-paper/` (17),
+`context-caching/` (16), `contextcite/` (14), `compiler-and-vgpu/` (12),
+`deploy-and-debug/` (12).
 
 ## Directory Structure
 
@@ -25,6 +36,7 @@ MVP-then-complicate driven by limit cases, and verification you can run.
 ### Functional Programming & Formal Verification
 - **[haskell-projects/](haskell-projects/)** - Various projects to learn Haskell
 - **[lean-proofs/](lean-proofs/)** - Mathematical proofs in Lean, progressing toward Galois theorem
+- **[curriculum/](curriculum/)** - Six course-and-book blocks with an honest assessment of each pairing: CS229 + Geron's Hands-On ML, CS224N + NLP with Transformers, CS230 + Goodfellow, CS336 + Raschka's Build a Large Language Model, CME295 + the Hugging Face LLM course, and CS329A + Hur & Song's Build an AI Agent. Includes what to skip given a mathematics background, why the CS230/Goodfellow pairing is weak (the book predates transformers by a year), why blocks 2, 4 and 5 teach attention three times, and [REPO-MAP.md](curriculum/REPO-MAP.md) mapping all 34 project directories onto the blocks
 
 ### Machine Learning & MLOps
 - **[distributed-training/](distributed-training/)** - Distributed training systems (data parallelism, model parallelism, multi-node training)
@@ -61,11 +73,20 @@ MVP-then-complicate driven by limit cases, and verification you can run.
 
 ## Philosophy
 
-This repository is dedicated to learning by building things from scratch. Each directory contains:
+The full statement is in [PHILOSOPHY.md](PHILOSOPHY.md). In short: learn from the
+implementation itself, name every design decision along with its cost, build the MVP and
+then complicate it in response to a concrete limit case, and ship verification you can run.
+
+Most directories contain:
 - **Template files** with TODO comments and implementation guidelines
 - **Step-by-step instructions** for gradual implementation
-- **Complete solutions** in the `solutions/` folder for reference
+- **Reference solutions** in a `solutions/` folder
 - A clear learning path from basics to advanced topics
+
+*Most*, not all. `curriculum/` and `docs/` are documentation. `mlops/` has no solutions
+yet. The `compression-lower-bounds/` track, on its own branch, deliberately ships no
+solutions at all — the material there is short enough that reading one costs the whole
+exercise, and its `check.py` names the broken invariant instead.
 
 ## Structure
 
@@ -75,10 +96,11 @@ Each project directory contains:
 project-name/
 ├── README.md              # Project overview and learning path
 ├── template-files         # Empty templates with TODOs and guidelines
-├── Makefile              # Build configuration (for C projects)
-└── solutions/            # Complete working implementations
-    ├── README.md         # Solution documentation
-    └── solution-files    # Fully implemented code
+├── check.py               # Graded checks against YOUR code (in six directories so far)
+├── Makefile               # Build configuration (for C projects)
+└── solutions/             # Reference implementations (absent by design in some tracks)
+    ├── README.md
+    └── solution-files
 ```
 
 ## Getting Started
@@ -88,8 +110,10 @@ project-name/
 3. **Start with the template files** - they have TODOs and guidelines
 4. **Implement gradually** - follow the TODO comments step by step
 5. **Test frequently** - build and test as you implement each section
-6. **Check solutions** when stuck or to verify your approach
-7. **Learn and iterate** - understand each step before moving forward
+6. **Run `check.py`** if the directory has one — it tests your code and says which
+   invariant broke, which is more useful than a solution
+7. **Check solutions** when stuck, and only then
+8. **Learn and iterate** - understand each step before moving forward
 
 ## Implementation Approach
 
@@ -112,6 +136,12 @@ make clean    # Clean build artifacts
 ```
 
 ## Video Courses & Learning Resources
+
+> For a **structured** path through the machine-learning half of this repository — six
+> course-and-book pairings with prerequisites, ordering and per-block builds — see
+> [`curriculum/`](curriculum/). The list below is broader and unstructured, and it is the
+> better resource for the systems, networking, cryptography and formal-methods
+> directories, which no curriculum block covers.
 
 To complement the hands-on projects in this repository, we've curated relevant video courses from universities and online platforms. These courses provide theoretical foundations and different perspectives on the topics covered here.
 
